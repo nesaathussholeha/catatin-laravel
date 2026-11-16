@@ -1,0 +1,455 @@
+/* ========================================
+   CATATIN - ADMIN LAYOUT
+======================================== */
+
+:root {
+    --admin-sidebar: #0d122b;
+    --admin-background: #EEF1FB;
+    --admin-primary: #f59e0b;
+    --admin-text: #252943;
+    --admin-muted: #9298ad;
+    --admin-danger: #ef4444;
+    --admin-white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+    background: var(--admin-background);
+    min-height: 100vh;
+    color: var(--admin-text);
+}
+
+/* ========================================
+   MAIN WRAPPER
+======================================== */
+
+.admin-wrapper {
+    min-height: 100vh;
+}
+
+/* ========================================
+   SIDEBAR
+======================================== */
+
+.admin-sidebar {
+    width: 250px;
+    height: 100vh;
+    background: var(--admin-sidebar);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    padding: 28px 18px 20px;
+    transition: transform .3s ease;
+}
+
+/* BRAND */
+
+.admin-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 10px 35px;
+}
+
+.brand-icon {
+    width: 43px;
+    height: 43px;
+    border-radius: 12px;
+    background: var(--admin-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.brand-text h2 {
+    color: white;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.brand-text span {
+    color: #9298ad;
+    font-size: 11px;
+}
+
+/* NAVIGATION */
+
+.admin-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.nav-label {
+    color: #777e99;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 0 12px;
+    margin-bottom: 9px;
+}
+
+.nav-label-bottom {
+    margin-top: 27px;
+}
+
+.admin-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 14px;
+    border-radius: 9px;
+    text-decoration: none;
+    color: #a2a7bd;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all .2s ease;
+}
+
+.admin-nav-link iconify-icon {
+    font-size: 19px;
+    flex-shrink: 0;
+}
+
+.admin-nav-link:hover {
+    color: white;
+    background: rgba(255, 255, 255, .07);
+}
+
+.admin-nav-link.active {
+    color: white;
+    background: var(--admin-primary);
+}
+
+/* ========================================
+   SIDEBAR LOGOUT
+======================================== */
+
+.admin-sidebar-footer {
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.admin-logout-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 14px;
+    border: none;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--admin-danger);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    transition: all .2s ease;
+}
+
+.admin-logout-btn iconify-icon {
+    font-size: 19px;
+}
+
+.admin-logout-btn:hover {
+    background: rgba(239, 68, 68, .12);
+}
+
+/* ========================================
+   MAIN CONTENT
+======================================== */
+
+.main-content {
+    margin-left: 250px;
+    min-height: 100vh;
+}
+
+/* ========================================
+   HEADER
+======================================== */
+
+.admin-header {
+    min-height: 82px;
+    background: var(--admin-background);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    border-bottom: 1px solid #dfe3ef;
+}
+
+.admin-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-page-heading h1 {
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--admin-text);
+}
+
+.admin-page-heading p {
+    color: var(--admin-muted);
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+/* HEADER PROFILE */
+
+.admin-header-right {
+    display: flex;
+    align-items: center;
+}
+
+.admin-profile-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 10px;
+    transition: background .2s ease;
+}
+
+.admin-profile-link:hover {
+    background: rgba(13, 18, 43, .05);
+}
+
+.admin-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 8px;
+}
+
+.admin-profile-info {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    gap: 3px;
+}
+
+.admin-profile-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--admin-text);
+}
+
+.admin-profile-role {
+    font-size: 10px;
+    color: var(--admin-muted);
+}
+
+.admin-avatar {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--admin-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 15px;
+}
+
+/* MENU TOGGLE */
+
+.admin-menu-toggle {
+    display: none;
+    border: none;
+    background: transparent;
+    color: var(--admin-text);
+    font-size: 25px;
+    cursor: pointer;
+}
+
+/* ========================================
+   PAGE CONTENT
+======================================== */
+
+.content {
+    padding: 25px 30px;
+}
+
+/* ========================================
+   LOGOUT MODAL
+======================================== */
+
+.admin-logout-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(13, 18, 43, .55);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.admin-logout-modal.active {
+    display: flex;
+}
+
+.admin-logout-modal-content {
+    width: 100%;
+    max-width: 380px;
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, .15);
+}
+
+.admin-logout-icon {
+    font-size: 32px;
+    color: var(--admin-danger);
+    margin-bottom: 15px;
+}
+
+.admin-logout-modal-content h3 {
+    font-size: 18px;
+    color: var(--admin-text);
+    margin-bottom: 9px;
+}
+
+.admin-logout-modal-content p {
+    font-size: 13px;
+    color: var(--admin-muted);
+    line-height: 1.6;
+}
+
+.admin-logout-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.admin-logout-actions button {
+    flex: 1;
+    padding: 11px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    transition: .2s;
+}
+
+#admin-cancel-logout {
+    background: #eef0f6;
+    color: #555b70;
+}
+
+#admin-cancel-logout:hover {
+    background: #e2e5ef;
+}
+
+#admin-confirm-logout {
+    background: var(--admin-danger);
+    color: white;
+}
+
+#admin-confirm-logout:hover {
+    background: #dc2626;
+}
+
+/* ========================================
+   SIDEBAR OVERLAY
+======================================== */
+
+.admin-sidebar-overlay {
+    display: none;
+}
+
+/* ========================================
+   RESPONSIVE - TABLET & MOBILE
+======================================== */
+
+@media (max-width: 768px) {
+
+    .admin-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .admin-sidebar.active {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .admin-menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .admin-header {
+        min-height: 75px;
+        padding: 15px 20px;
+    }
+
+    .admin-header-right {
+        margin-left: auto;
+    }
+
+    .admin-profile-info {
+        display: none;
+    }
+
+    .content {
+        padding: 22px 20px;
+    }
+
+    .admin-sidebar-overlay.active {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, .4);
+        z-index: 999;
+    }
+}
+
+/* ========================================
+   RESPONSIVE - SMALL MOBILE
+======================================== */
+
+@media (max-width: 480px) {
+
+    .admin-header {
+        padding: 13px 15px;
+    }
+
+    .admin-page-heading h1 {
+        font-size: 17px;
+    }
+
+    .admin-page-heading p {
+        font-size: 10px;
+    }
+
+    .admin-avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+
+    .content {
+        padding: 18px 15px;
+    }
+}
