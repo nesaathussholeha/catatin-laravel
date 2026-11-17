@@ -37,7 +37,8 @@
                 <span>Catatan Saya</span>
             </a>
 
-            <a href="#" class="nav-link">
+            <a href="{{ route('user.playlists.index') }}"
+                class="nav-link {{ request()->routeIs('user.playlists.*') ? 'active' : '' }}">
                 <iconify-icon icon="codicon:folder-opened-compact"></iconify-icon>
                 <span>Koleksi</span>
             </a>

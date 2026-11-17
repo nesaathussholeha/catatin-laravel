@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\PlaylistController;
 
 // ========================================
 // AUTHENTICATION (GUEST)
@@ -34,12 +35,23 @@ Route::middleware(['auth', 'role:student'])->group(function () {
 
 Route::get('/dashboard', [UserDashboardController::class, 'index'])
     ->name('user.dashboard');
+    
 
     Route::get('/profil', function () {
         return view('user.profile');
     })->name('user.profile');
 
+    Route::get('/koleksi', [PlaylistController::class, 'index'])
+        ->name('user.playlists.index');
+
+    Route::post('/koleksi', [PlaylistController::class, 'store'])
+        ->name('user.playlists.store');
+
+    Route::delete('/koleksi/{playlist}', [PlaylistController::class, 'destroy'])
+        ->name('user.playlists.destroy');
+
 });
+
 
 
 // ========================================

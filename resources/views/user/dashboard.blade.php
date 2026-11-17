@@ -1,5 +1,5 @@
 @extends('layouts.user')
-@section('title', 'Jelajahi Catatan')
+@section('title', 'Dashboard')
 @section('page-title', 'Jelajahi Catatan')
 
 @push('styles')
