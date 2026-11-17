@@ -4,7 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
-
+use App\Http\Controllers\UserDashboardController;
 
 // ========================================
 // AUTHENTICATION (GUEST)
@@ -32,9 +32,8 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware(['auth', 'role:student'])->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('user.dashboard');
-    })->name('user.dashboard');
+Route::get('/dashboard', [UserDashboardController::class, 'index'])
+    ->name('user.dashboard');
 
     Route::get('/profil', function () {
         return view('user.profile');
