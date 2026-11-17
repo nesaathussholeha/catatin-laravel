@@ -65,7 +65,6 @@
                         <span class="jumlah">{{ (int) $n->upvote }}</span> upvote
                     </button>
 
-                    {{-- Ganti "#" dengan route detail catatan setelah halamannya ada --}}
                     <a class="detail" href="#">Lihat detail</a>
                 </div>
             </article>
