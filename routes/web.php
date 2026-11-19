@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\AdminProfileController;
 
 // ========================================
 // AUTHENTICATION (GUEST)
@@ -80,6 +81,21 @@ Route::prefix('admin')
 
         Route::delete('/departments/{department}', [DepartmentController::class, 'destroy'])
             ->name('departments.destroy');
+    });
+    Route::prefix('admin')
+    ->name('admin.')
+    ->middleware(['auth', 'role:admin'])
+    ->group(function () {
+
+        Route::get('/dashboard', function () {
+            return view('admin.dashboard');
+        })->name('dashboard');
+
+        // Profil admin
+        Route::get('/profil', [AdminProfileController::class, 'edit'])->name('profil');
+        Route::put('/profil', [AdminProfileController::class, 'updateProfil'])->name('profil.update');
+        Route::put('/profil/password', [AdminProfileController::class, 'updatePassword'])->name('profil.password');
+
     });
 
 

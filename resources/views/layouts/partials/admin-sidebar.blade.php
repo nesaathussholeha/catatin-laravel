@@ -47,7 +47,8 @@
 
         <span class="nav-label nav-label-bottom">PENGATURAN</span>
 
-        <a href="#" class="admin-nav-link">
+        <a href="{{ route('admin.profil') }}"
+            class="admin-nav-link {{ request()->routeIs('admin.profil*') ? 'active' : '' }}">
             <iconify-icon icon="lucide:user-round"></iconify-icon>
             <span>Profil</span>
         </a>
