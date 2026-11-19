@@ -1,0 +1,532 @@
+/*    MASTER DATA PAGE  */
+
+.master-data-page {
+    width: 100%;
+}
+
+.master-data-page .page-heading {
+    margin-bottom: 28px;
+}
+
+.master-data-page .page-heading h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #17203c;
+    margin-bottom: 7px;
+}
+
+.master-data-page .page-heading p {
+    font-size: 14px;
+    color: #7b829b;
+}
+
+/*   TAB NAVIGATION  */
+
+.master-data-tabs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: #ffffff;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    border: 1px solid #e8eaf2;
+}
+
+.master-data-tabs a {
+    padding: 11px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #7b829b;
+    transition: 0.2s ease;
+}
+
+.master-data-tabs a:hover {
+    background: #f5f6fb;
+    color: #17203c;
+}
+
+.master-data-tabs a.active {
+    background: #f59e0b;
+    color: #ffffff;
+}
+
+/*  CONTENT  */
+
+.master-data-content {
+    background: #ffffff;
+    border: 1px solid #e8eaf2;
+    border-radius: 14px;
+    padding: 25px;
+}
+
+.master-data-heading {
+    margin-bottom: 22px;
+}
+
+.master-data-heading h2 {
+    font-size: 19px;
+    font-weight: 700;
+    color: #17203c;
+    margin-bottom: 6px;
+}
+
+.master-data-heading p {
+    font-size: 13px;
+    color: #858ba2;
+}
+
+/* TOOLBAR  */
+
+.master-data-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.search-box {
+    width: 350px;
+    max-width: 100%;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 11px 15px;
+    border: 1px solid #e1e4ef;
+    border-radius: 9px;
+    outline: none;
+    font-size: 13px;
+    color: #17203c;
+    transition: 0.2s ease;
+}
+
+.search-box input:focus {
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+.master-data-toolbar>button {
+    padding: 11px 18px;
+    background: #f59e0b;
+    color: #ffffff;
+    border: none;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.master-data-toolbar>button:hover {
+    background: #e58c00;
+}
+
+/*  TABLE  */
+
+.master-data-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.master-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.master-data-table thead {
+    background: #f7f8fc;
+}
+
+.master-data-table th {
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    color: #747c96;
+    border-bottom: 1px solid #e8eaf2;
+}
+
+.master-data-table td {
+    padding: 15px 16px;
+    font-size: 13px;
+    color: #424a63;
+    border-bottom: 1px solid #eef0f5;
+}
+
+.master-data-table tbody tr:hover {
+    background: #fafbff;
+}
+
+.master-data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* DEPARTMENT BADGE  */
+
+.department-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 2px 3px 2px 0;
+    background: #fff4df;
+    color: #b77908;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/*  RESPONSIVE  */
+
+@media (max-width: 768px) {
+    .master-data-content {
+        padding: 18px;
+    }
+
+    .master-data-tabs {
+        overflow-x: auto;
+    }
+
+    .master-data-tabs a {
+        white-space: nowrap;
+        padding: 10px 14px;
+    }
+
+    .master-data-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .master-data-toolbar>button {
+        width: 100%;
+    }
+}
+
+
+/*  MODAL MASTER DATA  */
+
+.master-data-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(13, 18, 43, 0.5);
+}
+
+.master-data-modal.active {
+    display: flex;
+}
+
+.master-data-modal-content {
+    width: 100%;
+    max-width: 480px;
+    padding: 25px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 15px 45px rgba(13, 18, 43, 0.15);
+    animation: modalFadeIn 0.2s ease;
+}
+
+.master-data-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.master-data-modal-header h2 {
+    margin: 0;
+    color: #17203c;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.master-data-modal-header button {
+    border: none;
+    background: transparent;
+    color: #858ba2;
+    font-size: 27px;
+    cursor: pointer;
+}
+
+.master-data-modal-header button:hover {
+    color: #17203c;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #424a63;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #e1e4ef;
+    border-radius: 9px;
+    outline: none;
+    color: #17203c;
+    font-size: 13px;
+    transition: 0.2s ease;
+}
+
+.form-group input:focus {
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+.form-group input::placeholder {
+    color: #a5aabd;
+}
+
+.master-data-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 28px;
+}
+
+.master-data-modal-actions button {
+    padding: 11px 20px;
+    border: none;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#btnBatalJurusan {
+    background: #f1f2f7;
+    color: #747c96;
+}
+
+#btnBatalJurusan:hover {
+    background: #e5e7ef;
+}
+
+#btnSimpanJurusan {
+    background: #f59e0b;
+    color: #fff;
+}
+
+#btnSimpanJurusan:hover {
+    background: #e58c00;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .master-data-modal-content {
+        padding: 20px;
+    }
+
+    .master-data-modal-actions {
+        flex-direction: column-reverse;
+    }
+
+    .master-data-modal-actions button {
+        width: 100%;
+    }
+}
+
+
+/* FORM VALIDATION */
+
+.required {
+    color: #ef4444;
+    margin-left: 3px;
+    font-weight: 700;
+}
+
+/* Input ketika validasi gagal */
+.form-group input.is-invalid {
+    border-color: #ef4444;
+    background-color: #fffafa;
+}
+
+.form-group input.is-invalid:focus {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Pesan error */
+.error-message {
+    display: block;
+    margin-top: 7px;
+    color: #ef4444;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+td.btn-action {
+    vertical-align: middle;
+    padding: 12px 16px;
+    white-space: nowrap;
+}
+
+td.btn-action button:not(:last-child) {
+    margin-right: 8px;
+}
+
+
+/* Tombol aksi tabel */
+.master-data-table td button {
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-edit-jurusan {
+    padding: 7px 13px;
+    border: none;
+    border-radius: 7px;
+    background: #eef2ff;
+    color: #4f62e6;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.btn-edit-jurusan:hover {
+    background: #dfe5ff;
+}
+
+.btn-hapus-jurusan {
+    padding: 7px 13px;
+    border: none;
+    border-radius: 7px;
+    background: #fee2e2;
+    color: #dc2626;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.btn-hapus-jurusan:hover {
+    background: #fecaca;
+}
+
+
+/* MODAL KONFIRMASI HAPUS */
+
+.modal-delete-content {
+    max-width: 420px;
+    text-align: center;
+}
+
+.delete-icon {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fee2e2;
+    color: #dc2626;
+    border-radius: 50%;
+    font-size: 27px;
+}
+
+.delete-icon .iconify {
+    width: 27px;
+    height: 27px;
+}
+
+.delete-heading h2 {
+    margin-bottom: 8px;
+    color: #17203c;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.delete-heading p {
+    color: #858ba2;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.delete-info {
+    margin: 20px 0 12px;
+    padding: 13px;
+    background: #f7f8fc;
+    border: 1px solid #e8eaf2;
+    border-radius: 9px;
+    color: #17203c;
+    font-size: 14px;
+}
+
+.delete-warning {
+    margin-bottom: 25px;
+    color: #dc2626;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.modal-delete-content .master-data-modal-actions {
+    justify-content: center;
+}
+
+#btnBatalHapusJurusan {
+    background: #f1f2f7;
+    color: #747c96;
+}
+
+#btnBatalHapusJurusan:hover {
+    background: #e5e7ef;
+}
+
+#btnKonfirmasiHapusJurusan {
+    padding: 11px 20px;
+    border: none;
+    border-radius: 9px;
+    background: #dc2626;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#btnKonfirmasiHapusJurusan:hover {
+    background: #b91c1c;
+}
+
+#btnBatalHapusJurusan {
+    padding: 11px 20px;
+    border: none;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.modal-delete-content .master-data-modal-actions form {
+    margin: 0;
+}

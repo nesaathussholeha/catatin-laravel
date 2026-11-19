@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\PlaylistController;
+use App\Http\Controllers\DepartmentController;
 
 // ========================================
 // AUTHENTICATION (GUEST)
@@ -19,7 +20,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [RegisterController::class, 'store'])
         ->name('register.store');
 
-    Route::get('/login', [LoginController::class, 'create'])
+    Route::get('/', [LoginController::class, 'create'])
         ->name('login');
 
     Route::post('/login', [LoginController::class, 'store'])
@@ -33,9 +34,9 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware(['auth', 'role:student'])->group(function () {
 
-Route::get('/dashboard', [UserDashboardController::class, 'index'])
-    ->name('user.dashboard');
-    
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])
+        ->name('user.dashboard');
+
 
     Route::get('/profil', function () {
         return view('user.profile');
@@ -49,7 +50,6 @@ Route::get('/dashboard', [UserDashboardController::class, 'index'])
 
     Route::delete('/koleksi/{playlist}', [PlaylistController::class, 'destroy'])
         ->name('user.playlists.destroy');
-
 });
 
 
@@ -67,7 +67,21 @@ Route::prefix('admin')
             return view('admin.dashboard');
         })->name('dashboard');
 
+        // Halaman Master Data
+        Route::get('/master-data', [DepartmentController::class, 'index'])
+            ->name('master-data.index');
+
+        // CRUD Jurusan
+        Route::post('/departments', [DepartmentController::class, 'store'])
+            ->name('departments.store');
+
+        Route::put('/departments/{department}', [DepartmentController::class, 'update'])
+            ->name('departments.update');
+
+        Route::delete('/departments/{department}', [DepartmentController::class, 'destroy'])
+            ->name('departments.destroy');
     });
+
 
 
 // ========================================
