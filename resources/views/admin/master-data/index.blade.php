@@ -141,9 +141,10 @@
                         </tr>
                     </thead>
 
+
                     <tbody>
                         @forelse (($courses ?? collect()) as $index => $course)
-                            <tr>
+                            <tr class="baris-matakuliah">
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $course->code }}</td>
                                 <td>{{ $course->name }}</td>
@@ -157,16 +158,29 @@
                                     @endforelse
                                 </td>
                                 <td>
-                                    <button type="button">Edit</button>
-                                    <button type="button">Hapus</button>
+                                    <button type="button" class="btn-edit-matakuliah" data-id="{{ $course->id }}"
+                                        data-code="{{ $course->code }}" data-name="{{ $course->name }}"
+                                        data-departments="{{ $course->departments->pluck('id')->implode(',') }}">
+                                        Edit
+                                    </button>
+
+                                    <button type="button" class="btn-hapus-matakuliah" data-id="{{ $course->id }}"
+                                        data-name="{{ $course->name }}">
+                                        Hapus
+                                    </button>
                                 </td>
                             </tr>
                         @empty
-                            <tr>
+                            <tr id="dataMatakuliahKosong">
                                 <td colspan="5">Belum ada data mata kuliah.</td>
                             </tr>
                         @endforelse
+
+                        <tr id="hasilMatakuliahTidakDitemukan" style="display: none;">
+                            <td colspan="5">Mata kuliah tidak ditemukan.</td>
+                        </tr>
                     </tbody>
+
                 </table>
             </div>
 
@@ -237,33 +251,37 @@
             <form id="formJurusan" action="{{ route('admin.departments.store') }}" method="POST">
                 @csrf
 
-                <input type="hidden" name="_method" id="methodJurusan" value="POST">
+                <div class="master-data-modal-body">
 
-                <div class="form-group">
-                    <label for="kodeJurusan">
-                        Kode Jurusan <span class="required">*</span>
-                    </label>
+                    <input type="hidden" name="_method" id="methodJurusan" value="POST">
 
-                    <input type="text" id="kodeJurusan" name="code" value="{{ old('code') }}"
-                        placeholder="Masukkan kode jurusan" class="@error('code') is-invalid @enderror">
+                    <div class="form-group">
+                        <label for="kodeJurusan">
+                            Kode Jurusan <span class="required">*</span>
+                        </label>
 
-                    @error('code')
-                        <small class="error-message">{{ $message }}</small>
-                    @enderror
+                        <input type="text" id="kodeJurusan" name="code" value="{{ old('code') }}"
+                            placeholder="Masukkan kode jurusan" class="@error('code') is-invalid @enderror">
+
+                        @error('code')
+                            <small class="error-message">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="namaJurusan">
+                            Nama Jurusan <span class="required">*</span>
+                        </label>
+
+                        <input type="text" id="namaJurusan" name="name" value="{{ old('name') }}"
+                            placeholder="Masukkan nama jurusan" class="@error('name') is-invalid @enderror">
+
+                        @error('name')
+                            <small class="error-message">{{ $message }}</small>
+                        @enderror
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="namaJurusan">
-                        Nama Jurusan <span class="required">*</span>
-                    </label>
-
-                    <input type="text" id="namaJurusan" name="name" value="{{ old('name') }}"
-                        placeholder="Masukkan nama jurusan" class="@error('name') is-invalid @enderror">
-
-                    @error('name')
-                        <small class="error-message">{{ $message }}</small>
-                    @enderror
-                </div>
 
 
                 <div class="master-data-modal-actions">
@@ -281,7 +299,7 @@
     </div>
 
 
-    {{-- Modal Hapus --}}
+    {{-- Modal Hapus Jurusan --}}
     <div class="master-data-modal" id="modalHapusJurusan">
         <div class="master-data-modal-content modal-delete-content">
 
@@ -311,6 +329,131 @@
                     @method('DELETE')
 
                     <button type="submit" id="btnKonfirmasiHapusJurusan">
+                        Ya, Hapus
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+
+    {{-- Modal Tambah/Edit Mata Kuliah --}}
+    <div class="master-data-modal" id="modalMatakuliah">
+        <div class="master-data-modal-content">
+
+            <div class="master-data-modal-header">
+                <h3 id="judulModalMatakuliah">Tambah Mata Kuliah</h3>
+
+                <button type="button" id="btnTutupModalMatakuliah">
+                    &times;
+                </button>
+            </div>
+
+            <form id="formMatakuliah" action="{{ route('admin.courses.store') }}" method="POST">
+                @csrf
+
+                <input type="hidden" name="_method" id="methodMatakuliah" value="POST">
+
+                <div class="master-data-modal-body">
+                    <div class="form-group">
+                        <label for="kodeMatakuliah">
+                            Kode Mata Kuliah <span class="required">*</span>
+                        </label>
+
+                        <input type="text" id="kodeMatakuliah" name="code" value="{{ old('code') }}"
+                            placeholder="Masukkan kode mata kuliah" class="@error('code') is-invalid @enderror">
+
+                        @error('code')
+                            <small class="error-message">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="namaMatakuliah">
+                            Nama Mata Kuliah <span class="required">*</span>
+                        </label>
+
+                        <input type="text" id="namaMatakuliah" name="name" value="{{ old('name') }}"
+                            placeholder="Masukkan nama mata kuliah" class="@error('name') is-invalid @enderror">
+
+                        @error('name')
+                            <small class="error-message">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Jurusan yang menggunakan mata kuliah <span class="required">*</span></label>
+
+                        <div class="jurusan-multiselect" id="jurusanMultiSelect">
+                            <div class="jurusan-selected" id="jurusanSelected">
+                                <span class="placeholder">Pilih jurusan...</span>
+                            </div>
+
+                            <div class="jurusan-dropdown">
+                                <input type="text" id="searchJurusanSelect" placeholder="Cari jurusan..."
+                                    autocomplete="off">
+
+                                <div class="jurusan-options" id="jurusanOptions">
+                                    @foreach ($departments as $department)
+                                        <label class="jurusan-option">
+                                            <input type="checkbox" name="departments[]" value="{{ $department->id }}"
+                                                data-name="{{ $department->name }}">
+                                            <span>{{ $department->name }}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="master-data-modal-actions">
+                    <button type="button" id="btnBatalMatakuliah">
+                        Batal
+                    </button>
+
+                    <button type="submit" id="btnSimpanMatakuliah">
+                        Simpan
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+
+    {{-- Modal Hapus Mata Kuliah --}}
+    <div class="master-data-modal" id="modalHapusMatakuliah">
+        <div class="master-data-modal-content modal-delete-content">
+
+            <div class="delete-icon">
+                <iconify-icon icon="lucide:trash-2"></iconify-icon>
+            </div>
+
+            <div class="delete-heading">
+                <p>Apakah kamu yakin ingin menghapus mata kuliah ini?</p>
+            </div>
+
+            <div class="delete-info">
+                <strong id="namaMatakuliahHapus"></strong>
+            </div>
+
+            <p class="delete-warning">
+                Data mata kuliah akan dihapus dan tindakan ini tidak dapat dibatalkan.
+            </p>
+
+            <div class="master-data-modal-actions">
+                <button type="button" id="btnBatalHapusMatakuliah">
+                    Batal
+                </button>
+
+                <form id="formHapusMatakuliah" method="POST">
+                    @csrf
+                    @method('DELETE')
+
+                    <button type="submit" id="btnKonfirmasiHapusMatakuliah">
                         Ya, Hapus
                     </button>
                 </form>

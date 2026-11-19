@@ -1,4 +1,6 @@
-/*    MASTER DATA PAGE  */
+/* =========================================
+   MASTER DATA PAGE
+========================================= */
 
 .master-data-page {
     width: 100%;
@@ -9,37 +11,41 @@
 }
 
 .master-data-page .page-heading h1 {
+    margin-bottom: 7px;
+    color: #17203c;
     font-size: 26px;
     font-weight: 700;
-    color: #17203c;
-    margin-bottom: 7px;
 }
 
 .master-data-page .page-heading p {
-    font-size: 14px;
     color: #7b829b;
+    font-size: 14px;
 }
 
-/*   TAB NAVIGATION  */
+
+/* =========================================
+   TAB NAVIGATION
+========================================= */
 
 .master-data-tabs {
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 8px;
-    background: #ffffff;
-    border-radius: 12px;
     margin-bottom: 24px;
+    background: #ffffff;
     border: 1px solid #e8eaf2;
+    border-radius: 12px;
 }
 
 .master-data-tabs a {
     padding: 11px 20px;
     border-radius: 8px;
-    text-decoration: none;
+    color: #7b829b;
     font-size: 14px;
     font-weight: 600;
-    color: #7b829b;
+    text-decoration: none;
+    white-space: nowrap;
     transition: 0.2s ease;
 }
 
@@ -53,13 +59,16 @@
     color: #ffffff;
 }
 
-/*  CONTENT  */
+
+/* =========================================
+   MASTER DATA CONTENT
+========================================= */
 
 .master-data-content {
+    padding: 25px;
     background: #ffffff;
     border: 1px solid #e8eaf2;
     border-radius: 14px;
-    padding: 25px;
 }
 
 .master-data-heading {
@@ -67,23 +76,26 @@
 }
 
 .master-data-heading h2 {
+    margin-bottom: 6px;
+    color: #17203c;
     font-size: 19px;
     font-weight: 700;
-    color: #17203c;
-    margin-bottom: 6px;
 }
 
 .master-data-heading p {
-    font-size: 13px;
     color: #858ba2;
+    font-size: 13px;
 }
 
-/* TOOLBAR  */
+
+/* =========================================
+   TOOLBAR & SEARCH
+========================================= */
 
 .master-data-toolbar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     gap: 15px;
     margin-bottom: 22px;
 }
@@ -99,8 +111,9 @@
     border: 1px solid #e1e4ef;
     border-radius: 9px;
     outline: none;
-    font-size: 13px;
     color: #17203c;
+    font-size: 13px;
+    box-sizing: border-box;
     transition: 0.2s ease;
 }
 
@@ -111,10 +124,10 @@
 
 .master-data-toolbar>button {
     padding: 11px 18px;
-    background: #f59e0b;
-    color: #ffffff;
     border: none;
     border-radius: 9px;
+    background: #f59e0b;
+    color: #ffffff;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
@@ -125,7 +138,10 @@
     background: #e58c00;
 }
 
-/*  TABLE  */
+
+/* =========================================
+   MASTER DATA TABLE
+========================================= */
 
 .master-data-table-wrapper {
     width: 100%;
@@ -134,8 +150,8 @@
 
 .master-data-table {
     width: 100%;
-    border-collapse: collapse;
     min-width: 600px;
+    border-collapse: collapse;
 }
 
 .master-data-table thead {
@@ -144,18 +160,18 @@
 
 .master-data-table th {
     padding: 14px 16px;
-    text-align: left;
+    border-bottom: 1px solid #e8eaf2;
+    color: #747c96;
     font-size: 12px;
     font-weight: 700;
-    color: #747c96;
-    border-bottom: 1px solid #e8eaf2;
+    text-align: left;
 }
 
 .master-data-table td {
     padding: 15px 16px;
-    font-size: 13px;
-    color: #424a63;
     border-bottom: 1px solid #eef0f5;
+    color: #424a63;
+    font-size: 13px;
 }
 
 .master-data-table tbody tr:hover {
@@ -166,61 +182,97 @@
     border-bottom: none;
 }
 
-/* DEPARTMENT BADGE  */
+.master-data-table td button {
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+td.btn-action {
+    padding: 12px 16px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+td.btn-action button:not(:last-child) {
+    margin-right: 8px;
+}
+
+
+/* =========================================
+   DEPARTMENT BADGE
+========================================= */
 
 .department-badge {
     display: inline-block;
     padding: 5px 10px;
     margin: 2px 3px 2px 0;
+    border-radius: 20px;
     background: #fff4df;
     color: #b77908;
-    border-radius: 20px;
     font-size: 11px;
     font-weight: 600;
     white-space: nowrap;
 }
 
-/*  RESPONSIVE  */
 
-@media (max-width: 768px) {
-    .master-data-content {
-        padding: 18px;
-    }
+/* =========================================
+   TABLE ACTION BUTTONS
+========================================= */
 
-    .master-data-tabs {
-        overflow-x: auto;
-    }
+/* Tombol Edit */
 
-    .master-data-tabs a {
-        white-space: nowrap;
-        padding: 10px 14px;
-    }
+.btn-edit-jurusan,
+.btn-edit-matakuliah {
+    padding: 7px 13px;
+    border: none;
+    border-radius: 7px;
+    background: #eef2ff;
+    color: #4f62e6;
+    font-size: 12px;
+    font-weight: 600;
+}
 
-    .master-data-toolbar {
-        align-items: stretch;
-        flex-direction: column;
-    }
+.btn-edit-jurusan:hover,
+.btn-edit-matakuliah:hover {
+    background: #dfe5ff;
+}
 
-    .search-box {
-        width: 100%;
-    }
+/* Tombol Hapus */
 
-    .master-data-toolbar>button {
-        width: 100%;
-    }
+.btn-hapus-jurusan,
+.btn-hapus-matakuliah {
+    padding: 7px 13px;
+    border: none;
+    border-radius: 7px;
+    background: #fee2e2;
+    color: #dc2626;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.btn-hapus-jurusan:hover,
+.btn-hapus-matakuliah:hover {
+    background: #fecaca;
 }
 
 
-/*  MODAL MASTER DATA  */
+/* =========================================
+   MODAL MASTER DATA
+========================================= */
 
 .master-data-modal {
     display: none;
     position: fixed;
     inset: 0;
     z-index: 9999;
+
     align-items: center;
     justify-content: center;
+
     padding: 20px;
+    overflow-y: auto;
+    box-sizing: border-box;
+
     background: rgba(13, 18, 43, 0.5);
 }
 
@@ -228,21 +280,40 @@
     display: flex;
 }
 
+/* Kontainer modal */
+
 .master-data-modal-content {
+    display: flex;
+    flex-direction: column;
+
     width: 100%;
     max-width: 480px;
-    padding: 25px;
-    background: #fff;
+    max-height: calc(100vh - 40px);
+    max-height: calc(100dvh - 40px);
+
+    padding: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+
+    background: #ffffff;
     border-radius: 16px;
     box-shadow: 0 15px 45px rgba(13, 18, 43, 0.15);
+
     animation: modalFadeIn 0.2s ease;
 }
 
+/* Header modal */
+
 .master-data-modal-header {
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 25px;
+
+    padding: 25px 25px 15px;
+    margin-bottom: 0;
+
+    background: #ffffff;
 }
 
 .master-data-modal-header h2 {
@@ -253,6 +324,7 @@
 }
 
 .master-data-modal-header button {
+    padding: 0;
     border: none;
     background: transparent;
     color: #858ba2;
@@ -263,6 +335,53 @@
 .master-data-modal-header button:hover {
     color: #17203c;
 }
+
+/* Form di dalam modal */
+
+.master-data-modal-content>form {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* Bagian isi modal yang bisa di-scroll */
+
+.master-data-modal-body {
+    flex: 1;
+    min-height: 0;
+
+    padding: 10px 25px 20px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+}
+
+/* Scrollbar isi modal */
+
+.master-data-modal-body::-webkit-scrollbar {
+    width: 5px;
+}
+
+.master-data-modal-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.master-data-modal-body::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 10px;
+}
+
+.master-data-modal-body::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+
+/* =========================================
+   FORM INPUT
+========================================= */
 
 .form-group {
     margin-bottom: 20px;
@@ -282,8 +401,11 @@
     border: 1px solid #e1e4ef;
     border-radius: 9px;
     outline: none;
+
     color: #17203c;
     font-size: 13px;
+
+    box-sizing: border-box;
     transition: 0.2s ease;
 }
 
@@ -296,40 +418,438 @@
     color: #a5aabd;
 }
 
+
+/* =========================================
+   FORM VALIDATION
+========================================= */
+
+.required {
+    margin-left: 3px;
+    color: #ef4444;
+    font-weight: 700;
+}
+
+.form-group input.is-invalid {
+    border-color: #ef4444;
+    background-color: #fffafa;
+}
+
+.form-group input.is-invalid:focus {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.error-message {
+    display: block;
+    margin-top: 7px;
+    color: #ef4444;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   MODAL ACTION BUTTONS
+========================================= */
+
 .master-data-modal-actions {
     display: flex;
+    flex-shrink: 0;
+    align-items: center;
     justify-content: flex-end;
     gap: 10px;
-    margin-top: 28px;
+
+    padding: 15px 25px 25px;
+    margin-top: 0;
+
+    border-top: 1px solid #e8eaf2;
+    background: #ffffff;
 }
 
 .master-data-modal-actions button {
     padding: 11px 20px;
     border: none;
     border-radius: 9px;
+
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     transition: 0.2s ease;
 }
 
-#btnBatalJurusan {
+/* Tombol Batal */
+
+#btnBatalJurusan,
+#btnBatalMatakuliah {
     background: #f1f2f7;
     color: #747c96;
 }
 
-#btnBatalJurusan:hover {
+#btnBatalJurusan:hover,
+#btnBatalMatakuliah:hover {
     background: #e5e7ef;
 }
 
-#btnSimpanJurusan {
+/* Tombol Simpan */
+
+#btnSimpanJurusan,
+#btnSimpanMatakuliah {
     background: #f59e0b;
-    color: #fff;
+    color: #ffffff;
 }
 
-#btnSimpanJurusan:hover {
+#btnSimpanJurusan:hover,
+#btnSimpanMatakuliah:hover {
     background: #e58c00;
 }
+
+
+
+/* =========================================
+   MODAL DELETE CONFIRMATION
+========================================= */
+
+.modal-delete-content {
+    max-width: 420px;
+    padding: 25px;
+    text-align: center;
+}
+
+/* Ikon hapus */
+
+.delete-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 18px;
+
+    border-radius: 50%;
+    background: #fee2e2;
+    color: #dc2626;
+    font-size: 27px;
+}
+
+.delete-icon .iconify {
+    width: 27px;
+    height: 27px;
+}
+
+/* Judul dan deskripsi */
+
+.delete-heading p {
+    margin: 0;
+    color: #17203c;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+/* Informasi data yang dihapus */
+
+.delete-info {
+    padding: 13px;
+    margin: 20px 0 12px;
+
+    border: 1px solid #e8eaf2;
+    border-radius: 9px;
+    background: #f7f8fc;
+
+    color: #17203c;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+/* Peringatan */
+
+.delete-warning {
+    margin: 0 0 22px;
+    color: #dc2626;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* Area tombol */
+
+.modal-delete-content .master-data-modal-actions {
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 15px 0 0;
+    margin: 0;
+
+    border-top: 1px solid #e8eaf2;
+}
+
+/* Form hapus */
+
+.modal-delete-content .master-data-modal-actions form {
+    display: flex;
+    margin: 0;
+}
+
+/* Semua tombol modal hapus */
+
+.modal-delete-content .master-data-modal-actions button {
+    width: auto;
+    padding: 11px 20px;
+
+    border: none;
+    border-radius: 9px;
+
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* Tombol Batal */
+
+#btnBatalHapusJurusan,
+#btnBatalHapusMatakuliah {
+    background: #f1f2f7;
+    color: #747c96;
+}
+
+#btnBatalHapusJurusan:hover,
+#btnBatalHapusMatakuliah:hover {
+    background: #e5e7ef;
+}
+
+/* Tombol Ya, Hapus */
+
+#btnKonfirmasiHapusJurusan,
+#btnKonfirmasiHapusMatakuliah {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+#btnKonfirmasiHapusJurusan:hover,
+#btnKonfirmasiHapusMatakuliah:hover {
+    background: #b91c1c;
+}
+
+/* Responsive modal hapus */
+
+@media (max-width: 480px) {
+    .modal-delete-content .master-data-modal-actions {
+        flex-direction: row;
+    }
+
+    .modal-delete-content .master-data-modal-actions button {
+        width: 100%;
+    }
+
+    .modal-delete-content .master-data-modal-actions form {
+        flex: 1;
+    }
+
+    .modal-delete-content .master-data-modal-actions>button {
+        flex: 1;
+    }
+}
+
+/* =========================================
+   SEARCHABLE MULTI SELECT JURUSAN
+========================================= */
+
+.jurusan-multiselect {
+    position: relative;
+    width: 100%;
+}
+
+/* Area jurusan yang dipilih */
+
+.jurusan-selected {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+
+    min-height: 46px;
+    padding: 8px 12px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #ffffff;
+
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.jurusan-selected:hover {
+    border-color: #9ca3af;
+}
+
+.jurusan-selected .placeholder {
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+/* Chip jurusan */
+
+.jurusan-selected .jurusan-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 5px 9px;
+    border-radius: 6px;
+
+    background: #eef1fb;
+    color: #374151;
+    font-size: 12px;
+}
+
+.jurusan-chip button {
+    padding: 0;
+    border: none;
+    background: none;
+    color: #6b7280;
+
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.jurusan-chip button:hover {
+    color: #ef4444;
+}
+
+/* Dropdown jurusan
+   Menggunakan normal flow agar tidak terpotong
+   oleh area scroll modal.
+*/
+
+.jurusan-dropdown {
+    display: none;
+    position: relative;
+
+    width: 100%;
+    max-height: 230px;
+    padding: 10px;
+    margin-top: 6px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.jurusan-multiselect.active .jurusan-dropdown {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Kolom pencarian jurusan */
+
+.jurusan-dropdown>input {
+    flex-shrink: 0;
+
+    width: 100%;
+    padding: 9px 10px;
+    margin-bottom: 8px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    outline: none;
+
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.jurusan-dropdown>input:focus {
+    border-color: #f59e0b;
+}
+
+/* Daftar pilihan jurusan */
+
+.jurusan-options {
+    flex: 1;
+    min-height: 0;
+    max-height: 170px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+}
+
+/* Setiap pilihan */
+
+.jurusan-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px;
+    border-radius: 7px;
+
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.jurusan-option input {
+    display: none;
+}
+
+.jurusan-option:hover {
+    background: #f3f4f6;
+}
+
+/* Jurusan yang dipilih */
+
+.jurusan-option.selected {
+    background: #eef1fb;
+    color: #374151;
+    font-weight: 600;
+}
+
+.jurusan-option.selected::after {
+    content: "✓";
+    color: #f59e0b;
+    font-weight: 700;
+}
+
+/* Hasil pencarian yang tidak cocok */
+
+.jurusan-option.hidden {
+    display: none;
+}
+
+/* Scrollbar daftar jurusan */
+
+.jurusan-options::-webkit-scrollbar {
+    width: 5px;
+}
+
+.jurusan-options::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.jurusan-options::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #d1d5db;
+}
+
+.jurusan-options::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+
+/* =========================================
+   ANIMATION
+========================================= */
 
 @keyframes modalFadeIn {
     from {
@@ -343,190 +863,83 @@
     }
 }
 
-@media (max-width: 480px) {
-    .master-data-modal-content {
-        padding: 20px;
+
+/* =========================================
+   RESPONSIVE - TABLET
+========================================= */
+
+@media (max-width: 768px) {
+    .master-data-content {
+        padding: 18px;
     }
 
-    .master-data-modal-actions {
-        flex-direction: column-reverse;
+    .master-data-tabs {
+        overflow-x: auto;
     }
 
-    .master-data-modal-actions button {
+    .master-data-tabs a {
+        padding: 10px 14px;
+    }
+
+    .master-data-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .master-data-toolbar>button {
         width: 100%;
     }
 }
 
 
-/* FORM VALIDATION */
+/* =========================================
+   RESPONSIVE - MOBILE
+========================================= */
 
-.required {
-    color: #ef4444;
-    margin-left: 3px;
-    font-weight: 700;
-}
+@media (max-width: 480px) {
+    .master-data-modal {
+        align-items: center;
+        padding: 12px;
+    }
 
-/* Input ketika validasi gagal */
-.form-group input.is-invalid {
-    border-color: #ef4444;
-    background-color: #fffafa;
-}
+    .master-data-modal-content {
+        max-width: 100%;
+        max-height: calc(100vh - 24px);
+        max-height: calc(100dvh - 24px);
 
-.form-group input.is-invalid:focus {
-    border-color: #ef4444;
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-}
+        border-radius: 12px;
+    }
 
-/* Pesan error */
-.error-message {
-    display: block;
-    margin-top: 7px;
-    color: #ef4444;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 1.5;
-}
+    .master-data-modal-header {
+        padding: 20px 20px 12px;
+    }
 
-td.btn-action {
-    vertical-align: middle;
-    padding: 12px 16px;
-    white-space: nowrap;
-}
+    .master-data-modal-header h2 {
+        font-size: 17px;
+    }
 
-td.btn-action button:not(:last-child) {
-    margin-right: 8px;
-}
+    .master-data-modal-body {
+        padding: 10px 20px 20px;
+    }
 
+    .master-data-modal-actions {
+        flex-direction: column-reverse;
+        padding: 15px 20px 20px;
+    }
 
-/* Tombol aksi tabel */
-.master-data-table td button {
-    cursor: pointer;
-    transition: 0.2s ease;
-}
+    .master-data-modal-actions button {
+        width: 100%;
+    }
 
-.btn-edit-jurusan {
-    padding: 7px 13px;
-    border: none;
-    border-radius: 7px;
-    background: #eef2ff;
-    color: #4f62e6;
-    font-size: 12px;
-    font-weight: 600;
-}
+    .jurusan-dropdown {
+        max-height: 210px;
+    }
 
-.btn-edit-jurusan:hover {
-    background: #dfe5ff;
-}
-
-.btn-hapus-jurusan {
-    padding: 7px 13px;
-    border: none;
-    border-radius: 7px;
-    background: #fee2e2;
-    color: #dc2626;
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.btn-hapus-jurusan:hover {
-    background: #fecaca;
-}
-
-
-/* MODAL KONFIRMASI HAPUS */
-
-.modal-delete-content {
-    max-width: 420px;
-    text-align: center;
-}
-
-.delete-icon {
-    width: 58px;
-    height: 58px;
-    margin: 0 auto 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fee2e2;
-    color: #dc2626;
-    border-radius: 50%;
-    font-size: 27px;
-}
-
-.delete-icon .iconify {
-    width: 27px;
-    height: 27px;
-}
-
-.delete-heading h2 {
-    margin-bottom: 8px;
-    color: #17203c;
-    font-size: 20px;
-    font-weight: 700;
-}
-
-.delete-heading p {
-    color: #858ba2;
-    font-size: 13px;
-    line-height: 1.6;
-}
-
-.delete-info {
-    margin: 20px 0 12px;
-    padding: 13px;
-    background: #f7f8fc;
-    border: 1px solid #e8eaf2;
-    border-radius: 9px;
-    color: #17203c;
-    font-size: 14px;
-}
-
-.delete-warning {
-    margin-bottom: 25px;
-    color: #dc2626;
-    font-size: 12px;
-    line-height: 1.6;
-}
-
-.modal-delete-content .master-data-modal-actions {
-    justify-content: center;
-}
-
-#btnBatalHapusJurusan {
-    background: #f1f2f7;
-    color: #747c96;
-}
-
-#btnBatalHapusJurusan:hover {
-    background: #e5e7ef;
-}
-
-#btnKonfirmasiHapusJurusan {
-    padding: 11px 20px;
-    border: none;
-    border-radius: 9px;
-    background: #dc2626;
-    color: #fff;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
-
-#btnKonfirmasiHapusJurusan:hover {
-    background: #b91c1c;
-}
-
-#btnBatalHapusJurusan {
-    padding: 11px 20px;
-    border: none;
-    border-radius: 9px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
-
-.modal-delete-content .master-data-modal-actions form {
-    margin: 0;
+    .jurusan-options {
+        max-height: 150px;
+    }
 }

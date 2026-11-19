@@ -22,7 +22,7 @@
 
     <div class="admin-header-right">
 
-        <a href="#" class="admin-profile-link">
+        <a href="{{ route('admin.profil') }}" class="admin-profile-link">
             <div class="admin-profile">
 
                 <div class="admin-profile-info">

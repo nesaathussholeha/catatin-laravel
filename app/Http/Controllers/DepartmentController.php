@@ -10,12 +10,18 @@ class DepartmentController extends Controller
 {
     public function index(Request $request)
     {
-        $departments = Department::latest()->get();
+        $departments = Department::with('courses')->latest()->get();
+
+        $courses = \App\Models\Course::with('departments')->latest()->get();
+
+        $categories = \App\Models\Category::latest()->get();
 
         $activeTab = $request->query('tab', 'jurusan');
 
         return view('admin.master-data.index', compact(
             'departments',
+            'courses',
+            'categories',
             'activeTab'
         ));
     }
