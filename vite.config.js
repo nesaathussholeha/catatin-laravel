@@ -39,6 +39,9 @@ export default defineConfig({
                 'resources/css/tugas.css',
                 'resources/js/tugas.js',
 
+                'resources/css/kelola-catatan.css',
+                'resources/js/kelola-catatan.js',
+
             ],
 
             refresh: true,

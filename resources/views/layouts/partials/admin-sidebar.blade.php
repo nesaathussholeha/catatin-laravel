@@ -25,11 +25,11 @@
             <span>Dashboard</span>
         </a>
 
-        <a href="#" class="admin-nav-link">
-            <iconify-icon icon="lucide:book-copy"></iconify-icon>
-            <span>Kelola Catatan</span>
-        </a>
-
+        <a href="{{ route('admin.kelola-catatan.index') }}"
+            class="admin-nav-link {{ request()->routeIs('admin.kelola-catatan.*') ? 'active' : '' }}">
+    <iconify-icon icon="lucide:book-copy"></iconify-icon>
+    <span>Kelola Catatan</span>
+</a>
         <a href="#" class="admin-nav-link">
             <iconify-icon icon="lucide:users"></iconify-icon>
             <span>Kelola Pengguna</span>

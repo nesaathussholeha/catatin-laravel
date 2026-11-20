@@ -12,6 +12,7 @@ use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CatatanController;
+use App\Http\Controllers\AdminCatatanController;
 
 // ========================================
 // AUTHENTICATION (GUEST)
@@ -126,6 +127,30 @@ Route::prefix('admin')
         Route::get('/profil', [AdminProfileController::class, 'edit'])->name('profil');
         Route::put('/profil', [AdminProfileController::class, 'updateProfil'])->name('profil.update');
         Route::put('/profil/password', [AdminProfileController::class, 'updatePassword'])->name('profil.password');
+
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
+        ->name('dashboard');
+
+        
+// ========================================
+// KELOLA CATATAN
+// ========================================
+
+Route::get('/kelola-catatan', [AdminCatatanController::class, 'index'])
+    ->name('kelola-catatan.index');
+
+Route::post('/kelola-catatan', [AdminCatatanController::class, 'store'])
+    ->name('kelola-catatan.store');
+
+Route::put('/kelola-catatan/{catatan}', [AdminCatatanController::class, 'update'])
+    ->name('kelola-catatan.update');
+
+Route::patch('/kelola-catatan/{catatan}/status', [AdminCatatanController::class, 'updateStatus'])
+    ->name('kelola-catatan.status');
+
+Route::delete('/kelola-catatan/{catatan}', [AdminCatatanController::class, 'destroy'])
+    ->name('kelola-catatan.destroy');
+
     });
 
 
