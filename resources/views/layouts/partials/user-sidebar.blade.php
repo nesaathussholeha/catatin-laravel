@@ -27,12 +27,14 @@
                 <span>Dashboard</span>
             </a>
 
-            <a href="#" class="nav-link">
+            <a href="{{ route('catatan.create') }}"
+                class="nav-link {{ request()->routeIs('catatan.create') ? 'active' : '' }}">
                 <iconify-icon icon="reicon:document-upload"></iconify-icon>
                 <span>Unggah Catatan</span>
             </a>
 
-            <a href="#" class="nav-link">
+            <a href="{{ route('catatan.index') }}"
+                class="nav-link {{ request()->routeIs('catatan.index', 'catatan.edit') ? 'active' : '' }}">
                 <iconify-icon icon="hugeicons:note"></iconify-icon>
                 <span>Catatan Saya</span>
             </a>

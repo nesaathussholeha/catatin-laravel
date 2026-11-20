@@ -153,4 +153,21 @@ function initDashboard() {
 
 document.addEventListener('DOMContentLoaded', initDashboard);
 
+(function () {
+    const modal = document.getElementById('pdModal');
+    if (!modal) return;
 
+    const tutup = () => { modal.hidden = true; };
+
+    document.querySelectorAll('.pd-tambah').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            document.getElementById('pdCatatanId').value = btn.dataset.noteId;
+            document.getElementById('pdJudul').textContent = btn.dataset.noteTitle;
+            modal.hidden = false;
+        });
+    });
+
+    document.getElementById('pdBatal')?.addEventListener('click', tutup);
+    modal.addEventListener('click', (e) => { if (e.target === modal) tutup(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') tutup(); });
+})();

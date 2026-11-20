@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Playlist extends Model
 {
@@ -12,5 +13,9 @@ class Playlist extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+    public function catatans(): BelongsToMany
+    {
+    return $this->belongsToMany(Catatan::class)->withTimestamps();
     }
 }

@@ -57,6 +57,10 @@ Route::middleware(['auth', 'role:student'])->group(function () {
         return view('user.profile');
     })->name('user.profile');
 
+    Route::post('/koleksi-catatan', [PlaylistController::class, 'attach'])->name('user.playlists.attach');
+    Route::delete('/koleksi/{playlist}/catatan/{catatan}', [PlaylistController::class, 'detach'])
+        ->whereNumber('catatan')->name('user.playlists.detach');
+
     Route::get('/koleksi', [PlaylistController::class, 'index'])
         ->name('user.playlists.index');
 

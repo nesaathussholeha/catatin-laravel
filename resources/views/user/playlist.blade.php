@@ -38,8 +38,7 @@
                 <a class="pl-folder-link"
                    href="{{ route('user.playlists.index', ['playlist' => $p->id]) }}">
                     <strong>{{ $p->name }}</strong>
-                    {{-- Jumlah asli menyusul setelah tabel Catatan ada --}}
-                    <span>0 catatan</span>
+                    <span>{{ $p->catatans_count }} catatan</span>
                 </a>
 
                 <div class="pl-menu">
@@ -100,11 +99,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- NANTI diganti @forelse catatan asli setelah tabel Catatan ada --}}
-                        <tr>
-                            <td colspan="3" class="pl-kosong">Belum ada catatan di folder ini.</td>
-                        </tr>
-                    </tbody>
+    @forelse ($isiFolder as $catatan)
+        <tr>
+            <td>{{ $catatan->judul }}</td>
+            <td>{{ $catatan->jurusan }}</td>
+            <td class="pl-aksi">
+    <form method="POST"
+          action="{{ route('user.playlists.detach', [$aktif, $catatan]) }}"
+          class="pl-detach-form" data-judul="{{ $catatan->judul }}">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="pl-btn-keluar">
+            <iconify-icon icon="lucide:folder-minus"></iconify-icon>
+            <span>Keluarkan</span>
+        </button>
+    </form>
+</td>
+        </tr>
+    @empty
+        <tr>
+            <td colspan="3" class="pl-kosong">Belum ada catatan di folder ini.</td>
+        </tr>
+    @endforelse
+</tbody>
                 </table>
             </div>
 
@@ -191,6 +208,19 @@
         <div class="pl-modal-actions">
             <button type="button" class="pl-btn-light" id="plConfirmBatal">Batal</button>
             <button type="button" class="pl-btn pl-btn-danger" id="plConfirmYa">Ya, Hapus</button>
+        </div>
+    </div>
+</div>
+
+<div class="pl-dm" id="plDetachModal" hidden>
+    <div class="pl-dm-box" role="dialog" aria-modal="true">
+        <div class="pl-dm-ikon"><iconify-icon icon="lucide:folder-minus"></iconify-icon></div>
+        <h3>Keluarkan dari folder?</h3>
+        <p><strong id="plDetachNama"></strong> akan dikeluarkan dari folder ini.
+           Catatan aslinya <em>tidak</em> dihapus.</p>
+        <div class="pl-dm-aksi">
+            <button type="button" class="pl-dm-batal" id="plDetachBatal">Batal</button>
+            <button type="button" class="pl-dm-ya" id="plDetachYa">Ya, keluarkan</button>
         </div>
     </div>
 </div>

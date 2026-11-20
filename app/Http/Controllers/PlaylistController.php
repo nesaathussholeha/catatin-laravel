@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Catatan;
 use App\Models\Playlist;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -11,15 +12,18 @@ class PlaylistController extends Controller
     public function index(Request $request)
     {
         $playlists = Playlist::where('user_id', auth()->id())
+            ->withCount(['catatans' => fn ($q) => $this->dapatDilihat($q)])
             ->latest()
             ->get();
 
-        // Folder yang sedang dibuka: diambil dari daftar milik sendiri,
-        // jadi ?playlist=ID milik orang lain otomatis diabaikan.
         $aktif = $playlists->firstWhere('id', (int) $request->query('playlist'))
             ?? $playlists->first();
 
-        return view('user.playlist', compact('playlists', 'aktif'));
+        $isiFolder = $aktif
+            ? $this->dapatDilihat($aktif->catatans())->orderByPivot('created_at', 'desc')->get()
+            : collect();
+
+        return view('user.playlist', compact('playlists', 'aktif', 'isiFolder'));
     }
 
     public function store(Request $request)
@@ -61,6 +65,58 @@ class PlaylistController extends Controller
 
         return redirect()->route('user.playlists.index')
             ->with('success', 'Folder berhasil dihapus.');
+    }
+
+    // Simpan catatan ke folder (dipanggil dari Dashboard)
+    public function attach(Request $request)
+    {
+        $data = $request->validate([
+            'playlist_id' => ['required', 'integer', 'exists:playlists,id'],
+            'catatan_id'  => ['required', 'integer', 'exists:catatans,id'],
+        ], [
+            'playlist_id.required' => 'Pilih folder terlebih dahulu.',
+            'playlist_id.exists'   => 'Folder tidak ditemukan.',
+            'catatan_id.exists'    => 'Catatan tidak ditemukan.',
+        ]);
+
+        $playlist = Playlist::findOrFail($data['playlist_id']);
+        abort_if($playlist->user_id !== auth()->id(), 403);
+
+        $catatan = Catatan::findOrFail($data['catatan_id']);
+        abort_unless(
+            $catatan->user_id === auth()->id()
+                || ($catatan->status === 'Terbit' && $catatan->visibilitas === 'publik'),
+            403
+        );
+
+        if ($playlist->catatans()->whereKey($catatan->id)->exists()) {
+            return back()->with('error', 'Catatan sudah ada di folder "' . $playlist->name . '".');
+        }
+
+        $playlist->catatans()->attach($catatan->id);
+
+        return back()->with('success', 'Catatan disimpan ke folder "' . $playlist->name . '".');
+    }
+
+    // Keluarkan catatan dari folder (catatan asli tidak dihapus)
+    public function detach(Playlist $playlist, Catatan $catatan)
+    {
+        abort_if($playlist->user_id !== auth()->id(), 403);
+
+        $playlist->catatans()->detach($catatan->id);
+
+        return redirect()
+            ->route('user.playlists.index', ['playlist' => $playlist->id])
+            ->with('success', 'Catatan dikeluarkan dari folder.');
+    }
+
+    // Catatan yang boleh dilihat pemilik folder: miliknya sendiri atau publik+terbit
+    private function dapatDilihat($query)
+    {
+        return $query->where(function ($w) {
+            $w->where('catatans.user_id', auth()->id())
+              ->orWhere(fn ($x) => $x->publik());
+        });
     }
 
     private function rules(?Playlist $playlist = null): array

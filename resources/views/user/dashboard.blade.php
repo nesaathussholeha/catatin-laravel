@@ -11,8 +11,23 @@
 @endpush
 
 @section('content')
-    <div class="dashboard-user">
-        <div class="sapaan">
+
+    {{-- Notifikasi --}}
+    @php
+        $pesanToast = session('success') ?? session('error') ?? ($errors->any() ? $errors->first() : null);
+        $toastError = ! session('success');
+    @endphp
+    @if ($pesanToast)
+        <div class="toast-notification {{ $toastError ? 'toast-error' : 'toast-success' }}" id="toastNotification">
+            <iconify-icon icon="{{ $toastError ? 'lucide:alert-circle' : 'lucide:check-circle' }}"></iconify-icon>
+            <span>{{ $pesanToast }}</span>
+            <button type="button" class="toast-close" id="btnTutupToast">&times;</button>
+        </div>
+    @endif
+
+<div class="dashboard-user">
+
+    <div class="sapaan">
         <h2>Halo, {{ auth()->user()->name }}! 👋</h2>
         <p>Temukan catatan kuliah yang kamu butuhkan hari ini.</p>
     </div>
@@ -64,22 +79,57 @@
                 <p class="meta">oleh {{ $n->penulis }} · {{ $n->tipe }}</p>
 
                 <div class="kartu-bawah">
-                    <button type="button" class="upvote" data-dasar="{{ (int) $n->upvote }}" aria-pressed="false">
+                    <button type="button" class="upvote" data-dasar="{{ $n->upvote }}" aria-pressed="false">
                         <span aria-hidden="true">▲</span>
-                        <span class="jumlah">{{ (int) $n->upvote }}</span> upvote
+                        <span class="jumlah">{{ $n->upvote }}</span> upvote
                     </button>
 
-                    <a class="detail" href="#">Lihat detail</a>
+                    <button type="button" class="pd-tambah"
+                            data-note-id="{{ $n->id }}" data-note-title="{{ $n->judul }}">
+                        + Playlist
+                    </button>
+
+                    <a class="detail" href="{{ $n->tautan }}" target="_blank" rel="noopener noreferrer">Lihat detail</a>
                 </div>
             </article>
         @endforeach
     </div>
 
-    <div class="kosong" id="kosong" hidden>
+    <div class="kosong" id="kosong" @if ($notes->isNotEmpty()) hidden @endif>
         <p><strong>Tidak ada catatan yang cocok.</strong></p>
         <p>Coba kata kunci lain atau ubah filter.</p>
         <button type="button" class="tombol" id="reset">Reset pencarian</button>
     </div>
 
+</div>
+
+{{-- Modal: simpan ke playlist --}}
+<div class="pd-modal" id="pdModal" hidden>
+    <form method="POST" action="{{ route('user.playlists.attach') }}" class="pd-box">
+        @csrf
+        <input type="hidden" name="catatan_id" id="pdCatatanId">
+
+        <h3>Simpan ke Playlist</h3>
+        <p class="pd-judul" id="pdJudul"></p>
+
+        @if ($playlists->isEmpty())
+            <p class="pd-info">Kamu belum punya folder.
+                <a href="{{ route('user.playlists.index') }}">Buat di Koleksi</a></p>
+        @else
+            <label for="pdPlaylist">Pilih folder</label>
+            <select name="playlist_id" id="pdPlaylist" required>
+                @foreach ($playlists as $p)
+                    <option value="{{ $p->id }}">{{ $p->name }}</option>
+                @endforeach
+            </select>
+        @endif
+
+        <div class="pd-aksi">
+            <button type="button" id="pdBatal">Batal</button>
+            @if ($playlists->isNotEmpty())
+                <button type="submit" class="pd-simpan">Simpan</button>
+            @endif
+        </div>
+    </form>
 </div>
 @endsection
