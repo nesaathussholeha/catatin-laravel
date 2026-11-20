@@ -222,20 +222,6 @@
 
                     </form>
 
-
-                    <!-- PEMBATAS -->
-                    <div class="divider">
-                        <span>atau masuk dengan</span>
-                    </div>
-
-
-                    <!-- GOOGLE -->
-                    <button type="button" class="btn-google" disabled>
-                        <iconify-icon icon="logos:google-icon"></iconify-icon>
-
-                        Google
-                    </button>
-
                 </div>
 
 
@@ -399,20 +385,6 @@
                         </button>
 
                     </form>
-
-
-                    <!-- PEMBATAS -->
-                    <div class="divider">
-                        <span>atau daftar dengan</span>
-                    </div>
-
-
-                    <!-- GOOGLE -->
-                    <button type="button" class="btn-google" disabled>
-                        <iconify-icon icon="logos:google-icon"></iconify-icon>
-
-                        Google
-                    </button>
 
                 </div>
 
