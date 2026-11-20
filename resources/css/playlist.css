@@ -194,51 +194,72 @@
     background: #fff;
     border: 1px solid #e5e7eb;
     border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(23, 25, 63, .06);
 }
 
 .pl-table {
     width: 100%;
+    min-width: 460px;
     border-collapse: collapse;
+    table-layout: fixed;
     font-size: .9rem;
 }
 
-.pl-table th {
-    padding: 12px 16px;
+.pl-table th:nth-child(2),
+.pl-table td:nth-child(2) {
+    width: 30%;
+}
+
+.pl-table th:nth-child(3),
+.pl-table td:nth-child(3) {
+    width: 120px;
+}
+
+.pl-table thead th {
+    padding: 13px 18px;
+    background: #f8f9fd;
     border-bottom: 1px solid #e5e7eb;
     color: #6b7280;
-    font-size: .8rem;
-    font-weight: 600;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .02em;
     text-align: left;
 }
 
-.pl-table td {
-    padding: 12px 16px;
+.pl-table tbody td {
+    padding: 14px 18px;
     border-bottom: 1px solid #f0f1f6;
+    overflow-wrap: anywhere;
+    vertical-align: middle;
 }
 
-.pl-table tr:last-child td {
+.pl-table tbody tr:last-child td {
     border-bottom: 0;
 }
 
-.pl-aksi-col {
-    width: 1%;
-    white-space: nowrap;
+.pl-table tbody tr:hover td {
+    background: #fafaff;
+}
+
+.pl-table .pl-aksi-col {
     text-align: right;
+    white-space: nowrap;
 }
 
-.pl-keluarkan {
-    border: 0;
-    background: none;
-    color: #dc2626;
-    font: inherit;
-    font-size: .85rem;
-    cursor: pointer;
-}
-
-.pl-kosong {
-    padding: 28px 16px !important;
+.pl-table tbody td.pl-kosong {
+    padding: 36px 18px;
     color: #6b7280;
     text-align: center;
+}
+
+.pl-table tbody tr:hover td.pl-kosong {
+    background: transparent;
+}
+
+.pl-detail-foot {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
 }
 
 .pl-placeholder {
@@ -375,8 +396,24 @@
 
 /* ---------- Responsif ---------- */
 @media (max-width: 900px) {
+    
+    .pl-layout,
+    .pl-sidebar,
+    .pl-detail {
+    max-width: 100%;
+}
     .pl-layout {
-        grid-template-columns: minmax(0, 1fr);
+        display: block;
+    }
+
+    .pl-sidebar {
+        margin-bottom: 24px;
+    }
+
+    .pl-sidebar,
+    .pl-detail {
+        width: 100%;
+        min-width: 0;
     }
 }
 
@@ -386,7 +423,13 @@
         align-items: stretch;
     }
 
+    .pl-detail-foot {
+        display: block;
+    }
+
     .pl-btn-katalog {
+        display: flex;
+        width: 100%;
         justify-content: center;
     }
 

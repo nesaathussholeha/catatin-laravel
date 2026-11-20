@@ -76,7 +76,7 @@
 
     </aside>
 
-    {{-- KANAN: isi folder --}}
+        {{-- KANAN: isi folder --}}
     <section class="pl-detail">
 
         @if ($aktif)
@@ -88,11 +88,6 @@
                         <p class="pl-desc">{{ $aktif->description }}</p>
                     @endif
                 </div>
-
-                <a class="pl-btn-katalog" href="{{ route('user.dashboard') }}">
-                    <iconify-icon icon="lucide:plus-circle"></iconify-icon>
-                    Tambahkan Catatan dari katalog
-                </a>
             </div>
 
             <div class="pl-table-wrap">
@@ -101,35 +96,23 @@
                         <tr>
                             <th>Judul catatan</th>
                             <th>Jurusan</th>
-                            <th class="pl-aksi-col"><span class="sr-only">Aksi</span></th>
+                            <th class="pl-aksi-col">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{--
-                            NANTI, setelah tabel Catatan ada, ganti baris kosong di bawah dengan:
-
-                            @forelse ($catatan as $c)
-                                <tr>
-                                    <td>{{ $c->judul }}</td>
-                                    <td>{{ $c->jurusan }}</td>
-                                    <td class="pl-aksi-col">
-                                        <form method="POST"
-                                              action="{{ route('user.playlists.notes.destroy', [$aktif, $c]) }}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="pl-keluarkan">Keluarkan</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @empty
-                                (baris kosong di bawah)
-                            @endforelse
-                        --}}
+                        {{-- NANTI diganti @forelse catatan asli setelah tabel Catatan ada --}}
                         <tr>
                             <td colspan="3" class="pl-kosong">Belum ada catatan di folder ini.</td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <div class="pl-detail-foot">
+                <a class="pl-btn-katalog" href="{{ route('user.dashboard') }}">
+                    <iconify-icon icon="lucide:plus-circle"></iconify-icon>
+                    Tambahkan Catatan dari katalog
+                </a>
             </div>
 
         @else
@@ -210,4 +193,5 @@
         </div>
     </div>
 </div>
+
 @endsection
