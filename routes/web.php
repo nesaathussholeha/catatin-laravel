@@ -24,11 +24,16 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [RegisterController::class, 'store'])
         ->name('register.store');
 
-    Route::get('/', [LoginController::class, 'create'])
-        ->name('login');
+    Route::get('/login', [LoginController::class, 'create'])
+    ->name('login');
 
-    Route::post('/login', [LoginController::class, 'store'])
-        ->name('login.store');
+Route::post('/login', [LoginController::class, 'store'])
+    ->name('login.store');
+
+// Halaman utama diarahkan ke halaman login
+Route::get('/', function () {
+    return redirect()->route('login');
+});
 });
 
 
