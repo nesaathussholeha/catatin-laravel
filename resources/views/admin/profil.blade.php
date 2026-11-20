@@ -59,20 +59,16 @@
 
     <div class="pa-grid">
 
-        {{-- Informasi Akun --}}
+                {{-- Informasi Akun --}}
         <section class="pa-card pa-panel">
             <h2>Informasi Akun</h2>
-            <p class="pa-hint">Perbarui nama, username, dan email administrator.</p>
-
-            @if (session('success'))
-                <div class="pa-alert" role="status">{{ session('success') }}</div>
-            @endif
+            <p class="pa-hint">Ubah username administrator.</p>
 
             <div class="pa-identity">
                 <div class="pa-avatar">{{ strtoupper(mb_substr($user->name, 0, 1)) }}</div>
                 <div>
                     <strong>{{ $user->name }}</strong>
-                    <small>{{ '@'.($user->username ?? '-') }} &middot; {{ $user->email }}</small>
+                    <small>{{ '@'.($user->username ?? '-') }}</small>
                 </div>
             </div>
 
@@ -81,24 +77,22 @@
                 @method('PUT')
 
                 <div class="pa-field">
-                    <label for="name">Nama Lengkap</label>
-                    <input type="text" id="name" name="name" maxlength="100"
-                           value="{{ old('name', $user->name) }}" required>
-                    @error('name') <p class="pa-err">{{ $message }}</p> @enderror
+                    <label for="nama">Nama Lengkap</label>
+                    <input type="text" id="nama" value="{{ $user->name }}" readonly class="pa-readonly">
+                    <small class="pa-note-kecil">Nama tidak dapat diubah melalui halaman profil.</small>
                 </div>
 
                 <div class="pa-field">
                     <label for="username">Username</label>
-                    <input type="text" id="username" name="username" maxlength="50"
+                    <input type="text" id="username" name="username" maxlength="30"
                            value="{{ old('username', $user->username) }}" required>
+                    <small class="pa-note-kecil">Username dipakai untuk login admin.</small>
                     @error('username') <p class="pa-err">{{ $message }}</p> @enderror
                 </div>
 
                 <div class="pa-field">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" maxlength="100"
-                           value="{{ old('email', $user->email) }}" required>
-                    @error('email') <p class="pa-err">{{ $message }}</p> @enderror
+                    <input type="email" id="email" value="{{ $user->email }}" readonly class="pa-readonly">
                 </div>
 
                 <button type="submit" class="pa-btn">Simpan Perubahan</button>

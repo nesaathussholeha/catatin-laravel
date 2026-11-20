@@ -19,14 +19,11 @@ class AdminProfileController extends Controller
         $user = auth()->user();
 
         $data = $request->validate([
-            'name'     => ['required', 'string', 'min:3', 'max:100'],
-            'username' => ['required', 'string', 'min:3', 'max:50', 'alpha_dash',
-                           Rule::unique('users', 'username')->ignore($user->id)],
-            'email'    => ['required', 'email', 'max:100',
-                           Rule::unique('users', 'email')->ignore($user->id)],
+            'username' => ['required', 'string', 'min:3', 'max:30', 'alpha_dash',
+                        Rule::unique('users', 'username')->ignore($user->id)],
         ], $this->messages());
 
-        $user->forceFill($data)->save();
+        $user->forceFill(['username' => $data['username']])->save();
 
         return redirect()->route('admin.profil')
             ->with('success', 'Profil berhasil diperbarui.');
@@ -58,6 +55,7 @@ class AdminProfileController extends Controller
             'username.required'              => 'Username wajib diisi.',
             'username.min'                   => 'Username minimal 3 karakter.',
             'username.alpha_dash'            => 'Username hanya boleh huruf, angka, strip, dan garis bawah.',
+            'username.max'                   => 'Username maksimal 30 karakter.',
             'username.unique'                => 'Username sudah dipakai.',
             'email.required'                 => 'Email wajib diisi.',
             'email.email'                    => 'Format email tidak valid.',
