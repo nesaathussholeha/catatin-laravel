@@ -12,6 +12,16 @@
 @endpush
 
 @section('content')
+@section('content')
+
+    {{-- Notifikasi --}}
+    @if (session('success') || session('error'))
+        <div class="toast-notification {{ session('success') ? 'toast-success' : 'toast-error' }}" id="toastNotification">
+            <iconify-icon icon="{{ session('success') ? 'lucide:check-circle' : 'lucide:alert-circle' }}"></iconify-icon>
+            <span>{{ session('success') ?? session('error') }}</span>
+            <button type="button" class="toast-close" id="btnTutupToast">&times;</button>
+        </div>
+    @endif
 <div class="profil-admin">
 
     {{-- Kartu ringkasan --}}

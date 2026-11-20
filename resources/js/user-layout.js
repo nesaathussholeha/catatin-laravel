@@ -56,3 +56,16 @@ logoutModal?.addEventListener("click", (e) => {
 confirmLogout?.addEventListener("click", () => {
     logoutForm.submit();
 });
+// Notifikasi toast: tutup manual dan hilang otomatis
+document.addEventListener('DOMContentLoaded', function () {
+    const toast = document.getElementById('toastNotification');
+    if (!toast) return;
+
+    const tutup = () => {
+        toast.classList.add('toast-hide');
+        setTimeout(() => toast.remove(), 300);
+    };
+
+    document.getElementById('btnTutupToast')?.addEventListener('click', tutup);
+    setTimeout(tutup, 4000);
+});

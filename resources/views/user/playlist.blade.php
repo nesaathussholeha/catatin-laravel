@@ -11,7 +11,18 @@
     @vite('resources/js/playlist.js')
 @endpush
 
+
 @section('content')
+
+    {{-- Notifikasi --}}
+    @if (session('success') || session('error'))
+        <div class="toast-notification {{ session('success') ? 'toast-success' : 'toast-error' }}" id="toastNotification">
+            <iconify-icon icon="{{ session('success') ? 'lucide:check-circle' : 'lucide:alert-circle' }}"></iconify-icon>
+            <span>{{ session('success') ?? session('error') }}</span>
+            <button type="button" class="toast-close" id="btnTutupToast">&times;</button>
+        </div>
+    @endif
+
 <div class="pl-page">
 
     <div class="pl-header">
@@ -24,10 +35,6 @@
             + Buat Playlist
         </button>
     </div>
-
-    @if (session('success'))
-        <p class="pl-flash">{{ session('success') }}</p>
-    @endif
 
     @if ($playlists->isEmpty())
 
@@ -45,10 +52,10 @@
                     <div class="pl-footer">
                         {{-- Jumlah catatan menyusul setelah tabel catatan ada --}}
                         <span>0 catatan</span>
-
                         <form method="POST"
-                              action="{{ route('user.playlists.destroy', $p) }}"
-                              onsubmit="return confirm('Hapus playlist ini?')">
+                            action="{{ route('user.playlists.destroy', $p) }}"
+                            class="pl-delete-form"
+                            data-nama="{{ $p->name }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="pl-delete">Hapus</button>
@@ -63,7 +70,7 @@
 
 </div>
 
-<div class="pl-modal" id="plModal" hidden>
+<div class="pl-modal" id="plModal" @unless ($errors->any()) hidden @endunless>
 
     <form method="POST"
           action="{{ route('user.playlists.store') }}"
@@ -87,5 +94,20 @@
         </div>
     </form>
 
+</div>
+
+<div class="pl-modal" id="plConfirm" hidden>
+    <div class="pl-modal-box pl-confirm">
+        <h2>Hapus playlist?</h2>
+        <p>
+            Playlist <strong id="plConfirmNama"></strong> akan dihapus.
+            Catatan di dalamnya tidak ikut terhapus.
+        </p>
+
+        <div class="pl-modal-actions">
+            <button type="button" class="pl-btn-light" id="plConfirmBatal">Batal</button>
+            <button type="button" class="pl-btn pl-btn-danger" id="plConfirmYa">Ya, Hapus</button>
+        </div>
+    </div>
 </div>
 @endsection

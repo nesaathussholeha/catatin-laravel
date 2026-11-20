@@ -40,3 +40,18 @@
 
 .pl-flash { background: #ecfdf5; color: #065f46; padding: 10px 14px; border-radius: 8px; margin-bottom: 16px; font-size: 14px; }
 .pl-error { color: #b91c1c; font-size: 12px; }
+
+.pl-btn-danger {
+    background: #dc2626;
+}
+
+.pl-btn-danger:hover {
+    background: #b91c1c;
+}
+
+.pl-confirm p {
+    margin: 0 0 18px;
+    color: #4b5563;
+    font-size: .92rem;
+    line-height: 1.6;
+}
