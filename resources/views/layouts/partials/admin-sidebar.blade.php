@@ -1,6 +1,5 @@
 <aside class="admin-sidebar" id="admin-sidebar">
 
-    {{-- BRAND --}}
     <div class="admin-brand">
         <div class="brand-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -36,7 +35,7 @@
             <span>Kelola Pengguna</span>
         </a>
 
-        <a href="#" class="admin-nav-link">
+        <a href="{{  route('admin.master-data.index') }}" class="admin-nav-link {{ request()->routeIs('admin.master-data.index') ? 'active' : '' }}"">
             <iconify-icon icon="lucide:database"></iconify-icon>
             <span>Master Data</span>
         </a>
@@ -48,7 +47,8 @@
 
         <span class="nav-label nav-label-bottom">PENGATURAN</span>
 
-        <a href="#" class="admin-nav-link">
+        <a href="{{ route('admin.profil') }}"
+            class="admin-nav-link {{ request()->routeIs('admin.profil*') ? 'active' : '' }}">
             <iconify-icon icon="lucide:user-round"></iconify-icon>
             <span>Profil</span>
         </a>

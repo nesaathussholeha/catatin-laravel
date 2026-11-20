@@ -7,6 +7,10 @@ use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\TugasController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\AdminProfileController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CategoryController;
 
 // ========================================
 // AUTHENTICATION (GUEST)
@@ -20,7 +24,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [RegisterController::class, 'store'])
         ->name('register.store');
 
-    Route::get('/login', [LoginController::class, 'create'])
+    Route::get('/', [LoginController::class, 'create'])
         ->name('login');
 
     Route::post('/login', [LoginController::class, 'store'])
@@ -55,6 +59,7 @@ Route::get('/dashboard', [UserDashboardController::class, 'index'])
         ->name('user.playlists.destroy');
     
 
+    Route::put('/koleksi/{playlist}', [PlaylistController::class, 'update'])->name('user.playlists.update');
 });
 
 
@@ -71,7 +76,46 @@ Route::prefix('admin')
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])
             ->name('dashboard');
 
+        // Halaman Master Data
+        Route::get('/master-data', [DepartmentController::class, 'index'])
+            ->name('master-data.index');
+
+        // CRUD Jurusan
+        Route::post('/departments', [DepartmentController::class, 'store'])
+            ->name('departments.store');
+
+        Route::put('/departments/{department}', [DepartmentController::class, 'update'])
+            ->name('departments.update');
+
+        Route::delete('/departments/{department}', [DepartmentController::class, 'destroy'])
+            ->name('departments.destroy');
+
+        // CRUD Mata Kuliah
+        Route::post('/courses', [CourseController::class, 'store'])
+            ->name('courses.store');
+
+        Route::put('/courses/{course}', [CourseController::class, 'update'])
+            ->name('courses.update');
+
+        Route::delete('/courses/{course}', [CourseController::class, 'destroy'])
+            ->name('courses.destroy');
+
+        //CRUD Kategori
+        Route::post('/categories', [CategoryController::class, 'store'])
+            ->name('categories.store');
+
+        Route::put('/categories/{category}', [CategoryController::class, 'update'])
+            ->name('categories.update');
+
+        Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])
+            ->name('categories.destroy');
+
+        // Profil admin
+        Route::get('/profil', [AdminProfileController::class, 'edit'])->name('profil');
+        Route::put('/profil', [AdminProfileController::class, 'updateProfil'])->name('profil.update');
+        Route::put('/profil/password', [AdminProfileController::class, 'updatePassword'])->name('profil.password');
     });
+
 
 
 // ========================================

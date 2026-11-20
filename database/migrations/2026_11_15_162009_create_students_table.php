@@ -20,7 +20,10 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->string('student_number', 20)->unique();
-            $table->unsignedBigInteger('department_id')->nullable();
+            $table->foreignId('department_id')
+                ->nullable()
+                ->constrained('departments')
+                ->restrictOnDelete();
             $table->year('enrollment_year')->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
 
