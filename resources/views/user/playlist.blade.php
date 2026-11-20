@@ -1,7 +1,7 @@
 @extends('layouts.user')
 
-@section('title', 'Playlist')
-@section('page-title', 'Playlist Saya')
+@section('title', 'Koleksi')
+@section('page-title', 'Koleksi belajar saya')
 
 @push('styles')
     @vite('resources/css/playlist.css')
@@ -10,7 +10,6 @@
 @push('scripts')
     @vite('resources/js/playlist.js')
 @endpush
-
 
 @section('content')
 
@@ -23,84 +22,185 @@
         </div>
     @endif
 
-<div class="pl-page">
+    @php
+        $errCreate = $errors->any() && old('_form') === 'create';
+        $errEdit   = $errors->any() && old('_form') === 'edit';
+    @endphp
 
-    <div class="pl-header">
-        <div>
-            <h1>Playlist Saya</h1>
-            <p>Kelompokkan catatan favoritmu agar mudah ditemukan.</p>
-        </div>
+<div class="pl-layout">
 
-        <button type="button" class="pl-btn" id="plOpenModal">
-            + Buat Playlist
-        </button>
-    </div>
+    {{-- KIRI: daftar folder --}}
+    <aside class="pl-sidebar">
 
-    @if ($playlists->isEmpty())
+        @forelse ($playlists as $p)
+            <div class="pl-folder {{ $aktif && $aktif->id === $p->id ? 'aktif' : '' }}">
 
-        <p class="pl-empty">Belum ada playlist. Buat yang pertama!</p>
+                <a class="pl-folder-link"
+                   href="{{ route('user.playlists.index', ['playlist' => $p->id]) }}">
+                    <strong>{{ $p->name }}</strong>
+                    {{-- Jumlah asli menyusul setelah tabel Catatan ada --}}
+                    <span>0 catatan</span>
+                </a>
 
-    @else
+                <div class="pl-menu">
+                    <button type="button" class="pl-menu-btn" aria-expanded="false"
+                            aria-label="Menu folder {{ $p->name }}">&#8942;</button>
 
-        <div class="pl-grid">
-            @foreach ($playlists as $p)
+                    <div class="pl-menu-list" hidden>
+                        <button type="button" class="pl-edit"
+                                data-url="{{ route('user.playlists.update', $p) }}"
+                                data-id="{{ $p->id }}"
+                                data-name="{{ $p->name }}"
+                                data-description="{{ $p->description }}">
+                            Ubah
+                        </button>
 
-                <article class="pl-card">
-                    <h3>{{ $p->name }}</h3>
-                    <p>{{ $p->description ?: 'Tanpa deskripsi' }}</p>
-
-                    <div class="pl-footer">
-                        {{-- Jumlah catatan menyusul setelah tabel catatan ada --}}
-                        <span>0 catatan</span>
                         <form method="POST"
-                            action="{{ route('user.playlists.destroy', $p) }}"
-                            class="pl-delete-form"
-                            data-nama="{{ $p->name }}">
+                              action="{{ route('user.playlists.destroy', $p) }}"
+                              class="pl-delete-form"
+                              data-nama="{{ $p->name }}">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="pl-delete">Hapus</button>
+                            <button type="submit" class="pl-danger">Hapus</button>
                         </form>
                     </div>
-                </article>
+                </div>
+            </div>
+        @empty
+            <p class="pl-empty">Belum ada folder. Buat yang pertama!</p>
+        @endforelse
 
-            @endforeach
+        <div class="pl-sidebar-aksi">
+            <button type="button" class="pl-btn" id="plOpenModal">+ Buat folder</button>
         </div>
 
-    @endif
+    </aside>
 
+    {{-- KANAN: isi folder --}}
+    <section class="pl-detail">
+
+        @if ($aktif)
+
+            <div class="pl-detail-head">
+                <div>
+                    <h2>Isi Folder: {{ $aktif->name }}</h2>
+                    @if ($aktif->description)
+                        <p class="pl-desc">{{ $aktif->description }}</p>
+                    @endif
+                </div>
+
+                <a class="pl-btn-katalog" href="{{ route('user.dashboard') }}">
+                    <iconify-icon icon="lucide:plus-circle"></iconify-icon>
+                    Tambahkan Catatan dari katalog
+                </a>
+            </div>
+
+            <div class="pl-table-wrap">
+                <table class="pl-table">
+                    <thead>
+                        <tr>
+                            <th>Judul catatan</th>
+                            <th>Jurusan</th>
+                            <th class="pl-aksi-col"><span class="sr-only">Aksi</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{--
+                            NANTI, setelah tabel Catatan ada, ganti baris kosong di bawah dengan:
+
+                            @forelse ($catatan as $c)
+                                <tr>
+                                    <td>{{ $c->judul }}</td>
+                                    <td>{{ $c->jurusan }}</td>
+                                    <td class="pl-aksi-col">
+                                        <form method="POST"
+                                              action="{{ route('user.playlists.notes.destroy', [$aktif, $c]) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="pl-keluarkan">Keluarkan</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @empty
+                                (baris kosong di bawah)
+                            @endforelse
+                        --}}
+                        <tr>
+                            <td colspan="3" class="pl-kosong">Belum ada catatan di folder ini.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        @else
+
+            <div class="pl-placeholder">
+                <iconify-icon icon="lucide:folder-open"></iconify-icon>
+                <p>Pilih atau buat folder untuk melihat isinya.</p>
+            </div>
+
+        @endif
+
+    </section>
 </div>
 
-<div class="pl-modal" id="plModal" @unless ($errors->any()) hidden @endunless>
-
-    <form method="POST"
-          action="{{ route('user.playlists.store') }}"
-          class="pl-modal-box">
+{{-- MODAL: Buat folder --}}
+<div class="pl-modal" id="plModal" @unless ($errCreate) hidden @endunless>
+    <form method="POST" action="{{ route('user.playlists.store') }}" class="pl-modal-box" novalidate>
         @csrf
+        <input type="hidden" name="_form" value="create">
 
-        <h2>Buat Playlist Baru</h2>
+        <h2>Buat Folder Baru</h2>
 
-        <label for="plNama">Nama playlist</label>
-        <input type="text" id="plNama" name="name" required maxlength="60" value="{{ old('name') }}">
-        @error('name')
-            <small class="pl-error">{{ $message }}</small>
-        @enderror
+        <label for="plNama">Nama folder</label>
+        <input type="text" id="plNama" name="name" maxlength="60"
+               value="{{ $errCreate ? old('name') : '' }}" required>
+        @if ($errCreate) @error('name') <small class="pl-error">{{ $message }}</small> @enderror @endif
 
         <label for="plDeskripsi">Deskripsi</label>
-        <textarea id="plDeskripsi" name="description" rows="3" maxlength="150">{{ old('description') }}</textarea>
+        <textarea id="plDeskripsi" name="description" rows="3" maxlength="150">{{ $errCreate ? old('description') : '' }}</textarea>
+        @if ($errCreate) @error('description') <small class="pl-error">{{ $message }}</small> @enderror @endif
 
         <div class="pl-modal-actions">
             <button type="button" class="pl-btn-light" id="plCloseModal">Batal</button>
             <button type="submit" class="pl-btn">Simpan</button>
         </div>
     </form>
-
 </div>
 
+{{-- MODAL: Ubah folder --}}
+<div class="pl-modal" id="plEditModal" @unless ($errEdit) hidden @endunless>
+    <form method="POST" id="plEditForm" class="pl-modal-box" novalidate
+          action="{{ $errEdit ? route('user.playlists.update', (int) old('edit_id')) : '#' }}">
+        @csrf
+        @method('PUT')
+        <input type="hidden" name="_form" value="edit">
+        <input type="hidden" name="edit_id" id="plEditId" value="{{ $errEdit ? old('edit_id') : '' }}">
+
+        <h2>Ubah Folder</h2>
+
+        <label for="plEditNama">Nama folder</label>
+        <input type="text" id="plEditNama" name="name" maxlength="60"
+               value="{{ $errEdit ? old('name') : '' }}" required>
+        @if ($errEdit) @error('name') <small class="pl-error">{{ $message }}</small> @enderror @endif
+
+        <label for="plEditDeskripsi">Deskripsi</label>
+        <textarea id="plEditDeskripsi" name="description" rows="3" maxlength="150">{{ $errEdit ? old('description') : '' }}</textarea>
+        @if ($errEdit) @error('description') <small class="pl-error">{{ $message }}</small> @enderror @endif
+
+        <div class="pl-modal-actions">
+            <button type="button" class="pl-btn-light" id="plEditClose">Batal</button>
+            <button type="submit" class="pl-btn">Simpan Perubahan</button>
+        </div>
+    </form>
+</div>
+
+{{-- MODAL: Konfirmasi hapus --}}
 <div class="pl-modal" id="plConfirm" hidden>
     <div class="pl-modal-box pl-confirm">
-        <h2>Hapus playlist?</h2>
+        <h2>Hapus folder?</h2>
         <p>
-            Playlist <strong id="plConfirmNama"></strong> akan dihapus.
+            Folder <strong id="plConfirmNama"></strong> akan dihapus.
             Catatan di dalamnya tidak ikut terhapus.
         </p>
 

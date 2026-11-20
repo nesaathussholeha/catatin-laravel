@@ -52,6 +52,8 @@ Route::middleware(['auth', 'role:student'])->group(function () {
 
     Route::delete('/koleksi/{playlist}', [PlaylistController::class, 'destroy'])
         ->name('user.playlists.destroy');
+
+    Route::put('/koleksi/{playlist}', [PlaylistController::class, 'update'])->name('user.playlists.update');
 });
 
 
