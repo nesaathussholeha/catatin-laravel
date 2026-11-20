@@ -12,6 +12,7 @@ use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CatatanController;
+use App\Http\Controllers\UserProfileController;
 
 // ========================================
 // AUTHENTICATION (GUEST)
@@ -72,6 +73,22 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/catatan/{catatan}/edit', [CatatanController::class, 'edit'])->name('catatan.edit');
     Route::put('/catatan/{catatan}',      [CatatanController::class, 'update'])->name('catatan.update');
     Route::delete('/catatan/{catatan}',   [CatatanController::class, 'destroy'])->name('catatan.destroy');
+
+    // Profil mahasiswa
+    Route::get('/profil', [UserProfileController::class, 'index'])
+        ->name('user.profile');
+
+    Route::put('/profil', [UserProfileController::class, 'update'])
+        ->name('user.profile.update');
+
+    Route::put('/profil/password', [UserProfileController::class, 'updatePassword'])
+        ->name('user.profile.password');
+
+    Route::delete('/profil', [UserProfileController::class, 'destroy'])
+        ->name('user.profile.destroy');
+        
+    Route::delete('/profil/foto', [UserProfileController::class, 'deletePhoto'])
+        ->name('user.profile.photo.delete');
 });
 
 
