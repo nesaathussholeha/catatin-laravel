@@ -215,19 +215,30 @@
 
                     <tbody>
                         @forelse (($categories ?? collect()) as $index => $category)
-                            <tr>
+                            <tr class="baris-kategori">
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $category->name }}</td>
                                 <td>
-                                    <button type="button">Edit</button>
-                                    <button type="button">Hapus</button>
+                                    <button type="button" class="btn-edit-kategori" data-id="{{ $category->id }}"
+                                        data-name="{{ $category->name }}">
+                                        Edit
+                                    </button>
+
+                                    <button type="button" class="btn-hapus-kategori" data-id="{{ $category->id }}"
+                                        data-name="{{ $category->name }}">
+                                        Hapus
+                                    </button>
                                 </td>
                             </tr>
                         @empty
-                            <tr>
+                            <tr id="dataKategoriKosong">
                                 <td colspan="3">Belum ada data kategori.</td>
                             </tr>
                         @endforelse
+
+                        <tr id="hasilKategoriTidakDitemukan" style="display: none;">
+                            <td colspan="3">Kategori tidak ditemukan.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -461,6 +472,97 @@
 
         </div>
     </div>
+
+
+    {{-- Modal Tambah/Edit Kategori --}}
+    <div class="master-data-modal" id="modalKategori">
+        <div class="master-data-modal-content">
+
+            <div class="master-data-modal-header">
+                <h2 id="judulModalKategori">Tambah Kategori</h2>
+
+                <button type="button" id="btnTutupModalKategori">
+                    &times;
+                </button>
+            </div>
+
+            <form id="formKategori" action="{{ route('admin.categories.store') }}" method="POST">
+
+                @csrf
+
+                <input type="hidden" name="_method" id="methodKategori" value="POST">
+
+                <div class="master-data-modal-body">
+
+                    <div class="form-group">
+                        <label for="namaKategori">
+                            Nama Kategori <span class="required">*</span>
+                        </label>
+
+                        <input type="text" id="namaKategori" name="name" value="{{ old('name') }}"
+                            placeholder="Masukkan nama kategori" class="@error('name') is-invalid @enderror">
+
+                        @error('name')
+                            <small class="error-message">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                </div>
+
+                <div class="master-data-modal-actions">
+                    <button type="button" id="btnBatalKategori">
+                        Batal
+                    </button>
+
+                    <button type="submit" id="btnSimpanKategori">
+                        Simpan
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+
+    {{-- Modal Hapus Kategori --}}
+    <div class="master-data-modal" id="modalHapusKategori">
+        <div class="master-data-modal-content modal-delete-content">
+
+            <div class="delete-icon">
+                <iconify-icon icon="lucide:trash-2"></iconify-icon>
+            </div>
+
+            <div class="delete-heading">
+                <p>Apakah kamu yakin ingin menghapus kategori ini?</p>
+            </div>
+
+            <div class="delete-info">
+                <strong id="namaKategoriHapus"></strong>
+            </div>
+
+            <p class="delete-warning">
+                Data kategori akan dihapus dan tindakan ini tidak dapat dibatalkan.
+            </p>
+
+            <div class="master-data-modal-actions">
+                <button type="button" id="btnBatalHapusKategori">
+                    Batal
+                </button>
+
+                <form id="formHapusKategori" method="POST">
+                    @csrf
+                    @method('DELETE')
+
+                    <button type="submit" id="btnKonfirmasiHapusKategori">
+                        Ya, Hapus
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
 
 
 @endsection

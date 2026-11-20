@@ -155,7 +155,6 @@ if (modalJurusan) {
         });
     }
 
-
     // ==========================================
     // CRUD MATA KULIAH
     // ==========================================
@@ -175,7 +174,8 @@ if (modalJurusan) {
         // SEARCHABLE MULTI SELECT JURUSAN
         // ==========================================
 
-        const jurusanMultiSelect = document.getElementById("jurusanMultiSelect");
+        const jurusanMultiSelect =
+            document.getElementById("jurusanMultiSelect");
         const selectedContainer = document.getElementById("jurusanSelected");
         const searchInput = document.getElementById("searchJurusanSelect");
         const optionsContainer = document.getElementById("jurusanOptions");
@@ -199,7 +199,7 @@ if (modalJurusan) {
             });
 
             const checkedBoxes = [...checkboxes].filter(
-                (checkbox) => checkbox.checked
+                (checkbox) => checkbox.checked,
             );
 
             if (checkedBoxes.length === 0) {
@@ -258,10 +258,7 @@ if (modalJurusan) {
                 .forEach((option) => {
                     const name = option.textContent.toLowerCase();
 
-                    option.classList.toggle(
-                        "hidden",
-                        !name.includes(keyword)
-                    );
+                    option.classList.toggle("hidden", !name.includes(keyword));
                 });
         });
 
@@ -311,7 +308,8 @@ if (modalJurusan) {
 
             jurusanMultiSelect?.classList.remove("active");
 
-            jurusanMultiSelect?.querySelectorAll(".jurusan-option")
+            jurusanMultiSelect
+                ?.querySelectorAll(".jurusan-option")
                 .forEach((option) => option.classList.remove("hidden"));
 
             renderJurusanSelected();
@@ -381,7 +379,8 @@ if (modalJurusan) {
 
                 jurusanMultiSelect?.classList.remove("active");
 
-                jurusanMultiSelect?.querySelectorAll(".jurusan-option")
+                jurusanMultiSelect
+                    ?.querySelectorAll(".jurusan-option")
                     .forEach((option) => option.classList.remove("hidden"));
 
                 // Perbarui chip dan tanda centang
@@ -396,22 +395,22 @@ if (modalJurusan) {
         // ==========================================
 
         const modalHapusMatakuliah = document.getElementById(
-            "modalHapusMatakuliah"
+            "modalHapusMatakuliah",
         );
 
         if (modalHapusMatakuliah) {
             const tombolHapus = document.querySelectorAll(
-                ".btn-hapus-matakuliah"
+                ".btn-hapus-matakuliah",
             );
 
             const btnBatalHapus = document.getElementById(
-                "btnBatalHapusMatakuliah"
+                "btnBatalHapusMatakuliah",
             );
 
             const formHapus = document.getElementById("formHapusMatakuliah");
 
             const namaMatakuliah = document.getElementById(
-                "namaMatakuliahHapus"
+                "namaMatakuliahHapus",
             );
 
             tombolHapus.forEach((button) => {
@@ -453,12 +452,11 @@ if (modalJurusan) {
         const searchMatakuliah = document.getElementById("searchMatakuliah");
 
         if (searchMatakuliah) {
-            const barisMatakuliah = document.querySelectorAll(
-                ".baris-matakuliah"
-            );
+            const barisMatakuliah =
+                document.querySelectorAll(".baris-matakuliah");
 
             const pesanTidakDitemukan = document.getElementById(
-                "hasilMatakuliahTidakDitemukan"
+                "hasilMatakuliahTidakDitemukan",
             );
 
             const dataKosong = document.getElementById("dataMatakuliahKosong");
@@ -492,4 +490,186 @@ if (modalJurusan) {
             });
         }
     }
+}
+
+// ==========================================
+// CRUD KATEGORI
+// ==========================================
+
+const modalKategori = document.getElementById("modalKategori");
+
+if (modalKategori) {
+    const btnTambah = document.getElementById("btnTambahKategori");
+    const btnTutup = document.getElementById("btnTutupModalKategori");
+    const btnBatal = document.getElementById("btnBatalKategori");
+
+    const form = document.getElementById("formKategori");
+    const judulModal = document.getElementById("judulModalKategori");
+    const method = document.getElementById("methodKategori");
+    const inputNama = document.getElementById("namaKategori");
+
+    // ==========================================
+    // VALIDASI LARAVEL
+    // ==========================================
+
+    const memilikiError = modalKategori.querySelector(".is-invalid");
+
+    if (memilikiError) {
+        modalKategori.classList.add("active");
+    }
+
+    // ==========================================
+    // MODAL TAMBAH KATEGORI
+    // ==========================================
+
+    function bukaModalTambahKategori() {
+        form.reset();
+
+        form.action = "/admin/categories";
+        method.value = "POST";
+
+        judulModal.textContent = "Tambah Kategori";
+
+        modalKategori.classList.add("active");
+    }
+
+    // ==========================================
+    // MENUTUP MODAL
+    // ==========================================
+
+    function tutupModalKategori() {
+        modalKategori.classList.remove("active");
+    }
+
+    btnTambah?.addEventListener("click", bukaModalTambahKategori);
+    btnTutup?.addEventListener("click", tutupModalKategori);
+    btnBatal?.addEventListener("click", tutupModalKategori);
+
+    modalKategori.addEventListener("click", (event) => {
+        if (event.target === modalKategori) {
+            tutupModalKategori();
+        }
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            tutupModalKategori();
+        }
+    });
+
+    // ==========================================
+    // EDIT KATEGORI
+    // ==========================================
+
+    const tombolEdit = document.querySelectorAll(".btn-edit-kategori");
+
+    tombolEdit.forEach((button) => {
+        button.addEventListener("click", function () {
+            const id = this.dataset.id;
+            const name = this.dataset.name;
+
+            form.reset();
+
+            judulModal.textContent = "Edit Kategori";
+
+            form.action = `/admin/categories/${id}`;
+            method.value = "PUT";
+
+            inputNama.value = name;
+
+            modalKategori.classList.add("active");
+        });
+    });
+
+    // ==========================================
+    // MODAL KONFIRMASI HAPUS KATEGORI
+    // ==========================================
+
+    const modalHapusKategori = document.getElementById("modalHapusKategori");
+
+    if (modalHapusKategori) {
+        const tombolHapus = document.querySelectorAll(".btn-hapus-kategori");
+
+        const btnBatalHapus = document.getElementById("btnBatalHapusKategori");
+
+        const formHapus = document.getElementById("formHapusKategori");
+
+        const namaKategori = document.getElementById("namaKategoriHapus");
+
+        // Membuka modal konfirmasi
+        tombolHapus.forEach((button) => {
+            button.addEventListener("click", function () {
+                const id = this.dataset.id;
+                const name = this.dataset.name;
+
+                namaKategori.textContent = name;
+
+                formHapus.action = `/admin/categories/${id}`;
+
+                modalHapusKategori.classList.add("active");
+            });
+        });
+
+        // Menutup modal
+        function tutupModalHapus() {
+            modalHapusKategori.classList.remove("active");
+        }
+
+        btnBatalHapus?.addEventListener("click", tutupModalHapus);
+
+        modalHapusKategori.addEventListener("click", (event) => {
+            if (event.target === modalHapusKategori) {
+                tutupModalHapus();
+            }
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                tutupModalHapus();
+            }
+        });
+    }
+}
+
+// ==========================================
+// SEARCH KATEGORI
+// ==========================================
+
+const searchKategori = document.getElementById("searchKategori");
+
+if (searchKategori) {
+    const barisKategori = document.querySelectorAll("tr.baris-kategori");
+
+    const pesanTidakDitemukan = document.getElementById(
+        "hasilKategoriTidakDitemukan",
+    );
+
+    const dataKosong = document.getElementById("dataKategoriKosong");
+
+    searchKategori.addEventListener("input", function () {
+        const keyword = this.value.toLowerCase().trim();
+        let jumlahDitemukan = 0;
+
+        barisKategori.forEach((baris) => {
+            const nama = baris.cells[1].textContent.toLowerCase();
+
+            const cocok = nama.includes(keyword);
+
+            baris.style.display = cocok ? "" : "none";
+
+            if (cocok) {
+                jumlahDitemukan++;
+            }
+        });
+
+        if (dataKosong) {
+            dataKosong.style.display =
+                jumlahDitemukan === 0 && keyword === "" ? "" : "none";
+        }
+
+        if (pesanTidakDitemukan) {
+            pesanTidakDitemukan.style.display =
+                keyword !== "" && jumlahDitemukan === 0 ? "" : "none";
+        }
+    });
 }

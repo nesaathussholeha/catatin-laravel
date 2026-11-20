@@ -1,3 +1,4 @@
+
 /* =========================================
    MASTER DATA PAGE
 ========================================= */
@@ -122,7 +123,7 @@
     box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
 }
 
-.master-data-toolbar>button {
+.master-data-toolbar > button {
     padding: 11px 18px;
     border: none;
     border-radius: 9px;
@@ -134,7 +135,7 @@
     transition: 0.2s ease;
 }
 
-.master-data-toolbar>button:hover {
+.master-data-toolbar > button:hover {
     background: #e58c00;
 }
 
@@ -222,7 +223,8 @@ td.btn-action button:not(:last-child) {
 /* Tombol Edit */
 
 .btn-edit-jurusan,
-.btn-edit-matakuliah {
+.btn-edit-matakuliah,
+.btn-edit-kategori {
     padding: 7px 13px;
     border: none;
     border-radius: 7px;
@@ -233,14 +235,16 @@ td.btn-action button:not(:last-child) {
 }
 
 .btn-edit-jurusan:hover,
-.btn-edit-matakuliah:hover {
+.btn-edit-matakuliah:hover,
+.btn-edit-kategori:hover {
     background: #dfe5ff;
 }
 
 /* Tombol Hapus */
 
 .btn-hapus-jurusan,
-.btn-hapus-matakuliah {
+.btn-hapus-matakuliah,
+.btn-hapus-kategori {
     padding: 7px 13px;
     border: none;
     border-radius: 7px;
@@ -251,7 +255,8 @@ td.btn-action button:not(:last-child) {
 }
 
 .btn-hapus-jurusan:hover,
-.btn-hapus-matakuliah:hover {
+.btn-hapus-matakuliah:hover,
+.btn-hapus-kategori:hover {
     background: #fecaca;
 }
 
@@ -338,7 +343,7 @@ td.btn-action button:not(:last-child) {
 
 /* Form di dalam modal */
 
-.master-data-modal-content>form {
+.master-data-modal-content > form {
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -481,29 +486,32 @@ td.btn-action button:not(:last-child) {
 /* Tombol Batal */
 
 #btnBatalJurusan,
-#btnBatalMatakuliah {
+#btnBatalMatakuliah,
+#btnBatalKategori {
     background: #f1f2f7;
     color: #747c96;
 }
 
 #btnBatalJurusan:hover,
-#btnBatalMatakuliah:hover {
+#btnBatalMatakuliah:hover,
+#btnBatalKategori:hover {
     background: #e5e7ef;
 }
 
 /* Tombol Simpan */
 
 #btnSimpanJurusan,
-#btnSimpanMatakuliah {
+#btnSimpanMatakuliah,
+#btnSimpanKategori {
     background: #f59e0b;
     color: #ffffff;
 }
 
 #btnSimpanJurusan:hover,
-#btnSimpanMatakuliah:hover {
+#btnSimpanMatakuliah:hover,
+#btnSimpanKategori:hover {
     background: #e58c00;
 }
-
 
 
 /* =========================================
@@ -613,48 +621,33 @@ td.btn-action button:not(:last-child) {
 /* Tombol Batal */
 
 #btnBatalHapusJurusan,
-#btnBatalHapusMatakuliah {
+#btnBatalHapusMatakuliah,
+#btnBatalHapusKategori {
     background: #f1f2f7;
     color: #747c96;
 }
 
 #btnBatalHapusJurusan:hover,
-#btnBatalHapusMatakuliah:hover {
+#btnBatalHapusMatakuliah:hover,
+#btnBatalHapusKategori:hover {
     background: #e5e7ef;
 }
 
 /* Tombol Ya, Hapus */
 
 #btnKonfirmasiHapusJurusan,
-#btnKonfirmasiHapusMatakuliah {
+#btnKonfirmasiHapusMatakuliah,
+#btnKonfirmasiHapusKategori {
     background: #dc2626;
     color: #ffffff;
 }
 
 #btnKonfirmasiHapusJurusan:hover,
-#btnKonfirmasiHapusMatakuliah:hover {
+#btnKonfirmasiHapusMatakuliah:hover,
+#btnKonfirmasiHapusKategori:hover {
     background: #b91c1c;
 }
 
-/* Responsive modal hapus */
-
-@media (max-width: 480px) {
-    .modal-delete-content .master-data-modal-actions {
-        flex-direction: row;
-    }
-
-    .modal-delete-content .master-data-modal-actions button {
-        width: 100%;
-    }
-
-    .modal-delete-content .master-data-modal-actions form {
-        flex: 1;
-    }
-
-    .modal-delete-content .master-data-modal-actions>button {
-        flex: 1;
-    }
-}
 
 /* =========================================
    SEARCHABLE MULTI SELECT JURUSAN
@@ -723,10 +716,7 @@ td.btn-action button:not(:last-child) {
     color: #ef4444;
 }
 
-/* Dropdown jurusan
-   Menggunakan normal flow agar tidak terpotong
-   oleh area scroll modal.
-*/
+/* Dropdown jurusan */
 
 .jurusan-dropdown {
     display: none;
@@ -753,7 +743,7 @@ td.btn-action button:not(:last-child) {
 
 /* Kolom pencarian jurusan */
 
-.jurusan-dropdown>input {
+.jurusan-dropdown > input {
     flex-shrink: 0;
 
     width: 100%;
@@ -768,7 +758,7 @@ td.btn-action button:not(:last-child) {
     box-sizing: border-box;
 }
 
-.jurusan-dropdown>input:focus {
+.jurusan-dropdown > input:focus {
     border-color: #f59e0b;
 }
 
@@ -890,7 +880,7 @@ td.btn-action button:not(:last-child) {
         width: 100%;
     }
 
-    .master-data-toolbar>button {
+    .master-data-toolbar > button {
         width: 100%;
     }
 }
@@ -941,5 +931,21 @@ td.btn-action button:not(:last-child) {
 
     .jurusan-options {
         max-height: 150px;
+    }
+
+    .modal-delete-content .master-data-modal-actions {
+        flex-direction: row;
+    }
+
+    .modal-delete-content .master-data-modal-actions button {
+        width: 100%;
+    }
+
+    .modal-delete-content .master-data-modal-actions form {
+        flex: 1;
+    }
+
+    .modal-delete-content .master-data-modal-actions > button {
+        flex: 1;
     }
 }

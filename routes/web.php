@@ -9,6 +9,7 @@ use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CategoryController;
 
 // ========================================
 // AUTHENTICATION (GUEST)
@@ -94,6 +95,16 @@ Route::prefix('admin')
 
         Route::delete('/courses/{course}', [CourseController::class, 'destroy'])
             ->name('courses.destroy');
+
+        //CRUD Kategori
+        Route::post('/categories', [CategoryController::class, 'store'])
+            ->name('categories.store');
+
+        Route::put('/categories/{category}', [CategoryController::class, 'update'])
+            ->name('categories.update');
+
+        Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])
+            ->name('categories.destroy');
 
         // Profil admin
         Route::get('/profil', [AdminProfileController::class, 'edit'])->name('profil');
