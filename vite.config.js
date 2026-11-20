@@ -1,3 +1,4 @@
+
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import { bunny } from 'laravel-vite-plugin/fonts';
@@ -6,7 +7,40 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
+            input: [
+                // Umum
+                'resources/css/app.css',
+                'resources/js/app.js',
+
+                // Authentication
+                'resources/css/auth.css',
+                'resources/js/auth.js',
+
+                // Layout User
+                'resources/css/user-layout.css',
+                'resources/js/user-layout.js',
+
+                // Dashboard User
+                'resources/css/dashboard-user.css',
+                'resources/js/dashboard-user.js',
+
+                // Playlist
+                'resources/css/playlist.css',
+                'resources/js/playlist.js',
+
+                // Layout Admin
+                'resources/css/admin-layout.css',
+                'resources/js/admin-layout.js',
+
+                // Dashboard Admin
+                'resources/css/dashboard-admin.css',
+                'resources/js/dashboard-admin.js',
+
+                'resources/css/tugas.css',
+                'resources/js/tugas.js',
+
+            ],
+
             refresh: true,
             fonts: [
                 bunny('Instrument Sans', {

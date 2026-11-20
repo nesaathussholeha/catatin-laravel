@@ -1,0 +1,266 @@
+
+.halaman-tugas {
+    width: 100%;
+}
+
+.tugas-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.tugas-heading h1 {
+    margin: 0 0 8px;
+    color: #10234f;
+    font-size: 25px;
+}
+
+.tugas-heading p {
+    margin: 0;
+    color: #777;
+    font-size: 14px;
+}
+
+.tombol-tambah,
+.tombol-simpan {
+    background: #10234f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 11px 17px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.tugas-filter {
+    margin-bottom: 20px;
+}
+
+.tugas-filter form {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.tugas-filter select {
+    padding: 10px 13px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+}
+
+.daftar-tugas {
+    display: grid;
+    gap: 15px;
+}
+
+.kartu-tugas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: white;
+    border: 1px solid #e7e9f0;
+    border-radius: 12px;
+}
+
+.tugas-info h3 {
+    margin: 0 0 8px;
+    color: #10234f;
+    font-size: 16px;
+}
+
+.tugas-info p {
+    margin: 0 0 10px;
+    color: #777;
+    font-size: 13px;
+}
+
+.teks-selesai {
+    text-decoration: line-through;
+    color: #999 !important;
+}
+
+.status-tugas {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.status-belum {
+    background: #fff2d9;
+    color: #946200;
+}
+
+.status-selesai {
+    background: #e1f5e8;
+    color: #237342;
+}
+
+.status-terlambat {
+    background: #ffe6e6;
+    color: #b52b2b;
+}
+
+.tugas-aksi {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.tugas-aksi form {
+    margin: 0;
+}
+
+.tugas-aksi button,
+.tugas-aksi a {
+    padding: 8px 11px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.tombol-status {
+    background: #e8efff;
+    color: #244b9b;
+}
+
+.tombol-edit {
+    background: #fff2d9;
+    color: #946200;
+}
+
+.tombol-hapus {
+    background: #ffe6e6;
+    color: #b52b2b;
+}
+
+.tugas-kosong {
+    padding: 40px 20px;
+    text-align: center;
+    background: white;
+    border-radius: 12px;
+    color: #777;
+}
+
+.tugas-kosong h3 {
+    color: #10234f;
+}
+
+.modal-tugas {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, .45);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-tugas.aktif {
+    display: flex;
+}
+
+.modal-konten {
+    width: 100%;
+    max-width: 430px;
+    padding: 25px;
+    background: white;
+    border-radius: 14px;
+}
+
+.modal-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-heading h2 {
+    margin: 0;
+    color: #10234f;
+    font-size: 20px;
+}
+
+.modal-heading button {
+    border: none;
+    background: none;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.modal-konten label {
+    display: block;
+    margin: 14px 0 7px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.modal-konten input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.modal-aksi {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.modal-aksi button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#batal-modal {
+    background: #eee;
+}
+
+.pesan-sukses,
+.pesan-error {
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    border-radius: 9px;
+    font-size: 14px;
+}
+
+.pesan-sukses {
+    background: #e1f5e8;
+    color: #237342;
+}
+
+.pesan-error {
+    background: #ffe6e6;
+    color: #b52b2b;
+}
+
+.pesan-error ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+@media (max-width: 700px) {
+    .tugas-heading,
+    .kartu-tugas {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .tugas-aksi {
+        width: 100%;
+    }
+}

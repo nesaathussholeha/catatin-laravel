@@ -43,10 +43,11 @@
                 <span>Koleksi</span>
             </a>
 
-            <a href="#" class="nav-link">
-                <iconify-icon icon="hugeicons:sticky-note-02"></iconify-icon>
-                <span>Tugas</span>
-            </a>
+            <a href="{{ route('tugas.index') }}"
+    class="nav-link {{ request()->routeIs('tugas.*') ? 'active' : '' }}">
+    <iconify-icon icon="hugeicons:sticky-note-02"></iconify-icon>
+    <span>Tugas</span>
+</a>
 
             <a href="#" class="nav-link">
                 <iconify-icon icon="iconamoon:profile-circle"></iconify-icon>

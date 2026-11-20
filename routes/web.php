@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -6,6 +5,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\PlaylistController;
+use App\Http\Controllers\TugasController;
+use App\Http\Controllers\AdminDashboardController;
 
 // ========================================
 // AUTHENTICATION (GUEST)
@@ -33,6 +34,9 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware(['auth', 'role:student'])->group(function () {
 
+Route::resource('tugas', TugasController::class)
+    ->parameters(['tugas' => 'tugas']);
+
 Route::get('/dashboard', [UserDashboardController::class, 'index'])
     ->name('user.dashboard');
     
@@ -49,6 +53,7 @@ Route::get('/dashboard', [UserDashboardController::class, 'index'])
 
     Route::delete('/koleksi/{playlist}', [PlaylistController::class, 'destroy'])
         ->name('user.playlists.destroy');
+    
 
 });
 
@@ -63,9 +68,8 @@ Route::prefix('admin')
     ->middleware(['auth', 'role:admin'])
     ->group(function () {
 
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        })->name('dashboard');
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
+            ->name('dashboard');
 
     });
 

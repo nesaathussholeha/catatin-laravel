@@ -1,0 +1,466 @@
+/* =========================
+   STATISTIK
+========================= */
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    background: white;
+    border: 1px solid #dfe4f0;
+    border-radius: 18px;
+    padding: 25px 27px;
+}
+
+.stat-card strong {
+    display: block;
+    font-size: 34px;
+    line-height: 1;
+    margin-bottom: 9px;
+}
+
+.stat-card span {
+    color: #71809d;
+    font-size: 14px;
+}
+
+
+/* =========================
+   SECTION
+========================= */
+
+.content-section {
+    margin-bottom: 28px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.section-heading h2 {
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.section-heading a {
+    color: #4c55df;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table-card {
+    background: white;
+    border: 1px solid #dfe4f0;
+    border-radius: 18px;
+    overflow: visible;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid #e4e8f1;
+    white-space: nowrap;
+}
+
+th {
+    color: #657594;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+td {
+    color: #24385f;
+    font-size: 13px;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.empty-table {
+    text-align: center;
+    color: #71809d;
+    padding: 25px;
+}
+
+
+/* =========================
+   STATUS PENGGUNA
+========================= */
+
+.status-user {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-active {
+    color: #079455;
+    background: #e5f7ee;
+}
+
+.status-blocked {
+    color: #dc2626;
+    background: #fdeaea;
+}
+
+
+/* =========================
+   DROPDOWN AKSI
+========================= */
+
+.action-wrap {
+    position: relative;
+    display: inline-block;
+}
+
+.action-button {
+    width: 110px;
+    height: 38px;
+    background: white;
+    border: 1px solid #d9e0ee;
+    border-radius: 10px;
+    color: #10234f;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    cursor: pointer;
+}
+
+.action-button:hover {
+    background: #f8f9fd;
+}
+
+.action-button span {
+    font-size: 9px;
+}
+
+.action-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 6px);
+    width: 145px;
+    background: white;
+    border: 1px solid #dce2ed;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, .12);
+    padding: 5px;
+    z-index: 50;
+}
+
+.action-menu.show {
+    display: block;
+}
+
+.menu-item {
+    display: block;
+    width: 100%;
+    padding: 9px 11px;
+    background: transparent;
+    border: none;
+    text-align: left;
+    color: #1c3158;
+    font-size: 12px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.menu-item:hover {
+    background: #f1f4fa;
+}
+
+
+/* =========================
+   RINGKASAN LAPORAN
+========================= */
+
+.report-card {
+    background: white;
+    border: 1px solid #dfe4f0;
+    border-radius: 18px;
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.report-card h2 {
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+.report-card p {
+    color: #71809d;
+    font-size: 13px;
+}
+
+
+/* =========================
+   TOMBOL
+========================= */
+
+.primary-button,
+.secondary-button,
+.danger-button {
+    border: none;
+    border-radius: 9px;
+    padding: 10px 15px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .2s ease;
+}
+
+.primary-button {
+    background: #f59e0b;
+    color: white;
+}
+
+.primary-button:hover {
+    background: #e89000;
+}
+
+.secondary-button {
+    background: #edf0ff;
+    color: #4c55df;
+}
+
+.secondary-button:hover {
+    background: #dfe4ff;
+}
+
+.danger-button {
+    background: #feeaea;
+    color: #dc2626;
+}
+
+.danger-button:hover {
+    background: #fbd5d5;
+}
+
+
+/* =========================
+   DAFTAR LAPORAN
+========================= */
+
+.report-list {
+    display: none;
+    margin-bottom: 30px;
+}
+
+.report-list.show {
+    display: block;
+}
+
+.reported-item {
+    background: white;
+    border: 1px solid #dfe4f0;
+    border-radius: 15px;
+    padding: 17px 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.reported-info h3 {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.reported-info p {
+    font-size: 12px;
+    color: #71809d;
+    margin-top: 3px;
+}
+
+.report-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-shrink: 0;
+}
+
+.empty-state {
+    background: white;
+    border: 1px solid #dfe4f0;
+    border-radius: 15px;
+    padding: 25px;
+    color: #71809d;
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, .5);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal {
+    width: 430px;
+    max-width: 100%;
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, .2);
+}
+
+.modal-large {
+    width: 600px;
+}
+
+.modal h2 {
+    font-size: 20px;
+    margin-bottom: 17px;
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    border: none;
+    background: transparent;
+    font-size: 24px;
+    color: #71809d;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    color: #10234f;
+}
+
+.detail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.detail-list div {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #edf0f5;
+}
+
+.detail-list span {
+    color: #71809d;
+}
+
+.modal-author {
+    color: #71809d;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.note-content {
+    background: #f7f8fc;
+    border-radius: 10px;
+    padding: 15px;
+    line-height: 1.7;
+    font-size: 13px;
+    color: #33476b;
+}
+
+.report-box {
+    background: #fff5e5;
+    border-radius: 10px;
+    padding: 13px;
+    margin-top: 15px;
+    font-size: 13px;
+}
+
+.report-box p {
+    margin-top: 5px;
+    color: #6d5a3a;
+}
+
+
+/* =========================
+   RESPONSIVE DASHBOARD
+========================= */
+
+@media (max-width: 900px) {
+
+    .stat-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .report-card,
+    .reported-item {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .report-actions {
+        flex-wrap: wrap;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .stat-card {
+        padding: 20px;
+    }
+
+    .report-card {
+        padding: 18px;
+    }
+
+    .modal {
+        padding: 20px;
+    }
+
+    .detail-list div {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+}
