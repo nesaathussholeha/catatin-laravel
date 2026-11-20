@@ -13,6 +13,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\AdminCatatanController;
+use App\Http\Controllers\UserProfileController;
 
 // ========================================
 // AUTHENTICATION (GUEST)
@@ -86,7 +87,7 @@ Route::middleware(['auth', 'role:student'])->group(function () {
 
     Route::delete('/profil', [UserProfileController::class, 'destroy'])
         ->name('user.profile.destroy');
-        
+
     Route::delete('/profil/foto', [UserProfileController::class, 'deletePhoto'])
         ->name('user.profile.photo.delete');
 });
@@ -147,7 +148,7 @@ Route::prefix('admin')
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])
         ->name('dashboard');
 
-        
+
 // ========================================
 // KELOLA CATATAN
 // ========================================
