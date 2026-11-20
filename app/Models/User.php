@@ -20,8 +20,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'profile_photo',
         'status',
+        'profile_photo',
     ];
 
     protected $hidden = [
@@ -41,7 +41,7 @@ class User extends Authenticatable
     {
         return $this->hasOne(Student::class);
     }
-    
+
     public function tugas(): HasMany
     {
         return $this->hasMany(Tugas::class);

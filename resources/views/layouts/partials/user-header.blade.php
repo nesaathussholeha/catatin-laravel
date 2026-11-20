@@ -22,7 +22,7 @@
 
     </div>
 
-    <a href="#" class="user-profile-link">
+    <a href="{{ route('user.profile') }}" class="user-profile-link">
         <div class="user-profile">
 
             <div class="user-info">
