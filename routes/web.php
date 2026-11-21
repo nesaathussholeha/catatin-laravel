@@ -18,6 +18,7 @@ use App\Http\Controllers\UserReportController;
 use App\Http\Controllers\NoteReportController;
 use App\Http\Controllers\AdminNoteReportController;
 use App\Http\Controllers\AuthorProfileController;
+use App\Http\Controllers\CatatanUpvoteController;
 
 // ========================================
 // AUTHENTICATION (GUEST)
@@ -110,8 +111,12 @@ Route::middleware(['auth', 'role:student', 'no.cache'])->group(function () {
         ->name('catatan.report.store');
 
     // Profil penulis catatan
-    Route::get('/penulis/{username}', [AuthorProfileController::class, 'show'])
+    Route::get('/penulis/{user}', [AuthorProfileController::class, 'show'])
+        ->whereNumber('user')
         ->name('user.author-profile');
+
+    Route::post('/catatan/{catatan}/upvote', [CatatanUpvoteController::class, 'toggle'])
+        ->name('catatan.upvote');
 });
 
 
@@ -181,10 +186,10 @@ Route::prefix('admin')
 
         // Kelola Catatan
         Route::get('/kelola-catatan', [AdminCatatanController::class, 'index'])
-        ->name('kelola-catatan.index');
+            ->name('kelola-catatan.index');
 
         Route::get('/kelola-catatan/{id}', [AdminCatatanController::class, 'show'])
-        ->name('kelola-catatan.show');
+            ->name('kelola-catatan.show');
 
 
         Route::patch('/kelola-catatan/{id}/status', [AdminCatatanController::class, 'updateStatus'])
@@ -192,10 +197,10 @@ Route::prefix('admin')
 
 
         Route::patch('/kelola-catatan/{id}/restore', [AdminCatatanController::class, 'restore'])
-        ->name('kelola-catatan.restore');
+            ->name('kelola-catatan.restore');
 
         Route::delete('/kelola-catatan/{id}/force-delete', [AdminCatatanController::class, 'forceDelete'])
-        ->name('kelola-catatan.force-delete');
+            ->name('kelola-catatan.force-delete');
 
         // Kelola Laporan
         Route::get('/kelola-laporan', [AdminNoteReportController::class, 'index'])

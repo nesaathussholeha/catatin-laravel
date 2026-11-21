@@ -94,19 +94,45 @@ class CatatanController extends Controller
 
         $catatan->load(['category', 'user']);
 
-        return view('user.detail-catatan', compact('catatan'));
+        $namaKategori = $catatan->category?->name ?? 'Kategori';
+        $namaPenulis = $catatan->anonim ? 'Anonim' : ($catatan->user?->name ?? 'Pengguna');
+        $inisialPenulis = strtoupper(substr($namaPenulis, 0, 1));
+        $tanggal = $catatan->created_at?->translatedFormat('d F Y') ?? '-';
+
+        $urlCatatan = $catatan->tipe_isi === 'tautan'
+            ? $catatan->tautan
+            : null;
+
+        return view('user.detail-catatan', compact(
+            'catatan',
+            'namaKategori',
+            'namaPenulis',
+            'inisialPenulis',
+            'tanggal',
+            'urlCatatan'
+        ));
     }
 
     /* ---------- Hanya akun aktif ---------- */
 
     public function create()
     {
-        $this->tolakJikaNonaktif();
+        $akun = Auth::user();
+
+        $akunNonaktif = $akun->status !== 'active';
+
+        $pesanNonaktif = match ($akun->status) {
+            'inactive' => 'Akun kamu dinonaktifkan karena pelanggaran aturan atau laporan pengguna. Fitur unggah sementara tidak tersedia.',
+            'blocked' => 'Akun kamu telah diblokir karena melanggar aturan CatatIn. Kamu tidak dapat mengunggah catatan.',
+            default => null,
+        };
 
         return view('user.unggah', [
-            'catatan'    => new Catatan(['visibilitas' => 'pribadi']),
-            'categories' => Category::all(),
-            'jurusan'    => $this->jurusan,
+            'catatan'       => new Catatan(['visibilitas' => 'pribadi']),
+            'categories'    => Category::all(),
+            'jurusan'       => $this->jurusan,
+            'akunNonaktif'  => $akunNonaktif,
+            'pesanNonaktif' => $pesanNonaktif,
         ]);
     }
 
@@ -149,5 +175,17 @@ class CatatanController extends Controller
         $catatan->delete();
 
         return redirect()->route('catatan.index')->with('sukses', 'Catatan berhasil dihapus.');
+    }
+
+    // Menampilkan isi catatan berdasarkan jenisnya
+    public function getIsiTampilanAttribute(): ?string
+    {
+        return $this->isi_teks;
+    }
+
+    // Mengecek apakah catatan berupa teks
+    public function getIsTeksAttribute(): bool
+    {
+        return $this->tipe_isi === 'teks';
     }
 }

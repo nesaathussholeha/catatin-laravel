@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // =========================
     // Report Modal
     // =========================
-
     const reportModal = document.getElementById("reportModal");
     const reportReason = document.getElementById("reportReason");
 
@@ -16,10 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Membuat fungsi bisa dipanggil dari onclick di Blade
     window.toggleModal = toggleModal;
 
-    // Tutup modal ketika area luar diklik
     if (reportModal) {
         reportModal.addEventListener("click", function (event) {
             if (event.target === reportModal) {
@@ -28,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Tutup modal dengan tombol Escape
     document.addEventListener("keydown", function (event) {
         if (event.key === "Escape") {
             toggleModal(false);
@@ -38,6 +34,141 @@ document.addEventListener("DOMContentLoaded", function () {
     // =========================
     // Search, Filter, and Sort
     // =========================
+    const searchInput = document.getElementById("searchInput");
+    const categorySelect = document.getElementById("categorySelect");
+    const sortSelect = document.getElementById("sortSelect");
+    const noteGrid = document.getElementById("noteGrid");
+    const emptyMessage = document.getElementById("emptyMessage");
+    const displayCount = document.getElementById("displayCount");
 
-    // Bagian ini tetap gunakan kode milikmu sebelumnya.
+    if (
+        searchInput &&
+        categorySelect &&
+        sortSelect &&
+        noteGrid &&
+        emptyMessage &&
+        displayCount
+    ) {
+        const cards = Array.from(noteGrid.querySelectorAll(".note-card"));
+
+        function filterAndSortNotes() {
+            const keyword = searchInput.value.trim().toLowerCase();
+            const selectedCategory = categorySelect.value;
+
+            const filteredCards = cards.filter((card) => {
+                const title = (card.dataset.title || "").toLowerCase();
+                const matkul = (card.dataset.matkul || "").toLowerCase();
+                const description = (
+                    card.dataset.deskripsi || ""
+                ).toLowerCase();
+                const category = card.dataset.category || "Umum";
+
+                const cocokPencarian =
+                    title.includes(keyword) ||
+                    matkul.includes(keyword) ||
+                    description.includes(keyword);
+
+                const cocokKategori =
+                    selectedCategory === "all" || category === selectedCategory;
+
+                return cocokPencarian && cocokKategori;
+            });
+
+            // Urutkan catatan
+            const sortType = sortSelect.value;
+
+            filteredCards.sort((a, b) => {
+                if (sortType === "terbaru") {
+                    return Number(b.dataset.date) - Number(a.dataset.date);
+                }
+
+                if (sortType === "terlama") {
+                    return Number(a.dataset.date) - Number(b.dataset.date);
+                }
+
+                if (sortType === "upvote") {
+                    return Number(b.dataset.upvote) - Number(a.dataset.upvote);
+                }
+
+                return 0;
+            });
+
+            // Sembunyikan semua kartu
+            cards.forEach((card) => {
+                card.hidden = true;
+            });
+
+            // Tampilkan kartu yang cocok
+            filteredCards.forEach((card) => {
+                card.hidden = false;
+                noteGrid.appendChild(card);
+            });
+
+            emptyMessage.hidden = filteredCards.length !== 0;
+
+            displayCount.textContent = `Menampilkan ${filteredCards.length} dari ${cards.length} catatan`;
+        }
+
+        searchInput.addEventListener("input", filterAndSortNotes);
+        categorySelect.addEventListener("change", filterAndSortNotes);
+        sortSelect.addEventListener("change", filterAndSortNotes);
+
+        filterAndSortNotes();
+
+        // =========================
+        // Upvote
+        // =========================
+        noteGrid.addEventListener("click", async function (event) {
+            const tombol = event.target.closest(".upvote-button");
+
+            if (!tombol || tombol.disabled) return;
+
+            const jumlah = tombol.querySelector(".upvote-count");
+            if (!jumlah) return;
+
+            tombol.disabled = true;
+
+            try {
+                const response = await fetch(tombol.dataset.url, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": document.querySelector(
+                            'meta[name="csrf-token"]',
+                        ).content,
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                    },
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || "Upvote gagal diproses.");
+                }
+
+                jumlah.textContent = data.upvote;
+                tombol.classList.toggle("aktif", data.upvoted);
+
+                tombol.setAttribute(
+                    "aria-pressed",
+                    data.upvoted ? "true" : "false",
+                );
+
+                const card = tombol.closest(".note-card");
+
+                if (card) {
+                    card.dataset.upvote = data.upvote;
+                }
+
+                // Perbarui urutan jika sedang mengurutkan berdasarkan upvote
+                if (sortSelect.value === "upvote") {
+                    filterAndSortNotes();
+                }
+            } catch (error) {
+                alert(error.message);
+            } finally {
+                tombol.disabled = false;
+            }
+        });
+    }
 });

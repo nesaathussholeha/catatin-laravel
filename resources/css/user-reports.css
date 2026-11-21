@@ -109,8 +109,8 @@
 
 .filter-form input:focus,
 .filter-form select:focus {
-    border-color: #6366f1;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    border-color: #F59E0B;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
 }
 
 .filter-form button,
@@ -130,11 +130,11 @@
 
 .filter-form button {
     color: #ffffff;
-    background: #4f46e5;
+    background: #F59E0B;
 }
 
 .filter-form button:hover {
-    background: #4338ca;
+    background: #D97706;
 }
 
 .filter-form a {
@@ -183,13 +183,13 @@
 }
 
 .table td a {
-    color: #4f46e5;
+    color: #D97706;
     font-weight: 600;
     text-decoration: none;
 }
 
 .table td a:hover {
-    color: #3730a3;
+    color: #B45309;
     text-decoration: underline;
 }
 
@@ -219,6 +219,16 @@
 .badge-success {
     color: #15803d;
     background: #dcfce7;
+}
+
+.badge-danger {
+    color: #b91c1c;
+    background: #fee2e2;
+}
+
+.badge-secondary {
+    background-color: #e5e7eb;
+    color: #374151;
 }
 
 /* ==============================
@@ -265,7 +275,6 @@
     }
 }
 
-
 /* ==============================
    TAB KELOLA PENGGUNA
 ============================== */
@@ -294,16 +303,17 @@
 }
 
 .user-tab:hover {
-    color: #4f46e5;
+    color: #D97706;
 }
 
 .user-tab.active {
-    color: #ffff;
-    background: #4f46e5;
+    color: #ffffff;
+    background: #F59E0B;
     box-shadow: 0 1px 4px rgba(15, 23, 42, 0.1);
 }
 
 /* Konten Tab */
+
 .user-tab-content {
     display: none;
 }
@@ -312,13 +322,8 @@
     display: block;
 }
 
-/* Badge Status Akun */
-.badge-danger {
-    color: #b91c1c;
-    background: #fee2e2;
-}
-
 /* Responsive Tab */
+
 @media (max-width: 768px) {
     .user-tabs {
         width: 100%;
@@ -330,7 +335,6 @@
         font-size: 12px;
     }
 }
-
 
 /* ==============================
    UBAH STATUS PENGGUNA
@@ -354,14 +358,14 @@
 }
 
 .status-select:focus {
-    border-color: #6366f1;
+    border-color: #F59E0B;
 }
 
 .btn-update-status {
     padding: 8px 12px;
     border: none;
     border-radius: 7px;
-    background: #4f46e5;
+    background: #F59E0B;
     color: #ffffff;
     font-size: 12px;
     font-weight: 600;
@@ -370,9 +374,8 @@
 }
 
 .btn-update-status:hover {
-    background: #4338ca;
+    background: #D97706;
 }
-
 
 /* ==============================
    MODAL KONFIRMASI UBAH STATUS
@@ -412,8 +415,8 @@
     height: 55px;
     margin: 0 auto 16px;
     border-radius: 50%;
-    background: #eef2ff;
-    color: #4f46e5;
+    background: #FFFBEB;
+    color: #F59E0B;
     font-size: 28px;
 }
 
@@ -459,11 +462,11 @@
 
 .btn-modal-confirm {
     color: #ffffff;
-    background: #4f46e5;
+    background: #F59E0B;
 }
 
 .btn-modal-confirm:hover {
-    background: #4338ca;
+    background: #D97706;
 }
 
 @keyframes modalFadeIn {

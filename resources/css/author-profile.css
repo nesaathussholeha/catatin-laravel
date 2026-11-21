@@ -576,7 +576,7 @@
     font-weight: 700;
 }
 
-.report-modal-content > p {
+.report-modal-content>p {
     margin: 0 0 20px;
     color: #88899a;
     font-size: 12px;
@@ -797,4 +797,12 @@
     .uploaded-footer {
         flex-direction: column;
     }
+}
+
+.note-card[hidden] {
+    display: none !important;
+}
+
+.empty-message[hidden] {
+    display: none !important;
 }

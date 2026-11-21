@@ -40,16 +40,19 @@ class LoginController extends Controller
             ->first();
 
         // Memeriksa akun dan password
+        // Memeriksa akun dan password
         if (
             !$user ||
             !Hash::check($request->password, $user->password) ||
-            $user->status === 'blocked'
+            in_array($user->status, ['blocked', 'deleted'])
         ) {
             return back()
                 ->withErrors([
-                    'identifier' => $user && $user->status === 'blocked'
-                        ? 'Akun kamu telah diblokir dan tidak dapat login.'
-                        : 'Email, NIM, username, atau password tidak sesuai.',
+                    'identifier' => !$user || !Hash::check($request->password, $user->password)
+                        ? 'Email, NIM, username, atau password tidak sesuai.'
+                        : ($user->status === 'deleted'
+                            ? 'Akun ini telah dihapus dan tidak dapat digunakan lagi.'
+                            : 'Akun kamu telah diblokir dan tidak dapat login.'),
                 ])
                 ->onlyInput('identifier');
         }

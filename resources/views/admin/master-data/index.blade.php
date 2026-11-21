@@ -12,6 +12,12 @@
 
 @section('content')
 
+    <div class="page-header">
+        <div>
+            <h1>Kelola Pengguna</h1>
+            <p>Kelola akun mahasiswa dan laporan pengguna.</p>
+        </div>
+    </div>
 
     {{-- Notifikasi --}}
     @if (session('success') || session('error'))

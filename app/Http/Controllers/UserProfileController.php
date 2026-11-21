@@ -211,6 +211,7 @@ class UserProfileController extends Controller
     }
 
     // Menonaktifkan akun mahasiswa
+    // Menghapus akun mahasiswa
     public function destroy(Request $request)
     {
         $request->validate([
@@ -225,9 +226,9 @@ class UserProfileController extends Controller
 
         $user = Auth::user();
 
-        // Ubah status akun menjadi inactive
+        // Tandai akun sebagai dihapus
         $user->update([
-            'status' => 'inactive',
+            'status' => 'deleted',
         ]);
 
         // Logout pengguna
@@ -238,6 +239,6 @@ class UserProfileController extends Controller
 
         return redirect()
             ->route('login')
-            ->with('success', 'Akun berhasil dinonaktifkan.');
+            ->with('success', 'Akun berhasil dihapus.');
     }
 }

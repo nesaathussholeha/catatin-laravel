@@ -7,9 +7,10 @@ use App\Models\Catatan;
 
 class AuthorProfileController extends Controller
 {
-    public function show($username)
+    public function show($user)
     {
-        $user = User::where('username', $username)->firstOrFail();
+        // Cari penulis berdasarkan ID
+        $user = User::findOrFail($user);
 
         abort_unless($user->role === 'student', 404);
 
@@ -21,7 +22,6 @@ class AuthorProfileController extends Controller
             ->latest()
             ->get();
 
-
         $namaPenulis = $user->name;
         $inisial = strtoupper(substr($namaPenulis, 0, 2));
         $foto = $user->profile_photo;
@@ -31,8 +31,11 @@ class AuthorProfileController extends Controller
 
         $jumlahCatatan = $catatan->count();
         $jumlahUpvote = $catatan->sum('upvote');
-
-        $jumlahUnduhan = 0;
+        $jumlahKategori = $catatan
+            ->pluck('category_id')
+            ->filter()
+            ->unique()
+            ->count();
 
         $jumlahMatkul = $catatan
             ->pluck('matkul')
@@ -43,13 +46,12 @@ class AuthorProfileController extends Controller
         $statistik = [
             'jumlah_catatan' => $jumlahCatatan,
             'total_upvote' => $jumlahUpvote,
-            'jumlah_unduhan' => $jumlahUnduhan,
+            'jumlah_kategori' => $jumlahKategori,
             'jumlah_matkul' => $jumlahMatkul,
         ];
 
         $kategoriList = $catatan
-            ->map(fn($item) => $item->category?->name)
-            ->filter()
+            ->map(fn($item) => $item->category?->name ?? 'Umum')
             ->unique()
             ->values();
 
@@ -63,7 +65,7 @@ class AuthorProfileController extends Controller
             'tanggalBergabung',
             'jumlahCatatan',
             'jumlahUpvote',
-            'jumlahUnduhan',
+            'jumlahKategori',
             'jumlahMatkul',
             'statistik',
             'kategoriList'
