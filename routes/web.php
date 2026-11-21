@@ -165,6 +165,9 @@ Route::prefix('admin')
         Route::get('/user-reports', [UserReportController::class, 'index'])
             ->name('user-reports.index');
 
+        Route::patch('/users/{user}/status', [UserReportController::class, 'updateUserStatus'])
+            ->name('users.update-status');
+
         Route::get('/user-reports/{user_report}', [UserReportController::class, 'show'])
             ->name('user-reports.show');
 

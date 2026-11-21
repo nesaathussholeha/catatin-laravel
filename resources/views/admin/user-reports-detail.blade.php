@@ -2,12 +2,12 @@
 @extends('layouts.admin')
 
 @section('title', 'Detail Laporan Pengguna')
-@section('page-heading', 'Detail Laporan Pengguna')
+@section('page-heading', 'Kelola Pengguna')
 
 @push('styles')
     @vite([
-        'resources/css/user-report-detail.css',
-        'resources/js/user-report-detail.js'
+        'resources/css/user-reports-detail.css',
+        'resources/js/user-reports-detail.js'
     ])
 @endpush
 

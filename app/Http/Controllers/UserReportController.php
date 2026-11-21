@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class UserReportController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, User $users)
     {
         $query = UserReport::with([
             'reporter',
@@ -44,8 +44,34 @@ class UserReportController extends Controller
         $pendingReports = UserReport::where('status', 'pending')->count();
         $completedReports = UserReport::where('status', 'completed')->count();
 
+
+        $userQuery = User::where('role', 'student');
+
+        // Pencarian pengguna
+        if ($request->filled('user_search')) {
+            $searchUser = $request->user_search;
+
+            $userQuery->where(function ($q) use ($searchUser) {
+                $q->where('name', 'like', "%{$searchUser}%")
+                    ->orWhere('username', 'like', "%{$searchUser}%")
+                    ->orWhere('email', 'like', "%{$searchUser}%");
+            });
+        }
+
+        // Filter status akun
+        if (in_array($request->user_status, ['active', 'inactive', 'blocked'])) {
+            $userQuery->where('status', $request->user_status);
+        }
+
+        // Pagination daftar pengguna
+        $users = $userQuery->latest()
+            ->paginate(10, ['*'], 'users_page')
+            ->withQueryString();
+
+
         return view('admin.user-reports', compact(
             'reports',
+            'users',
             'totalReports',
             'pendingReports',
             'completedReports'
@@ -60,7 +86,7 @@ class UserReportController extends Controller
             'reviewer',
         ]);
 
-        return view('admin.user-report-detail', [
+        return view('admin.user-reports-detail', [
             'report' => $user_report,
         ]);
     }
@@ -142,5 +168,24 @@ class UserReportController extends Controller
         return redirect()
             ->route('admin.user-reports.show', $user_report->id)
             ->with('success', 'Keputusan laporan berhasil disimpan.');
+    }
+
+
+    public function updateUserStatus(Request $request, User $user)
+    {
+        // Pastikan akun yang diubah adalah mahasiswa
+        if ($user->role !== 'student') {
+            abort(404);
+        }
+
+        $validated = $request->validate([
+            'status' => ['required', 'in:active,inactive,blocked'],
+        ]);
+
+        $user->update([
+            'status' => $validated['status'],
+        ]);
+
+        return back()->with('success', 'Status pengguna berhasil diperbarui.');
     }
 }
