@@ -49,6 +49,14 @@ export default defineConfig({
                 // Kelola Laporan
                 'resources/css/kelola-laporan.css',
                 'resources/js/kelola-laporan.js',
+
+                // Catatan Saya
+                'resources/css/catatan_saya.css',
+                'resources/js/catatan_saya.js',
+
+                // Unggah Catatan
+                'resources/css/unggah-catatan.css',
+                'esources/js/unggah-catatan.js',
             ],
 
             refresh: true,
