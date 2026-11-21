@@ -1,16 +1,33 @@
+
+/* =========================================
+   LAYOUT UTAMA
+========================================= */
+
 .pl-layout {
     display: grid;
-    grid-template-columns: 300px minmax(0, 1fr);
-    gap: 28px;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 24px;
     align-items: start;
+    width: 100%;
+    min-width: 0;
 }
 
-/* ---------- Kiri: daftar folder ---------- */
 .pl-sidebar {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    min-width: 0;
 }
+
+.pl-detail {
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* =========================================
+   FOLDER SIDEBAR
+========================================= */
 
 .pl-folder {
     position: relative;
@@ -22,7 +39,7 @@
     background: #fff;
     border: 1px solid #d9dce6;
     border-radius: 14px;
-    transition: border-color .15s, box-shadow .15s;
+    transition: border-color .2s, box-shadow .2s;
 }
 
 .pl-folder:hover {
@@ -45,7 +62,7 @@
 .pl-folder-link strong {
     display: block;
     font-size: 1rem;
-    line-height: 1.35;
+    line-height: 1.4;
     overflow-wrap: anywhere;
 }
 
@@ -56,21 +73,24 @@
     font-size: .85rem;
 }
 
-/* Menu titik tiga */
+
+/* =========================================
+   MENU TITIK TIGA
+========================================= */
+
 .pl-menu {
     position: relative;
     flex-shrink: 0;
 }
 
 .pl-menu-btn {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     border: 0;
     border-radius: 8px;
     background: transparent;
     color: #6b7280;
     font-size: 1.2rem;
-    line-height: 1;
     cursor: pointer;
 }
 
@@ -81,7 +101,7 @@
 
 .pl-menu-list {
     position: absolute;
-    top: 32px;
+    top: 34px;
     right: 0;
     z-index: 20;
     min-width: 120px;
@@ -137,60 +157,41 @@
     text-align: center;
 }
 
-/* ---------- Kanan: isi folder ---------- */
-.pl-detail {
-    min-width: 0;
-}
+
+/* =========================================
+   HEADER DETAIL
+========================================= */
 
 .pl-detail-head {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: 16px;
-    flex-wrap: wrap;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
 }
 
 .pl-detail-head h2 {
     margin: 0;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     font-weight: 700;
     overflow-wrap: anywhere;
 }
 
 .pl-desc {
-    margin: 4px 0 0;
+    margin: 5px 0 0;
     color: #6b7280;
     font-size: .88rem;
 }
 
-.pl-btn-katalog {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 18px;
-    border-radius: 999px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    box-shadow: 0 6px 16px rgba(99, 102, 241, .32);
-    color: #fff;
-    font-size: .88rem;
-    font-weight: 600;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: transform .15s, box-shadow .15s;
-}
 
-.pl-btn-katalog:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(99, 102, 241, .42);
-}
-
-.pl-btn-katalog iconify-icon {
-    font-size: 1.1rem;
-}
+/* =========================================
+   TABEL KOLEKSI
+========================================= */
 
 .pl-table-wrap {
-    overflow-x: auto;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
     background: #fff;
     border: 1px solid #e5e7eb;
     border-radius: 14px;
@@ -199,35 +200,40 @@
 
 .pl-table {
     width: 100%;
-    min-width: 460px;
+    min-width: 0;
     border-collapse: collapse;
     table-layout: fixed;
     font-size: .9rem;
 }
 
+/* Lebar masing-masing kolom */
+.pl-table th:nth-child(1),
+.pl-table td:nth-child(1) {
+    width: 50%;
+}
+
 .pl-table th:nth-child(2),
 .pl-table td:nth-child(2) {
-    width: 30%;
+    width: 27%;
 }
 
 .pl-table th:nth-child(3),
 .pl-table td:nth-child(3) {
-    width: 120px;
+    width: 23%;
 }
 
 .pl-table thead th {
-    padding: 13px 18px;
+    padding: 14px 16px;
     background: #f8f9fd;
     border-bottom: 1px solid #e5e7eb;
     color: #6b7280;
-    font-size: .78rem;
+    font-size: .8rem;
     font-weight: 700;
-    letter-spacing: .02em;
     text-align: left;
 }
 
 .pl-table tbody td {
-    padding: 14px 18px;
+    padding: 16px;
     border-bottom: 1px solid #f0f1f6;
     overflow-wrap: anywhere;
     vertical-align: middle;
@@ -241,26 +247,154 @@
     background: #fafaff;
 }
 
-.pl-table .pl-aksi-col {
-    text-align: right;
-    white-space: nowrap;
+.pl-table .pl-aksi-col,
+.pl-table td.pl-aksi {
+    text-align: center;
 }
 
-.pl-table tbody td.pl-kosong {
-    padding: 36px 18px;
+.pl-table td.pl-kosong {
+    padding: 36px 16px;
     color: #6b7280;
     text-align: center;
+}
+
+.pl-kosong iconify-icon {
+    display: block;
+    margin: 0 auto 8px;
+    font-size: 1.7rem;
+    color: #a5b4fc;
 }
 
 .pl-table tbody tr:hover td.pl-kosong {
     background: transparent;
 }
 
+
+/* =========================================
+   TOMBOL KELUARKAN - TEMPAT SAMPAH
+========================================= */
+
+.pl-btn-keluar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 8px 12px;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    background: #fff5f5;
+    color: #dc2626;
+    font: inherit;
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .2s, color .2s,
+        border-color .2s, box-shadow .2s;
+}
+
+.pl-btn-keluar iconify-icon {
+    font-size: 17px;
+    transition: transform .25s ease;
+}
+
+.pl-btn-keluar:hover {
+    background: #dc2626;
+    color: #fff;
+    border-color: #dc2626;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, .2);
+}
+
+.pl-btn-keluar:hover iconify-icon {
+    animation: gerakTempatSampah .45s ease;
+}
+
+@keyframes gerakTempatSampah {
+    0%, 100% {
+        transform: rotate(0);
+    }
+
+    25% {
+        transform: rotate(-15deg);
+    }
+
+    50% {
+        transform: rotate(15deg);
+    }
+
+    75% {
+        transform: rotate(-8deg);
+    }
+}
+
+
+/* =========================================
+   ANIMASI BARIS CATATAN
+========================================= */
+
+.pl-row-keluar {
+    animation: hapusBaris .4s ease forwards;
+    pointer-events: none;
+}
+
+@keyframes hapusBaris {
+    0% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+
+    60% {
+        opacity: .4;
+        transform: translateX(20px) scale(.97);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(40px) scale(.9);
+    }
+}
+
+
+/* =========================================
+   TOMBOL TAMBAHKAN KATALOG
+========================================= */
+
 .pl-detail-foot {
     display: flex;
     justify-content: flex-end;
     margin-top: 16px;
 }
+
+.pl-btn-katalog {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    box-shadow: 0 6px 16px rgba(99, 102, 241, .32);
+    color: #fff;
+    font-size: .9rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    transition: transform .15s, box-shadow .15s;
+}
+
+.pl-btn-katalog:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, .42);
+}
+
+.pl-btn-katalog iconify-icon {
+    font-size: 1.1rem;
+}
+
+
+/* =========================================
+   PLACEHOLDER
+========================================= */
 
 .pl-placeholder {
     display: grid;
@@ -278,7 +412,11 @@
     color: #a5b4fc;
 }
 
-/* ---------- Tombol ---------- */
+
+/* =========================================
+   TOMBOL UMUM
+========================================= */
+
 .pl-btn {
     padding: 10px 18px;
     border: 0;
@@ -319,7 +457,11 @@
     background: #b91c1c;
 }
 
-/* ---------- Modal ---------- */
+
+/* =========================================
+   MODAL BUAT, UBAH, HAPUS
+========================================= */
+
 .pl-modal {
     position: fixed;
     inset: 0;
@@ -394,33 +536,197 @@
     line-height: 1.6;
 }
 
-/* ---------- Responsif ---------- */
-@media (max-width: 900px) {
 
-    .pl-layout,
-    .pl-sidebar,
-    .pl-detail {
-    max-width: 100%;
+/* =========================================
+   MODAL KELUARKAN CATATAN
+========================================= */
+
+.pl-dm {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    background: rgba(17, 24, 39, .55);
+    animation: modalMuncul .2s ease;
 }
+
+.pl-dm[hidden] {
+    display: none;
+}
+
+.pl-dm-box {
+    width: min(100%, 400px);
+    padding: 26px;
+    border-radius: 18px;
+    background: #fff;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .2);
+    animation: kotakMuncul .25s ease;
+}
+
+.pl-dm-ikon {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    background: #fef2f2;
+    color: #dc2626;
+    font-size: 1.7rem;
+}
+
+.pl-dm-box h3 {
+    margin: 0 0 8px;
+    font-size: 1.1rem;
+}
+
+.pl-dm-box p {
+    margin: 0;
+    color: #6b7280;
+    font-size: .92rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.pl-dm-aksi {
+    display: flex;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.pl-dm-aksi button {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 11px;
+    border: 1px solid #d9dce6;
+    border-radius: 10px;
+    background: #fff;
+    font: inherit;
+    font-size: .88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+}
+
+.pl-dm-aksi .pl-dm-batal:hover {
+    background: #f3f4f6;
+}
+
+.pl-dm-aksi .pl-dm-ya {
+    border-color: #dc2626;
+    background: #dc2626;
+    color: #fff;
+}
+
+.pl-dm-aksi .pl-dm-ya:hover {
+    background: #b91c1c;
+}
+
+.pl-dm-aksi button:active {
+    transform: scale(.97);
+}
+
+@keyframes modalMuncul {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes kotakMuncul {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* =========================================
+   RESPONSIF TABLET
+========================================= */
+
+@media (max-width: 900px) {
     .pl-layout {
-        display: block;
+        grid-template-columns: 1fr;
+        gap: 22px;
     }
 
     .pl-sidebar {
-        margin-bottom: 24px;
+        width: 100%;
     }
 
-    .pl-sidebar,
     .pl-detail {
         width: 100%;
-        min-width: 0;
     }
 }
 
-@media (max-width: 767px) {
+
+/* =========================================
+   RESPONSIF HP
+========================================= */
+
+@media (max-width: 600px) {
     .pl-detail-head {
         flex-direction: column;
         align-items: stretch;
+    }
+
+    .pl-table thead {
+        display: none;
+    }
+
+    .pl-table,
+    .pl-table tbody {
+        display: block;
+        width: 100%;
+    }
+
+    .pl-table tbody tr {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 8px;
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .pl-table tbody td {
+        display: block;
+        width: auto !important;
+        padding: 4px;
+        border: 0;
+    }
+
+    .pl-table tbody td:first-child {
+        grid-column: 1 / -1;
+        font-weight: 600;
+    }
+
+    .pl-table tbody td:nth-child(2) {
+        color: #6b7280;
+        font-size: .85rem;
+    }
+
+    .pl-table tbody td.pl-aksi {
+        justify-self: end;
+    }
+
+    .pl-table tbody td.pl-kosong {
+        grid-column: 1 / -1;
+        text-align: center;
     }
 
     .pl-detail-foot {
@@ -430,7 +736,7 @@
     .pl-btn-katalog {
         display: flex;
         width: 100%;
-        justify-content: center;
+        box-sizing: border-box;
     }
 
     .pl-modal-actions {
@@ -440,39 +746,452 @@
     .pl-modal-actions button {
         width: 100%;
     }
+
+    .pl-dm-aksi {
+        flex-direction: column-reverse;
+    }
+
+    .pl-dm-aksi button {
+        width: 100%;
+    }
+}
+
+
+/* =========================================
+   AKSESIBILITAS
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .pl-btn-keluar,
+    .pl-btn-keluar iconify-icon,
+    .pl-dm,
+    .pl-dm-box,
+    .pl-row-keluar {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+
+/* KARTU CATATAN DALAM FOLDER */
+.pl-card-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.pl-catatan-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px;
+    background: #ffffff;
+    border: 1px solid #e8eaf0;
+    border-radius: 12px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pl-catatan-card:hover {
+    border-color: #c9c5f5;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.pl-card-info {
+    min-width: 0;
+}
+
+.pl-card-info h3 {
+    margin: 0 0 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #25243a;
+    overflow-wrap: anywhere;
+}
+
+.pl-card-info p {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    font-size: 13px;
+    color: #77768a;
 }
 
 .pl-btn-keluar {
-    display: inline-flex; align-items: center; gap: .35rem;
-    padding: .4rem .85rem; border: 1px solid #fecaca; border-radius: 999px;
-    background: #fef2f2; color: #dc2626; font: inherit; font-size: .8rem;
-    font-weight: 600; cursor: pointer; white-space: nowrap;
-    transition: background .15s, color .15s, transform .15s, box-shadow .15s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-shrink: 0;
+    padding: 9px 12px;
+    border: none;
+    border-radius: 8px;
+    background: #fff0f0;
+    color: #d94b4b;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
 }
-.pl-btn-keluar:hover {
-    background: #dc2626; border-color: #dc2626; color: #fff;
-    transform: translateY(-1px); box-shadow: 0 6px 14px rgba(220, 38, 38, .25);
-}
-.pl-btn-keluar:active { transform: translateY(0); }
 
-.pl-dm {
-    position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center;
-    padding: 1rem; background: rgba(17, 24, 39, .55);
+.pl-btn-keluar:hover {
+    background: #ffe0e0;
 }
-.pl-dm[hidden] { display: none; }
-.pl-dm-box {
-    width: min(100%, 400px); padding: 1.6rem; border-radius: 18px;
-    background: #fff; text-align: center;
+
+.pl-kosong {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 40px 20px;
+    color: #88879a;
+    text-align: center;
 }
-.pl-dm-ikon {
-    display: grid; place-items: center; width: 52px; height: 52px; margin: 0 auto .8rem;
-    border-radius: 50%; background: #fef2f2; color: #dc2626; font-size: 1.6rem;
+
+.pl-kosong iconify-icon {
+    font-size: 32px;
 }
-.pl-dm-box h3 { margin: 0 0 .4rem; }
-.pl-dm-box p { margin: 0; color: #6b7280; font-size: .92rem; overflow-wrap: anywhere; }
-.pl-dm-aksi { display: flex; gap: .6rem; margin-top: 1.2rem; }
-.pl-dm-aksi button {
-    flex: 1; padding: .6rem; border: 1px solid #d9dce6; border-radius: 10px;
-    background: #fff; font: inherit; font-weight: 600; cursor: pointer;
+
+.pl-kosong p {
+    margin: 0;
+    font-size: 14px;
 }
-.pl-dm-aksi .pl-dm-ya { border-color: #dc2626; background: #dc2626; color: #fff; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .pl-card-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .pl-catatan-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .pl-btn-keluar {
+        align-self: flex-end;
+    }
+}
+
+
+/* DAFTAR KARTU CATATAN */
+.pl-card-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    width: 100%;
+    margin-top: 24px;
+}
+
+.pl-catatan-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    min-width: 0;
+    min-height: 190px;
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #e8eaf0;
+    border-radius: 16px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+    transition: 0.2s ease;
+}
+
+.pl-catatan-card:hover {
+    border-color: #c9c5f5;
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.07);
+    transform: translateY(-2px);
+}
+
+.pl-card-info {
+    min-width: 0;
+}
+
+.pl-card-label {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #7770c9;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.pl-card-info h3 {
+    margin: 0 0 14px;
+    color: #25243a;
+    font-size: 18px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.pl-card-jurusan,
+.pl-card-matkul {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0 0;
+    color: #77768a;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.pl-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding-top: 16px;
+    border-top: 1px solid #f0f0f4;
+}
+
+.pl-btn-detail,
+.pl-btn-keluar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 40px;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.pl-btn-detail {
+    background: #f0efff;
+    color: #6259b5;
+}
+
+.pl-btn-detail:hover {
+    background: #e5e2ff;
+}
+
+.pl-btn-keluar {
+    background: #fff0f0;
+    color: #d94b4b;
+}
+
+.pl-btn-keluar:hover {
+    background: #ffe0e0;
+}
+
+.pl-kosong {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 220px;
+    padding: 30px;
+    color: #88879a;
+    text-align: center;
+    background: #fff;
+    border: 1px dashed #dcdce5;
+    border-radius: 16px;
+}
+
+.pl-kosong iconify-icon {
+    font-size: 36px;
+}
+
+.pl-kosong p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* TABLET */
+@media (max-width: 900px) {
+    .pl-card-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* HP */
+@media (max-width: 480px) {
+    .pl-catatan-card {
+        padding: 18px;
+        min-height: auto;
+    }
+
+    .pl-card-info h3 {
+        font-size: 16px;
+    }
+
+    .pl-card-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .pl-btn-detail,
+    .pl-btn-keluar {
+        width: 100%;
+    }
+}
+
+/* =========================================
+   MODAL DETAIL CATATAN
+========================================= */
+
+.pl-detail-modal-box {
+    max-width: 520px;
+}
+
+.pl-detail-modal-box h2 {
+    margin: 8px 0 24px;
+    color: #25243a;
+    font-size: 1.3rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.pl-detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px 0;
+    border-bottom: 1px solid #eeeef4;
+}
+
+.pl-detail-item span {
+    color: #77768a;
+    font-size: .85rem;
+}
+
+.pl-detail-item strong {
+    color: #25243a;
+    font-size: .95rem;
+    overflow-wrap: anywhere;
+}
+
+/* =========================================
+   ANIMASI CARD KELUAR
+========================================= */
+
+.pl-card-keluar {
+    animation: kartuKeluar .4s ease forwards;
+    pointer-events: none;
+}
+
+@keyframes kartuKeluar {
+    0% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+
+    60% {
+        opacity: .4;
+        transform: translateX(20px) scale(.97);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(40px) scale(.9);
+    }
+}
+
+/* =========================================
+   CARD RESPONSIF
+========================================= */
+
+.pl-card-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    width: 100%;
+    margin-top: 24px;
+}
+
+.pl-catatan-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    min-width: 0;
+    min-height: 190px;
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #e8eaf0;
+    border-radius: 16px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .04);
+    transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+
+.pl-catatan-card:hover {
+    border-color: #c9c5f5;
+    box-shadow: 0 7px 20px rgba(0, 0, 0, .07);
+    transform: translateY(-2px);
+}
+
+.pl-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding-top: 16px;
+    border-top: 1px solid #f0f0f4;
+}
+
+.pl-card-actions form {
+    margin: 0;
+}
+
+.pl-btn-detail,
+.pl-card-actions .pl-btn-keluar {
+    min-height: 42px;
+    padding: 10px 14px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 9px;
+}
+
+.pl-btn-detail {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border: 0;
+    background: #f0efff;
+    color: #6259b5;
+    cursor: pointer;
+}
+
+.pl-btn-detail:hover {
+    background: #e5e2ff;
+}
+
+@media (max-width: 900px) {
+    .pl-card-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .pl-catatan-card {
+        min-height: auto;
+        padding: 18px;
+    }
+
+    .pl-card-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .pl-card-actions form,
+    .pl-card-actions .pl-btn-detail,
+    .pl-card-actions .pl-btn-keluar {
+        width: 100%;
+    }
+}
