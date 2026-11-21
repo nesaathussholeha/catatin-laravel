@@ -48,7 +48,7 @@ Route::middleware('guest')->group(function () {
 // HALAMAN MAHASISWA
 // ========================================
 
-Route::middleware(['auth', 'role:student'])->group(function () {
+Route::middleware(['auth', 'role:student', 'no.cache'])->group(function () {
 
     Route::resource('tugas', TugasController::class)
         ->parameters(['tugas' => 'tugas']);
@@ -121,7 +121,7 @@ Route::middleware(['auth', 'role:student'])->group(function () {
 
 Route::prefix('admin')
     ->name('admin.')
-    ->middleware(['auth', 'role:admin'])
+    ->middleware(['auth', 'role:admin', 'no.cache'])
     ->group(function () {
 
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])
