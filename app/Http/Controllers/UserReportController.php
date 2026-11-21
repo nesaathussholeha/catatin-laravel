@@ -59,7 +59,7 @@ class UserReportController extends Controller
         }
 
         // Filter status akun
-        if (in_array($request->user_status, ['active', 'inactive', 'blocked'])) {
+        if (in_array($request->user_status, ['active', 'inactive', 'blocked', 'deleted'])) {
             $userQuery->where('status', $request->user_status);
         }
 
@@ -152,10 +152,14 @@ class UserReportController extends Controller
         }
 
         if ($validated['decision'] === 'accepted') {
-            User::whereKey($user_report->reported_user_id)
-                ->update([
-                    'status' => $validated['account_status'],
-                ]);
+            $reportedUser = User::find($user_report->reported_user_id);
+
+            if ($reportedUser && $reportedUser->status === 'deleted') {
+                return back()->with(
+                    'error',
+                    'Akun ini telah dihapus oleh pemiliknya dan statusnya tidak dapat diubah lagi.'
+                );
+            }
         }
 
         $user_report->update([
@@ -176,6 +180,14 @@ class UserReportController extends Controller
         // Pastikan akun yang diubah adalah mahasiswa
         if ($user->role !== 'student') {
             abort(404);
+        }
+
+        // Akun yang sudah dihapus tidak dapat diubah statusnya
+        if ($user->status === 'deleted') {
+            return back()->with(
+                'error',
+                'Akun ini telah dihapus oleh pemiliknya dan statusnya tidak dapat diubah lagi.'
+            );
         }
 
         $validated = $request->validate([

@@ -1,4 +1,3 @@
-
 @extends('layouts.admin')
 
 @section('title', 'Kelola Pengguna')
@@ -46,14 +45,15 @@
             {{-- Pencarian dan Filter Pengguna --}}
             <form action="{{ route('admin.user-reports.index') }}" method="GET" class="filter-form">
                 <input type="text" name="user_search" id="searchPengguna"
-                    placeholder="Cari nama, username, atau email..."
-                    value="{{ request('user_search') }}">
+                    placeholder="Cari nama, username, atau email..." value="{{ request('user_search') }}">
 
                 <select name="user_status" id="filterStatusPengguna">
                     <option value="">Semua Status</option>
                     <option value="active" {{ request('user_status') === 'active' ? 'selected' : '' }}>Aktif</option>
-                    <option value="inactive" {{ request('user_status') === 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
+                    <option value="inactive" {{ request('user_status') === 'inactive' ? 'selected' : '' }}>Tidak Aktif
+                    </option>
                     <option value="blocked" {{ request('user_status') === 'blocked' ? 'selected' : '' }}>Diblokir</option>
+                    <option value="deleted" {{ request('user_status') === 'deleted' ? 'selected' : '' }}>Dihapus</option>
                 </select>
 
                 <button type="submit">Cari</button>
@@ -86,26 +86,36 @@
                                         <span class="badge badge-success">Aktif</span>
                                     @elseif ($user->status === 'inactive')
                                         <span class="badge badge-warning">Tidak Aktif</span>
-                                    @else
+                                    @elseif ($user->status === 'blocked')
                                         <span class="badge badge-danger">Diblokir</span>
+                                    @elseif ($user->status === 'deleted')
+                                        <span class="badge badge-secondary">Dihapus</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <form action="{{ route('admin.users.update-status', $user->id) }}"
-                                        method="POST" class="status-form">
-                                        @csrf
-                                        @method('PATCH')
+                                    @if ($user->status === 'deleted')
+                                        <span> - </span>
+                                    @else
+                                        <form action="{{ route('admin.users.update-status', $user->id) }}" method="POST"
+                                            class="status-form">
+                                            @csrf
+                                            @method('PATCH')
 
-                                        <select name="status" class="status-select"
-                                            data-current-status="{{ $user->status }}"
-                                            data-user-name="{{ $user->name }}">
-                                            <option value="active" {{ $user->status === 'active' ? 'selected' : '' }}>Aktif</option>
-                                            <option value="inactive" {{ $user->status === 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
-                                            <option value="blocked" {{ $user->status === 'blocked' ? 'selected' : '' }}>Diblokir</option>
-                                        </select>
+                                            <select name="status" class="status-select"
+                                                data-current-status="{{ $user->status }}"
+                                                data-user-name="{{ $user->name }}">
+                                                <option value="active" {{ $user->status === 'active' ? 'selected' : '' }}>
+                                                    Aktif</option>
+                                                <option value="inactive"
+                                                    {{ $user->status === 'inactive' ? 'selected' : '' }}>Tidak Aktif
+                                                </option>
+                                                <option value="blocked"
+                                                    {{ $user->status === 'blocked' ? 'selected' : '' }}>Diblokir</option>
+                                            </select>
 
-                                        <button type="button" class="btn-update-status">Ubah</button>
-                                    </form>
+                                            <button type="button" class="btn-update-status">Ubah</button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @empty
@@ -140,8 +150,7 @@
 
             {{-- Pencarian dan Filter Laporan --}}
             <form action="{{ route('admin.user-reports.index') }}" method="GET" class="filter-form">
-                <input type="text" name="search" id="searchLaporan"
-                    placeholder="Cari nama atau alasan laporan..."
+                <input type="text" name="search" id="searchLaporan" placeholder="Cari nama atau alasan laporan..."
                     value="{{ request('search') }}">
 
                 <select name="status" id="filterStatusLaporan">
