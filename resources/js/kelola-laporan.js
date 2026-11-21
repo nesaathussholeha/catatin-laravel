@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const STORAGE_KEY = 'catatin_laporan_preview_v1';
-
     const STATUS_LABEL = {
         menunggu: 'Menunggu',
         diproses: 'Diproses',
         selesai: 'Selesai',
     };
+
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
 
     const state = {
         loading: true,
@@ -28,39 +28,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const confirmDeleteBtn = document.getElementById('confirm-delete');
 
     /* ========================================
-       DATA & PENYIMPANAN LOKAL
+       DATA DARI SERVER
     ======================================== */
 
     const loadReports = () => {
-        const fromServer = Array.isArray(window.LAPORAN_DATA)
-            ? window.LAPORAN_DATA
+        return Array.isArray(window.LAPORAN_DATA)
+            ? window.LAPORAN_DATA.slice()
             : [];
-
-        if (fromServer.length > 0) {
-            return fromServer.slice();
-        }
-
-        try {
-            const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-            if (saved && Array.isArray(saved.reports)) {
-                return saved.reports;
-            }
-        } catch (error) {
-            console.warn('Data laporan lokal tidak dapat dibaca:', error);
-        }
-
-        return [];
-    };
-
-    const persist = () => {
-        try {
-            localStorage.setItem(
-                STORAGE_KEY,
-                JSON.stringify({ reports: state.reports })
-            );
-        } catch (error) {
-            console.warn('Data laporan gagal disimpan:', error);
-        }
     };
 
     /* ========================================
@@ -93,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const getStatus = (status) => (STATUS_LABEL[status] ? status : 'menunggu');
 
     /* ========================================
-       TOAST (mengikuti .toast-notification layout admin)
+       TOAST
     ======================================== */
 
     const showToast = (message, type = 'success') => {
@@ -284,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
         render(true);
     });
 
-    statusMenu?.addEventListener('click', (event) => {
+    statusMenu?.addEventListener('click', async (event) => {
         const option = event.target.closest('.status-option');
         if (!option || state.menuForId === null) return;
 
@@ -296,12 +270,31 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        report.status = newStatus;
-        persist();
-        render(false);
-        showToast(
-            `Status "${report.catatan}" diubah menjadi ${STATUS_LABEL[newStatus]}`
-        );
+        try {
+            const response = await fetch(`/admin/kelola-laporan/${report.id}/status`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({ status: newStatus }),
+            });
+
+            if (!response.ok) {
+                showToast('Gagal memperbarui status laporan.', 'error');
+                return;
+            }
+
+            report.status = newStatus;
+            render(false);
+            showToast(
+                `Status "${report.catatan}" diubah menjadi ${STATUS_LABEL[newStatus]}`
+            );
+        } catch (error) {
+            showToast('Terjadi kesalahan jaringan saat mengubah status.', 'error');
+        }
     });
 
     document.addEventListener('click', (event) => {
@@ -415,7 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    confirmDeleteBtn?.addEventListener('click', () => {
+    confirmDeleteBtn?.addEventListener('click', async () => {
         if (state.deleteId === null) return;
 
         const id = state.deleteId;
@@ -423,24 +416,41 @@ document.addEventListener('DOMContentLoaded', () => {
         closeModal(deleteModal);
         state.deleteId = null;
 
-        const row = tbody?.querySelector(`tr[data-id="${id}"]`);
+        try {
+            const response = await fetch(`/admin/kelola-laporan/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            });
 
-        const finalizeDelete = () => {
-            state.reports = state.reports.filter(
-                (item) => Number(item.id) !== Number(id)
-            );
-            persist();
-            render(false);
-            if (report) {
-                showToast(`Laporan "${report.catatan}" berhasil dihapus`);
+            if (!response.ok) {
+                showToast('Gagal menghapus laporan.', 'error');
+                return;
             }
-        };
 
-        if (row) {
-            row.classList.add('row-leave');
-            setTimeout(finalizeDelete, 250);
-        } else {
-            finalizeDelete();
+            const row = tbody?.querySelector(`tr[data-id="${id}"]`);
+
+            const finalizeDelete = () => {
+                state.reports = state.reports.filter(
+                    (item) => Number(item.id) !== Number(id)
+                );
+                render(false);
+                if (report) {
+                    showToast(`Laporan "${report.catatan}" berhasil dihapus`);
+                }
+            };
+
+            if (row) {
+                row.classList.add('row-leave');
+                setTimeout(finalizeDelete, 250);
+            } else {
+                finalizeDelete();
+            }
+        } catch (error) {
+            showToast('Terjadi kesalahan jaringan saat menghapus laporan.', 'error');
         }
     });
 
@@ -461,5 +471,5 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         state.loading = false;
         render(true);
-    }, 600);
+    }, 300);
 });

@@ -14,7 +14,7 @@ function tampilkanToast(pesan) {
 
     setTimeout(() => {
         toast.hidden = true;
-    }, 3000);
+    }, 3500);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -24,8 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const inputJudul = document.getElementById('inputJudul');
     const inputDeskripsi = document.getElementById('inputDeskripsi');
+    const inputJenis = document.getElementById('inputJenis');
     const errorJudul = document.querySelector('[data-error="judul"]');
     const errorJenis = document.querySelector('[data-error="jenis"]');
+    const submitBtn = form.querySelector('button[type="submit"]');
     let jenisTerpilih = '';
 
     function bukaModal() {
@@ -62,13 +64,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!chip) return;
 
         jenisTerpilih = chip.dataset.value;
+        if (inputJenis) inputJenis.value = jenisTerpilih;
+
         document.querySelectorAll('#chipGroup .chip').forEach((item) => {
             item.classList.toggle('aktif', item === chip);
         });
         errorJenis.textContent = '';
     });
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
         let valid = true;
 
@@ -82,11 +86,48 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (!valid) return;
 
-        form.reset();
-        jenisTerpilih = '';
-        document.querySelectorAll('#chipGroup .chip').forEach((c) => c.classList.remove('aktif'));
-        perbaruiCounter();
-        tutupModal();
-        tampilkanToast('Laporan berhasil dikirim!');
+        if (inputJenis) inputJenis.value = jenisTerpilih;
+
+        const formData = new FormData(form);
+        const teksAsli = submitBtn ? submitBtn.textContent : 'Kirim Laporan';
+
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Mengirim...';
+        }
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: formData,
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                tutupModal();
+                tampilkanToast(data.message || 'Gagal mengirim laporan.');
+                return;
+            }
+
+            form.reset();
+            jenisTerpilih = '';
+            if (inputJenis) inputJenis.value = '';
+            document.querySelectorAll('#chipGroup .chip').forEach((c) => c.classList.remove('aktif'));
+            perbaruiCounter();
+            tutupModal();
+            tampilkanToast(data.message || 'Laporan berhasil dikirim!');
+        } catch (error) {
+            tampilkanToast('Terjadi kesalahan jaringan. Silakan coba lagi.');
+        } finally {
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = teksAsli;
+            }
+        }
     });
 });

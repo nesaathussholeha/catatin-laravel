@@ -152,9 +152,14 @@
                 <button type="button" class="tutup-modal" id="modalClose" aria-label="Tutup">✕</button>
             </div>
 
-            <form id="formLaporan" class="isi-modal" novalidate>
+            <form id="formLaporan"
+                    action="{{ route('catatan.report.store', $catatan->id) }}"
+                    method="POST"
+                    class="isi-modal"
+                    novalidate>
                 @csrf
                 <input type="hidden" name="catatan_id" value="{{ $catatan->id }}">
+                <input type="hidden" name="jenis" id="inputJenis">
 
                 <div class="grup-input">
                     <label for="inputJudul">Judul Laporan <span class="wajib">*</span></label>

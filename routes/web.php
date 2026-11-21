@@ -15,6 +15,8 @@ use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\AdminCatatanController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserReportController;
+use App\Http\Controllers\NoteReportController;
+use App\Http\Controllers\AdminNoteReportController;
 
 // ========================================
 // AUTHENTICATION (GUEST)
@@ -101,6 +103,13 @@ Route::middleware(['auth', 'role:student'])->group(function () {
 
     Route::view('/user/reports/preview', 'user.reports.create')
         ->name('user.reports.preview');
+
+    // Buat laporan
+    Route::middleware(['auth'])->group(function () {
+    Route::post('/catatan/{catatan}/report', [NoteReportController::class, 'store'])
+        ->name('catatan.report.store');
+    });
+
 });
 
 
@@ -182,8 +191,14 @@ Route::prefix('admin')
             ->name('kelola-catatan.destroy');
 
         // Kelola Laporan
-        Route::view('/kelola-laporan', 'admin.kelola-laporan.index')
+        Route::get('/kelola-laporan', [AdminNoteReportController::class, 'index'])
             ->name('kelola-laporan');
+
+        Route::patch('/kelola-laporan/{noteReport}/status', [AdminNoteReportController::class, 'updateStatus'])
+            ->name('kelola-laporan.updateStatus');
+
+        Route::delete('/kelola-laporan/{noteReport}', [AdminNoteReportController::class, 'destroy'])
+            ->name('kelola-laporan.destroy');
     });
 
 
