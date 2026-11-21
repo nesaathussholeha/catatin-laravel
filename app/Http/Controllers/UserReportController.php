@@ -65,18 +65,38 @@ class UserReportController extends Controller
         ]);
     }
 
+
     public function store(Request $request)
     {
         $validated = $request->validate([
             'reported_user_id' => ['required', 'exists:users,id'],
             'reason' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+        ], [
+            'reported_user_id.required' => 'Pengguna yang dilaporkan wajib dipilih.',
+            'reported_user_id.exists' => 'Pengguna yang dilaporkan tidak valid.',
+            'reason.required' => 'Alasan laporan wajib diisi.',
+            'reason.string' => 'Alasan laporan harus berupa teks.',
+            'reason.max' => 'Alasan laporan maksimal 255 karakter.',
+            'description.string' => 'Keterangan tambahan harus berupa teks.',
         ]);
 
+        // Mencegah pengguna melaporkan akun sendiri
         if ($validated['reported_user_id'] == auth()->id()) {
             return back()->withErrors([
                 'reported_user_id' => 'Kamu tidak bisa melaporkan akun sendiri.',
-            ]);
+            ])->withInput();
+        }
+
+        // Mencegah laporan berulang kepada pengguna yang sama
+        $sudahMelaporkan = UserReport::where('reporter_id', auth()->id())
+            ->where('reported_user_id', $validated['reported_user_id'])
+            ->exists();
+
+        if ($sudahMelaporkan) {
+            return back()->withErrors([
+                'reported_user_id' => 'Kamu sudah pernah melaporkan pengguna ini. Kamu tidak dapat melaporkannya kembali.',
+            ])->withInput();
         }
 
         UserReport::create([
@@ -88,6 +108,7 @@ class UserReportController extends Controller
 
         return back()->with('success', 'Laporan berhasil dikirim.');
     }
+
 
     public function update(Request $request, UserReport $user_report)
     {

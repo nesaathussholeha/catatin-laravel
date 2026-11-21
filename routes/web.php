@@ -15,6 +15,7 @@ use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\AdminCatatanController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserReportController;
+use App\Http\Controllers\AuthorProfileController;
 
 // ========================================
 // AUTHENTICATION (GUEST)
@@ -101,6 +102,10 @@ Route::middleware(['auth', 'role:student'])->group(function () {
 
     Route::view('/user/reports/preview', 'user.reports.create')
         ->name('user.reports.preview');
+
+    Route::get('/penulis/{username}', [AuthorProfileController::class, 'show'])
+        ->middleware(['auth', 'role:student'])
+        ->name('user.author-profile');
 });
 
 
