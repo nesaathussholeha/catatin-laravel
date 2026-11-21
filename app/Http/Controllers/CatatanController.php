@@ -94,7 +94,23 @@ class CatatanController extends Controller
 
         $catatan->load(['category', 'user']);
 
-        return view('user.detail-catatan', compact('catatan'));
+        $namaKategori = $catatan->category?->name ?? 'Kategori';
+        $namaPenulis = $catatan->anonim ? 'Anonim' : ($catatan->user?->name ?? 'Pengguna');
+        $inisialPenulis = strtoupper(substr($namaPenulis, 0, 1));
+        $tanggal = $catatan->created_at?->translatedFormat('d F Y') ?? '-';
+
+        $urlCatatan = $catatan->tipe_isi === 'tautan'
+            ? $catatan->tautan
+            : null;
+
+        return view('user.detail-catatan', compact(
+            'catatan',
+            'namaKategori',
+            'namaPenulis',
+            'inisialPenulis',
+            'tanggal',
+            'urlCatatan'
+        ));
     }
 
     /* ---------- Hanya akun aktif ---------- */
@@ -149,5 +165,17 @@ class CatatanController extends Controller
         $catatan->delete();
 
         return redirect()->route('catatan.index')->with('sukses', 'Catatan berhasil dihapus.');
+    }
+
+    // Menampilkan isi catatan berdasarkan jenisnya
+    public function getIsiTampilanAttribute(): ?string
+    {
+        return $this->isi_teks;
+    }
+
+    // Mengecek apakah catatan berupa teks
+    public function getIsTeksAttribute(): bool
+    {
+        return $this->tipe_isi === 'teks';
     }
 }

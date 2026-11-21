@@ -250,7 +250,7 @@
     margin: 0;
 }
 
-.detail-catatan .daftar-info > div {
+.detail-catatan .daftar-info>div {
     display: flex;
     justify-content: space-between;
     gap: 12px;
@@ -442,9 +442,75 @@
 }
 
 @media (max-width: 767px) {
+
     .detail-catatan .kepala-catatan,
     .detail-catatan .grid-detail {
         grid-template-columns: 1fr;
         flex-direction: column;
     }
+}
+
+/* Profil Penulis yang Bisa Diklik */
+.detail-catatan .tautan-profil-penulis {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px;
+    margin: -10px;
+    color: inherit;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.detail-catatan .tautan-profil-penulis .nama-penulis {
+    color: var(--teks);
+}
+
+.detail-catatan .tautan-profil-penulis .peran-penulis {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--primer);
+}
+
+.detail-catatan .isi-catatan-teks {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--teks);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.detail-catatan .isi-catatan-teks {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--teks);
+    overflow-wrap: anywhere;
+}
+
+.detail-catatan .isi-catatan-teks p {
+    margin: 0;
+}
+
+.detail-catatan .isi-catatan-teks {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.detail-catatan .isi-catatan-teks p:first-child {
+    margin-top: 0;
+}
+
+.isi-catatan-teks ul,
+.isi-catatan-teks ol {
+    padding-left: 40px;
+    margin: 8px 0 12px;
+    list-style-position: outside;
+}
+
+.isi-catatan-teks li {
+    padding-left: 8px;
+    margin-bottom: 5px;
 }
