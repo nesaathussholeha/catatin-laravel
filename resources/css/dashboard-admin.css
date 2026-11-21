@@ -1,3 +1,20 @@
+.welcome-admin {
+    margin-bottom: 24px;
+}
+
+.welcome-admin h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 6px;
+}
+
+.welcome-admin p {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+}
+
 /* =========================
    STATISTIK
 ========================= */

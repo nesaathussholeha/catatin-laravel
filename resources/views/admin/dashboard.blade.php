@@ -9,6 +9,11 @@
 
 @section('content')
 
+    <div class="welcome-admin">
+        <h2>Selamat datang, {{ auth()->user()->name }}!</h2>
+        <p>Selamat bekerja dan mengelola platform CatatIn.</p>
+    </div>
+
     {{-- STATISTIK --}}
     <section class="stat-grid">
 
@@ -60,10 +65,9 @@
                                 <td>{{ $user['jurusan'] }}</td>
 
                                 <td>
-                                    <span class="status-user
-                                        {{ $user['status'] === 'Aktif'
-                                            ? 'status-active'
-                                            : 'status-blocked' }}">
+                                    <span
+                                        class="status-user
+                                        {{ $user['status'] === 'Aktif' ? 'status-active' : 'status-blocked' }}">
                                         {{ $user['status'] }}
                                     </span>
                                 </td>
@@ -71,21 +75,15 @@
                                 <td>
                                     <div class="action-wrap">
 
-                                        <button
-                                            class="action-button dropdown-trigger"
-                                            type="button">
+                                        <button class="action-button dropdown-trigger" type="button">
                                             Aksi <span>▼</span>
                                         </button>
 
                                         <div class="action-menu">
 
-                                            <button
-                                                class="menu-item view-user"
-                                                type="button"
-                                                data-name="{{ $user['nama'] }}"
-                                                data-nim="{{ $user['nim'] }}"
-                                                data-jurusan="{{ $user['jurusan'] }}"
-                                                data-status="{{ $user['status'] }}">
+                                            <button class="menu-item view-user" type="button"
+                                                data-name="{{ $user['nama'] }}" data-nim="{{ $user['nim'] }}"
+                                                data-jurusan="{{ $user['jurusan'] }}" data-status="{{ $user['status'] }}">
                                                 Lihat
                                             </button>
 
@@ -124,10 +122,7 @@
             </p>
         </div>
 
-        <button
-            class="primary-button"
-            id="report-button"
-            type="button">
+        <button class="primary-button" id="report-button" type="button">
             Periksa laporan
         </button>
 
@@ -154,9 +149,7 @@
 
                 </div>
             @endforeach
-
         @else
-
             <div class="empty-state">
                 Tidak ada catatan yang dilaporkan.
             </div>
@@ -171,10 +164,7 @@
 
         <div class="modal">
 
-            <button
-                class="modal-close"
-                type="button"
-                data-close="user-modal">
+            <button class="modal-close" type="button" data-close="user-modal">
                 &times;
             </button>
 
@@ -214,23 +204,16 @@
 
         <div class="modal modal-large">
 
-            <button
-                class="modal-close"
-                type="button"
-                data-close="note-modal">
+            <button class="modal-close" type="button" data-close="note-modal">
                 &times;
             </button>
 
             <h2 id="modal-note-title"></h2>
 
-            <p
-                class="modal-author"
-                id="modal-note-author">
+            <p class="modal-author" id="modal-note-author">
             </p>
 
-            <div
-                class="note-content"
-                id="modal-note-content">
+            <div class="note-content" id="modal-note-content">
             </div>
 
             <div class="report-box">
