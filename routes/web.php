@@ -17,6 +17,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserReportController;
 use App\Http\Controllers\NoteReportController;
 use App\Http\Controllers\AdminNoteReportController;
+use App\Http\Controllers\AuthorProfileController;
 
 // ========================================
 // AUTHENTICATION (GUEST)
@@ -104,12 +105,13 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::view('/user/reports/preview', 'user.reports.create')
         ->name('user.reports.preview');
 
-    // Buat laporan
-    Route::middleware(['auth'])->group(function () {
+    // Buat laporan catatan
     Route::post('/catatan/{catatan}/report', [NoteReportController::class, 'store'])
         ->name('catatan.report.store');
-    });
 
+    // Profil penulis catatan
+    Route::get('/penulis/{username}', [AuthorProfileController::class, 'show'])
+        ->name('user.author-profile');
 });
 
 

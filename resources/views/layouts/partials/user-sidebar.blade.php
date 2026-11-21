@@ -22,7 +22,7 @@
         <nav class="sidebar-nav">
 
             <a href="{{ route('user.dashboard') }}"
-                class="nav-link {{ request()->routeIs('user.dashboard', 'catatan.show' ) ? 'active' : '' }}">
+                class="nav-link {{ request()->routeIs('user.dashboard', 'catatan.show', 'user.author-profile') ? 'active' : '' }}">
                 <iconify-icon icon="akar-icons:dashboard"></iconify-icon>
                 <span>Dashboard</span>
             </a>
@@ -50,7 +50,8 @@
                 <span>Tugas</span>
             </a>
 
-            <a href="{{ route('user.profile') }}" class="nav-link {{ request()->routeIs('user.profile') ? 'active' : '' }}">
+            <a href="{{ route('user.profile') }}"
+                class="nav-link {{ request()->routeIs('user.profile') ? 'active' : '' }}">
                 <iconify-icon icon="iconamoon:profile-circle"></iconify-icon>
                 <span>Profil</span>
             </a>
