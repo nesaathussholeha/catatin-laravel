@@ -72,15 +72,37 @@ class CatatanController extends Controller
         return trim($teks);
     }
 
+    /* ---------- Boleh dilihat akun aktif dan nonaktif ---------- */
+
     public function index()
     {
+        $this->tolakJikaDiblokir();
+
         $catatanSaya = Auth::user()->catatans()->with('category')->latest()->get();
 
         return view('user.catatan', compact('catatanSaya'));
     }
 
+    public function show(Catatan $catatan)
+    {
+        $this->tolakJikaDiblokir();
+
+        abort_unless(
+            $catatan->status === 'Terbit' && $catatan->visibilitas === 'publik',
+            404
+        );
+
+        $catatan->load(['category', 'user']);
+
+        return view('user.detail-catatan', compact('catatan'));
+    }
+
+    /* ---------- Hanya akun aktif ---------- */
+
     public function create()
     {
+        $this->tolakJikaNonaktif();
+
         return view('user.unggah', [
             'catatan'    => new Catatan(['visibilitas' => 'pribadi']),
             'categories' => Category::all(),
@@ -90,14 +112,16 @@ class CatatanController extends Controller
 
     public function store(Request $request)
     {
+        $this->tolakJikaNonaktif();
+
         Auth::user()->catatans()->create($this->siapkanData($request));
 
         return redirect()->route('catatan.index')->with('sukses', 'Catatan berhasil disimpan.');
     }
 
-
     public function edit(Catatan $catatan)
     {
+        $this->tolakJikaNonaktif();
         abort_if($catatan->user_id !== Auth::id(), 404);
 
         return view('user.unggah', [
@@ -109,6 +133,7 @@ class CatatanController extends Controller
 
     public function update(Request $request, Catatan $catatan)
     {
+        $this->tolakJikaNonaktif();
         abort_if($catatan->user_id !== Auth::id(), 404);
 
         $catatan->update($this->siapkanData($request));
@@ -118,22 +143,11 @@ class CatatanController extends Controller
 
     public function destroy(Catatan $catatan)
     {
+        $this->tolakJikaNonaktif();
         abort_if($catatan->user_id !== Auth::id(), 404);
 
         $catatan->delete();
 
         return redirect()->route('catatan.index')->with('sukses', 'Catatan berhasil dihapus.');
-    }
-
-    public function show(Catatan $catatan)
-    {
-        abort_unless(
-            $catatan->status === 'Terbit' && $catatan->visibilitas === 'publik',
-            404
-        );
-
-        $catatan->load(['category', 'user']);
-
-        return view('user.detail-catatan', compact('catatan'));
     }
 }

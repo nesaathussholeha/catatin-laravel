@@ -51,4 +51,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Catatan::class);
     }
+
+    public function isDiblokir(): bool
+    {
+        return $this->status === 'blocked';
+    }
+
+    public function isNonaktif(): bool
+    {
+        return $this->status === 'inactive';   // ← pastikan dulu nilai aslinya (lihat di bawah)
+    }
 }
