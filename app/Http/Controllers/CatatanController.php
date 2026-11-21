@@ -117,12 +117,22 @@ class CatatanController extends Controller
 
     public function create()
     {
-        $this->tolakJikaNonaktif();
+        $akun = Auth::user();
+
+        $akunNonaktif = $akun->status !== 'active';
+
+        $pesanNonaktif = match ($akun->status) {
+            'inactive' => 'Akun kamu dinonaktifkan karena pelanggaran aturan atau laporan pengguna. Fitur unggah sementara tidak tersedia.',
+            'blocked' => 'Akun kamu telah diblokir karena melanggar aturan CatatIn. Kamu tidak dapat mengunggah catatan.',
+            default => null,
+        };
 
         return view('user.unggah', [
-            'catatan'    => new Catatan(['visibilitas' => 'pribadi']),
-            'categories' => Category::all(),
-            'jurusan'    => $this->jurusan,
+            'catatan'       => new Catatan(['visibilitas' => 'pribadi']),
+            'categories'    => Category::all(),
+            'jurusan'       => $this->jurusan,
+            'akunNonaktif'  => $akunNonaktif,
+            'pesanNonaktif' => $pesanNonaktif,
         ]);
     }
 

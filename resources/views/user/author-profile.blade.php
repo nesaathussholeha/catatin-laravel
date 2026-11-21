@@ -27,13 +27,11 @@
             </a>
 
             <span>/</span>
-
             <span class="breadcrumb-current">Detail Penulis</span>
         </div>
 
         {{-- Informasi Profil --}}
         <section class="profile-card">
-
             <div class="profile-main">
 
                 <div class="profile-avatar">
@@ -45,7 +43,6 @@
                 </div>
 
                 <div class="profile-identity">
-
                     <h2>{{ $namaPenulis }}</h2>
 
                     <p class="profile-major">
@@ -57,7 +54,6 @@
                         Bergabung sejak
                         {{ $tanggalBergabung ? $tanggalBergabung->translatedFormat('F Y') : '-' }}
                     </p>
-
                 </div>
 
                 {{-- Tombol Laporan --}}
@@ -77,7 +73,6 @@
                     <div class="stat-icon">
                         <iconify-icon icon="lucide:file-text"></iconify-icon>
                     </div>
-
                     <div>
                         <h3>{{ $jumlahCatatan }}</h3>
                         <p>Catatan diunggah</p>
@@ -88,7 +83,6 @@
                     <div class="stat-icon">
                         <iconify-icon icon="lucide:thumbs-up"></iconify-icon>
                     </div>
-
                     <div>
                         <h3 id="totalUpvote">
                             {{ number_format($jumlahUpvote, 0, ',', '.') }}
@@ -99,14 +93,14 @@
 
                 <div class="profile-stat">
                     <div class="stat-icon">
-                        <iconify-icon icon="lucide:download"></iconify-icon>
+                        <iconify-icon icon="lucide:layers"></iconify-icon>
                     </div>
 
                     <div>
                         <h3>
-                            {{ number_format($jumlahUnduhan, 0, ',', '.') }}
+                            {{ number_format($jumlahKategori, 0, ',', '.') }}
                         </h3>
-                        <p>Total unduhan</p>
+                        <p>Total kategori</p>
                     </div>
                 </div>
 
@@ -114,7 +108,6 @@
                     <div class="stat-icon">
                         <iconify-icon icon="lucide:book-open"></iconify-icon>
                     </div>
-
                     <div>
                         <h3>{{ $jumlahMatkul }}</h3>
                         <p>Mata kuliah</p>
@@ -128,16 +121,13 @@
         <section class="uploaded-section">
 
             <div class="uploaded-heading">
-
                 <div>
                     <div class="heading-title">
-
                         <h2>Catatan yang diunggah</h2>
 
                         <span class="total-badge">
                             {{ $jumlahCatatan }} catatan
                         </span>
-
                     </div>
 
                     <p>
@@ -145,7 +135,6 @@
                         dari {{ $namaPenulis }}.
                     </p>
                 </div>
-
             </div>
 
             {{-- Pencarian dan Filter --}}
@@ -186,14 +175,14 @@
             {{-- Kumpulan Kartu Catatan --}}
             <div class="note-grid" id="noteGrid">
 
-                @forelse ($catatan as $item)
-                    <article class="note-card" data-title="{{ strtolower($item->judul ?? 'Tanpa Judul') }}"
-                        data-category="{{ $item->category?->name ?? 'Umum' }}"
-                        data-date="{{ $item->created_at?->timestamp ?? 0 }}" data-upvote="{{ $item->upvote ?? 0 }}">
+                @foreach ($catatan as $item)
+                    <article class="note-card" data-title="{{ $item->judul ?? 'Tanpa Judul' }}"
+                        data-category="{{ $item->category?->name ?? 'Umum' }}" data-matkul="{{ $item->matkul ?? '' }}"
+                        data-deskripsi="{{ $item->deskripsi ?? '' }}" data-date="{{ $item->created_at?->timestamp ?? 0 }}"
+                        data-upvote="{{ $item->upvote ?? 0 }}">
 
                         {{-- Preview Dokumen --}}
                         <div class="note-preview">
-
                             <div class="document-preview">
 
                                 <span class="document-type">
@@ -201,7 +190,7 @@
                                 </span>
 
                                 <div class="document-title">
-                                    {{ $item->judul }}
+                                    {{ $item->judul ?? 'Tanpa Judul' }}
                                 </div>
 
                                 <div class="document-lines">
@@ -215,25 +204,24 @@
                                 </div>
 
                             </div>
-
                         </div>
 
                         {{-- Informasi Catatan --}}
                         <div class="note-information">
 
                             <div class="note-tags">
-
                                 <span class="note-tag category-tag">
                                     {{ $item->category?->name ?? 'Umum' }}
                                 </span>
 
-                                <span class="note-tag">
-                                    {{ $item->matkul }}
-                                </span>
-
+                                @if ($item->matkul)
+                                    <span class="note-tag">
+                                        {{ $item->matkul }}
+                                    </span>
+                                @endif
                             </div>
 
-                            <h3>{{ $item->judul }}</h3>
+                            <h3>{{ $item->judul ?? 'Tanpa Judul' }}</h3>
 
                             <p class="note-description">
                                 {{ $item->deskripsi ?? 'Tidak ada deskripsi.' }}
@@ -254,7 +242,8 @@
                         {{-- Aksi Catatan --}}
                         <div class="note-footer">
 
-                            <button type="button" class="upvote-button" onclick="toggleUpvote(this)">
+                            {{-- Jumlah upvote ditampilkan, belum menjadi tombol interaktif --}}
+                            <div class="upvote-button">
                                 <iconify-icon icon="lucide:thumbs-up"></iconify-icon>
 
                                 <span class="upvote-count">
@@ -262,49 +251,39 @@
                                 </span>
 
                                 <span>Upvote</span>
-                            </button>
+                            </div>
 
-                            @if ($item->tautan)
-                                <a href="{{ $item->tautan }}" class="note-detail-link" target="_blank"
-                                    rel="noopener noreferrer">
-                                    Lihat catatan
-
-                                    <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-                                </a>
-                            @endif
+                            <a href="{{ route('catatan.show', $item->id) }}" class="note-detail-link">
+                                Lihat catatan
+                                <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+                            </a>
 
                         </div>
 
                     </article>
-
-                @empty
-
-                    <p>Belum ada catatan yang diunggah.</p>
-                @endforelse
+                @endforeach
 
             </div>
 
             {{-- Pesan Jika Kosong --}}
             <div class="empty-message" id="emptyMessage" hidden>
-
                 <iconify-icon icon="lucide:search-x"></iconify-icon>
 
-                <p>Tidak ada catatan yang cocok.</p>
-
+                <p>
+                    {{ $catatan->isEmpty() ? 'Belum ada catatan yang diunggah.' : 'Tidak ada catatan yang cocok.' }}
+                </p>
             </div>
 
+            {{-- Footer Daftar Catatan --}}
             <div class="uploaded-footer">
-
                 <span id="displayCount">
                     Menampilkan {{ $jumlahCatatan }} dari {{ $jumlahCatatan }} catatan
                 </span>
 
                 <span>Semua unggahan sudah ditampilkan</span>
-
             </div>
 
         </section>
-
 
         {{-- Modal Laporan Pengguna --}}
         @if (auth()->id() !== $penulis->id)
@@ -328,16 +307,16 @@
                         Sampaikan alasan kamu melaporkan pengguna ini.
                     </p>
 
-
                     <form action="{{ route('user-reports.store') }}" method="POST">
                         @csrf
 
                         <input type="hidden" name="reported_user_id" value="{{ $penulis->id }}">
 
-                        {{-- Alasan laporan --}}
+                        {{-- Alasan Laporan --}}
                         <div class="form-group">
                             <label for="reportReason">
-                                Alasan Laporan <span class="required-mark" style="color: red">*</span>
+                                Alasan Laporan
+                                <span class="required-mark" style="color: red">*</span>
                             </label>
 
                             <input type="text" name="reason" id="reportReason" maxlength="255"
@@ -348,7 +327,7 @@
                             @enderror
                         </div>
 
-                        {{-- Keterangan tambahan --}}
+                        {{-- Keterangan Tambahan --}}
                         <div class="form-group">
                             <label for="reportDescription">
                                 Keterangan Tambahan
@@ -379,12 +358,9 @@
 
                     </form>
 
-
                 </div>
-
             </div>
         @endif
-
 
     </div>
 

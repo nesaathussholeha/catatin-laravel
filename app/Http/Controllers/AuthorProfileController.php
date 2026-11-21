@@ -31,7 +31,11 @@ class AuthorProfileController extends Controller
 
         $jumlahCatatan = $catatan->count();
         $jumlahUpvote = $catatan->sum('upvote');
-        $jumlahUnduhan = 0;
+        $jumlahKategori = $catatan
+            ->pluck('category_id')
+            ->filter()
+            ->unique()
+            ->count();
 
         $jumlahMatkul = $catatan
             ->pluck('matkul')
@@ -42,13 +46,12 @@ class AuthorProfileController extends Controller
         $statistik = [
             'jumlah_catatan' => $jumlahCatatan,
             'total_upvote' => $jumlahUpvote,
-            'jumlah_unduhan' => $jumlahUnduhan,
+            'jumlah_kategori' => $jumlahKategori,
             'jumlah_matkul' => $jumlahMatkul,
         ];
 
         $kategoriList = $catatan
-            ->map(fn($item) => $item->category?->name)
-            ->filter()
+            ->map(fn($item) => $item->category?->name ?? 'Umum')
             ->unique()
             ->values();
 
@@ -62,7 +65,7 @@ class AuthorProfileController extends Controller
             'tanggalBergabung',
             'jumlahCatatan',
             'jumlahUpvote',
-            'jumlahUnduhan',
+            'jumlahKategori',
             'jumlahMatkul',
             'statistik',
             'kategoriList'
