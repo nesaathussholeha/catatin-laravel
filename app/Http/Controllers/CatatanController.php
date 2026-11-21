@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Catatan;
 use App\Models\Category;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CatatanController extends Controller
 {
@@ -28,12 +28,13 @@ class CatatanController extends Controller
     public function index()
     {
         $catatanSaya = Auth::user()->catatans()->with('category')->latest()->get();
+
         return view('user.catatan', compact('catatanSaya'));
     }
 
     public function create()
     {
-        return view('catatan.unggah', [
+        return view('user.unggah', [
             'catatan'    => new Catatan(['visibilitas' => 'pribadi']),
             'categories' => Category::all(),
             'jurusan'    => $this->jurusan,
@@ -45,16 +46,16 @@ class CatatanController extends Controller
         $data = $request->validate($this->aturan());
         $data['anonim'] = $request->boolean('anonim') && $data['visibilitas'] === 'publik';
 
-        auth()->user()->catatans()->create($data);   // user_id terisi otomatis
+        Auth::user()->catatans()->create($data);
 
-        return redirect()->route('user.catatan')->with('sukses', 'Catatan berhasil disimpan.');
+        return redirect()->route('catatan.index')->with('sukses', 'Catatan berhasil disimpan.');
     }
 
     public function edit(Catatan $catatan)
     {
-        abort_if($catatan->user_id !== auth()->id(), 404);
+        abort_if($catatan->user_id !== Auth::id(), 404);
 
-        return view('catatan.unggah', [
+        return view('user.unggah', [
             'catatan'    => $catatan,
             'categories' => Category::all(),
             'jurusan'    => $this->jurusan,
@@ -70,7 +71,7 @@ class CatatanController extends Controller
 
         $catatan->update($data);
 
-        return redirect()->route('user.catatan')->with('sukses', 'Catatan berhasil diperbarui.');
+        return redirect()->route('catatan.index')->with('sukses', 'Catatan berhasil diperbarui.');
     }
 
     public function destroy(Catatan $catatan)
@@ -84,17 +85,13 @@ class CatatanController extends Controller
 
     public function show(Catatan $catatan)
     {
-        // Ambil relasi kategori dan penulis
-        $catatan->load(['category', 'user']);
-
-        // Hanya catatan publik yang sudah diterbitkan
         abort_unless(
-            $catatan->status === 'Terbit' &&
-            $catatan->visibilitas === 'publik',
+            $catatan->status === 'Terbit' && $catatan->visibilitas === 'publik',
             404
         );
 
-    return view('user.detail-catatan', compact('catatan'));
-    }
+        $catatan->load(['category', 'user']);
 
+        return view('user.detail-catatan', compact('catatan'));
+    }
 }
