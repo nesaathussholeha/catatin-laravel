@@ -1,9 +1,10 @@
-catatan.blade.php
-
 @extends('layouts.user')
 
+@section('title', 'Catatan Saya')
+@section('page-title', 'Catatan Saya')
+
 @section('content')
-<link rel="stylesheet" href="{{ asset('css/catatan_saya.css') }}">
+@vite(['resources/css/catatan-saya.css', 'resources/js/catatan-saya.js'])
 
 @if (session('sukses'))
     <div class="toast" role="status" data-auto>{{ session('sukses') }}</div>
@@ -48,5 +49,5 @@ catatan.blade.php
     </table>
 </div>
 
-<script src="{{ asset('js/catatan_saya.js') }}"></script>
+<script src="{{ asset('js/catatan-saya.js') }}"></script>
 @endsection

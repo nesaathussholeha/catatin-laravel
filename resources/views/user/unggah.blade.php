@@ -1,9 +1,10 @@
-unggah.blade.php
-
 @extends('layouts.user')
 
+@section('title', $catatan->exists ? 'Edit Catatan' : 'Unggah Catatan')
+@section('page-title', $catatan->exists ? 'Edit Catatan' : 'Unggah Catatan')
+
 @section('content')
-<link rel="stylesheet" href="{{ asset('css/upload.css') }}">
+@vite(['resources/css/unggah-catatan.css', 'resources/js/unggah-catatan.js'])
 
 @php($edit = $catatan->exists)
 
@@ -93,5 +94,5 @@ unggah.blade.php
     </div>
 </form>
 
-<script src="{{ asset('js/upload.js') }}"></script>
+<script src="{{ asset('js/unggah-catatan.js') }}"></script>
 @endsection
