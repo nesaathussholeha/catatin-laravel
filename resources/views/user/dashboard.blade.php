@@ -89,7 +89,9 @@
                         + Playlist
                     </button>
 
-                    <a class="detail" href="{{ $n->tautan }}" target="_blank" rel="noopener noreferrer">Lihat detail</a>
+                    <a class="detail" href="{{ route('catatan.show', $n->id) }}">
+                        Lihat detail
+                    </a>
                 </div>
             </article>
         @endforeach

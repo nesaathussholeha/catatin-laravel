@@ -1,4 +1,3 @@
-
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import { bunny } from 'laravel-vite-plugin/fonts';
@@ -24,6 +23,10 @@ export default defineConfig({
                 'resources/css/dashboard-user.css',
                 'resources/js/dashboard-user.js',
 
+                // Detail Catatan
+                'resources/css/detail-catatan.css',
+                'resources/js/detail-catatan.js',
+
                 // Playlist
                 'resources/css/playlist.css',
                 'resources/js/playlist.js',
@@ -39,9 +42,13 @@ export default defineConfig({
                 'resources/css/tugas.css',
                 'resources/js/tugas.js',
 
+                // Kelola Catatan
                 'resources/css/kelola-catatan.css',
                 'resources/js/kelola-catatan.js',
 
+                // Kelola Laporan
+                'resources/css/kelola-laporan.css',
+                'resources/js/kelola-laporan.js',
             ],
 
             refresh: true,

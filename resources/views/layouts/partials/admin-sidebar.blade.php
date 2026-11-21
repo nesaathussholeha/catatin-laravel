@@ -40,7 +40,7 @@
             <span>Master Data</span>
         </a>
 
-        <a href="#" class="admin-nav-link">
+        <a href="{{ route('admin.kelola-laporan') }}" class="admin-nav-link {{ request()->routeIs('admin.kelola-laporan') ? 'active' : '' }}">
             <iconify-icon icon="lucide:flag"></iconify-icon>
             <span>Kelola Laporan</span>
         </a>

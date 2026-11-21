@@ -52,11 +52,6 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])
         ->name('user.dashboard');
 
-
-    Route::get('/profil', function () {
-        return view('user.profile');
-    })->name('user.profile');
-
     Route::post('/koleksi-catatan', [PlaylistController::class, 'attach'])->name('user.playlists.attach');
     Route::delete('/koleksi/{playlist}/catatan/{catatan}', [PlaylistController::class, 'detach'])
         ->whereNumber('catatan')->name('user.playlists.detach');
@@ -79,7 +74,7 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::put('/catatan/{catatan}',      [CatatanController::class, 'update'])->name('catatan.update');
     Route::delete('/catatan/{catatan}',   [CatatanController::class, 'destroy'])->name('catatan.destroy');
 
-    // Profil mahasiswa
+    // Profil mahasiswa (dari temanmu)
     Route::get('/profil', [UserProfileController::class, 'index'])
         ->name('user.profile');
 
@@ -94,8 +89,14 @@ Route::middleware(['auth', 'role:student'])->group(function () {
 
     Route::delete('/profil/foto', [UserProfileController::class, 'deletePhoto'])
         ->name('user.profile.photo.delete');
-});
 
+    // Detail Catatan & Laporan (punyamu)
+    Route::get('/catatan/{catatan}', [CatatanController::class, 'show'])
+        ->name('catatan.show');
+
+    Route::view('/user/reports/preview', 'user.reports.create')
+        ->name('user.reports.preview');
+});
 
 
 // ========================================
@@ -134,7 +135,7 @@ Route::prefix('admin')
         Route::delete('/courses/{course}', [CourseController::class, 'destroy'])
             ->name('courses.destroy');
 
-        //CRUD Kategori
+        // CRUD Kategori
         Route::post('/categories', [CategoryController::class, 'store'])
             ->name('categories.store');
 
@@ -149,31 +150,26 @@ Route::prefix('admin')
         Route::put('/profil', [AdminProfileController::class, 'updateProfil'])->name('profil.update');
         Route::put('/profil/password', [AdminProfileController::class, 'updatePassword'])->name('profil.password');
 
-        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
-        ->name('dashboard');
+        // Kelola Catatan (dari temanmu)
+        Route::get('/kelola-catatan', [AdminCatatanController::class, 'index'])
+            ->name('kelola-catatan.index');
 
+        Route::post('/kelola-catatan', [AdminCatatanController::class, 'store'])
+            ->name('kelola-catatan.store');
 
-// ========================================
-// KELOLA CATATAN
-// ========================================
+        Route::put('/kelola-catatan/{catatan}', [AdminCatatanController::class, 'update'])
+            ->name('kelola-catatan.update');
 
-Route::get('/kelola-catatan', [AdminCatatanController::class, 'index'])
-    ->name('kelola-catatan.index');
+        Route::patch('/kelola-catatan/{catatan}/status', [AdminCatatanController::class, 'updateStatus'])
+            ->name('kelola-catatan.status');
 
-Route::post('/kelola-catatan', [AdminCatatanController::class, 'store'])
-    ->name('kelola-catatan.store');
+        Route::delete('/kelola-catatan/{catatan}', [AdminCatatanController::class, 'destroy'])
+            ->name('kelola-catatan.destroy');
 
-Route::put('/kelola-catatan/{catatan}', [AdminCatatanController::class, 'update'])
-    ->name('kelola-catatan.update');
-
-Route::patch('/kelola-catatan/{catatan}/status', [AdminCatatanController::class, 'updateStatus'])
-    ->name('kelola-catatan.status');
-
-Route::delete('/kelola-catatan/{catatan}', [AdminCatatanController::class, 'destroy'])
-    ->name('kelola-catatan.destroy');
-
+        // Kelola Laporan (punyamu)
+        Route::view('/kelola-laporan', 'admin.kelola-laporan.index')
+            ->name('kelola-laporan');
     });
-
 
 
 // ========================================

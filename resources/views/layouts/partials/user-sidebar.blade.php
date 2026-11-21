@@ -22,7 +22,7 @@
         <nav class="sidebar-nav">
 
             <a href="{{ route('user.dashboard') }}"
-                class="nav-link {{ request()->routeIs('user.dashboard') ? 'active' : '' }}">
+                class="nav-link {{ request()->routeIs('user.dashboard', 'catatan.show' ) ? 'active' : '' }}">
                 <iconify-icon icon="akar-icons:dashboard"></iconify-icon>
                 <span>Dashboard</span>
             </a>

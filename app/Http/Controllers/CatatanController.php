@@ -81,4 +81,20 @@ class CatatanController extends Controller
 
         return redirect()->route('catatan.index')->with('sukses', 'Catatan berhasil dihapus.');
     }
+
+    public function show(Catatan $catatan)
+    {
+        // Ambil relasi kategori dan penulis
+        $catatan->load(['category', 'user']);
+
+        // Hanya catatan publik yang sudah diterbitkan
+        abort_unless(
+            $catatan->status === 'Terbit' &&
+            $catatan->visibilitas === 'publik',
+            404
+        );
+
+    return view('user.detail-catatan', compact('catatan'));
+    }
+
 }
