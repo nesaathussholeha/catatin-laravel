@@ -89,9 +89,7 @@
                         + Playlist
                     </button>
 
-                    <a class="detail" href="{{ route('catatan.show', $n->id) }}">
-                        Lihat detail
-                    </a>
+                <a class="detail" href="{{ route('catatan.show', $n->id) }}">Lihat detail</a>
                 </div>
             </article>
         @endforeach

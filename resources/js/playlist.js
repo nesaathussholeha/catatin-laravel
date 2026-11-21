@@ -185,8 +185,8 @@ document.querySelectorAll('.pl-open-detail').forEach(function (btn) {
         if (!modalDetail) return;
 
         const judul = btn.dataset.judul || '-';
-        const tautan = btn.dataset.tautan || '';
-
+        const tautanMentah = btn.dataset.tautan || '';
+        const tautan = /^https?:\/\//i.test(tautanMentah) ? tautanMentah : '';
         $('plDetailJudul').textContent = judul;
         $('plDetailJurusan').textContent = btn.dataset.jurusan || '-';
         $('plDetailMatkul').textContent = btn.dataset.matkul || '-';

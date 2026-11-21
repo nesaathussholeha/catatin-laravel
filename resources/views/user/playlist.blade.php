@@ -136,7 +136,15 @@
 
             <div class="pl-card-actions">
 
-           <button type="button"
+        @if ($catatan->status === 'Terbit' && $catatan->visibilitas === 'publik')
+            {{-- Catatan publik: buka halaman detail milik tim --}}
+            <a href="{{ route('catatan.show', $catatan->id) }}" class="pl-btn-detail">
+                <iconify-icon icon="lucide:eye"></iconify-icon>
+                Lihat Detail
+            </a>
+        @else
+            {{-- Catatan privat/draft milik sendiri: halaman detail tim menolaknya (404), jadi tetap pakai modal --}}
+            <button type="button"
                     class="pl-btn-detail pl-open-detail"
                     data-judul="{{ $catatan->judul }}"
                     data-jurusan="{{ $catatan->jurusan ?? 'Jurusan tidak tersedia' }}"
@@ -145,6 +153,7 @@
                 <iconify-icon icon="lucide:eye"></iconify-icon>
                 Lihat Detail
             </button>
+        @endif
 
                 <form method="POST"
                       action="{{ route('user.playlists.detach', [$aktif, $catatan]) }}"
