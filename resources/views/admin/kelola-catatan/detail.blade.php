@@ -48,9 +48,14 @@
             <div>{{ $catatan->deskripsi ?: '-' }}</div>
 
             <p><strong>Isi Catatan:</strong></p>
-            <div class="catatan-full-content">
-                {{ $catatan->isi ?: 'Isi catatan belum tersedia.' }}
-            </div>
+
+                <div class="catatan-full-content">
+                    @if ($catatan->isi_html)
+                        {!! $catatan->isi_html !!}
+                    @else
+                        <p>Isi catatan belum tersedia.</p>
+                    @endif
+                </div>
 
             <p><strong>Link Catatan:</strong></p>
 

@@ -56,10 +56,11 @@
             </a>
         </div>
 
-        <form method="GET"
-              action="{{ route('admin.kelola-catatan.index') }}"
-              class="catatan-toolbar">
-
+        <form
+            method="GET"
+            action="{{ route('admin.kelola-catatan.index') }}"
+            class="catatan-toolbar"
+        >
             <input type="hidden" name="filter" value="{{ $filter }}">
 
             <input
@@ -119,9 +120,35 @@
                                 </td>
                             @else
                                 <td>
-                                    <span class="status-badge status-{{ strtolower($item->status) }}">
-                                        {{ $item->status }}
-                                    </span>
+                                    <form
+                                        action="{{ route('admin.kelola-catatan.update-status', $item->id) }}"
+                                        method="POST"
+                                        class="status-form"
+                                        onsubmit="return confirm('Apakah kamu yakin ingin mengubah status catatan ini?')"
+                                    >
+                                        @csrf
+                                        @method('PATCH')
+
+                                        <select
+                                            name="status"
+                                            class="status-select"
+                                            onchange="this.form.requestSubmit()"
+                                        >
+                                            <option
+                                                value="Terbit"
+                                                {{ $item->status === 'Terbit' ? 'selected' : '' }}
+                                            >
+                                                Terbit
+                                            </option>
+
+                                            <option
+                                                value="Draft"
+                                                {{ $item->status === 'Draft' ? 'selected' : '' }}
+                                            >
+                                                Draft
+                                            </option>
+                                        </select>
+                                    </form>
                                 </td>
                             @endif
 
@@ -168,6 +195,7 @@
                                 </div>
                             </td>
                         </tr>
+
                     @empty
                         <tr>
                             <td colspan="7" class="empty-row">

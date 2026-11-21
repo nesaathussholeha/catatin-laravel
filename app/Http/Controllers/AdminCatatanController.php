@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class AdminCatatanController extends Controller
 {
     /**
-     * Menampilkan catatan aktif atau catatan yang dihapus sementara.
+     * Menampilkan catatan aktif atau yang dihapus sementara.
      */
     public function index(Request $request)
     {
@@ -66,6 +66,46 @@ class AdminCatatanController extends Controller
     }
 
     /**
+     * Mengubah status catatan menjadi Terbit atau Draft.
+     */
+    
+    /**
+     * Mengubah status catatan.
+     */
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => ['required', 'in:Terbit,Draft'],
+        ]);
+
+        $catatan = Catatan::findOrFail($id);
+
+        $statusBaru = $request->status;
+
+        $catatan->status = $statusBaru;
+        $catatan->save();
+
+        // Jika status menjadi Draft, pindahkan ke Dihapus Sementara.
+        if ($statusBaru === 'Draft') {
+            $catatan->delete();
+
+            return redirect()
+                ->route('admin.kelola-catatan.index', [
+                    'filter' => 'dihapus',
+                ])
+                ->with('sukses', 'Catatan berhasil diubah menjadi Draft dan dipindahkan ke Dihapus Sementara.');
+        }
+
+        return redirect()
+            ->route('admin.kelola-catatan.index', [
+                'filter' => 'aktif',
+            ])
+            ->with('sukses', 'Status catatan berhasil diubah menjadi Terbit.');
+    }
+
+    
+
+    /**
      * Memulihkan catatan yang dihapus sementara.
      */
     public function restore($id)
@@ -76,7 +116,7 @@ class AdminCatatanController extends Controller
 
         return redirect()
             ->route('admin.kelola-catatan.index', ['filter' => 'dihapus'])
-            ->with('sukses', 'Catatan berhasil dipulihkan.');
+            ->with('sukses', 'Catatan berhasil dipulihkan. Statusnya tetap Draft.');
     }
 
     /**
@@ -92,4 +132,5 @@ class AdminCatatanController extends Controller
             ->route('admin.kelola-catatan.index', ['filter' => 'dihapus'])
             ->with('sukses', 'Catatan berhasil dihapus secara permanen.');
     }
+    
 }

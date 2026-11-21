@@ -186,6 +186,11 @@ Route::prefix('admin')
         Route::get('/kelola-catatan/{id}', [AdminCatatanController::class, 'show'])
         ->name('kelola-catatan.show');
 
+
+        Route::patch('/kelola-catatan/{id}/status', [AdminCatatanController::class, 'updateStatus'])
+        ->name('kelola-catatan.update-status');
+
+
         Route::patch('/kelola-catatan/{id}/restore', [AdminCatatanController::class, 'restore'])
         ->name('kelola-catatan.restore');
 
