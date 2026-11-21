@@ -117,7 +117,7 @@ $opsiIdentitas = [
 
         {{-- 03. PENGATURAN PUBLIKASI --}}
         <section class="form-section">
-            <h2 class="section-title">Pengaturan Publikasi</h2>
+            <h2 class="section-title"><span>03.</span>Pengaturan Publikasi</h2>
             <p class="section-desc">Atur siapa yang dapat melihat catatan dan bagaimana nama penulis ditampilkan.</p>
 
             <div class="form-row">

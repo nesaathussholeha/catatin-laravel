@@ -87,10 +87,10 @@ class CatatanController extends Controller
     {
         $this->tolakJikaDiblokir();
 
-        abort_unless(
-            $catatan->status === 'Terbit' && $catatan->visibilitas === 'publik',
-            404
-        );
+        $adalahPemilik = $catatan->user_id === Auth::id();
+        $bolehPublik   = $catatan->status === 'Terbit' && $catatan->visibilitas === 'publik';
+
+        abort_unless($adalahPemilik || $bolehPublik, 404);
 
         $catatan->load(['category', 'user']);
 
