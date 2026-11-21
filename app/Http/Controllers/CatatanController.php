@@ -176,16 +176,4 @@ class CatatanController extends Controller
 
         return redirect()->route('catatan.index')->with('sukses', 'Catatan berhasil dihapus.');
     }
-
-    // Menampilkan isi catatan berdasarkan jenisnya
-    public function getIsiTampilanAttribute(): ?string
-    {
-        return $this->isi_teks;
-    }
-
-    // Mengecek apakah catatan berupa teks
-    public function getIsTeksAttribute(): bool
-    {
-        return $this->tipe_isi === 'teks';
-    }
 }

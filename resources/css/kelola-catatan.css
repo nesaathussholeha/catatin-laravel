@@ -1,3 +1,7 @@
+/* =========================================
+   HALAMAN KELOLA CATATAN ADMIN
+========================================= */
+
 .catatan-admin-page {
     width: 100%;
     color: #17213b;
@@ -168,7 +172,7 @@
     white-space: nowrap;
 }
 
-/* Status */
+/* Badge Status */
 
 .status-badge {
     display: inline-block;
@@ -194,7 +198,35 @@
     color: #b91c1c;
 }
 
-/* Tombol aksi */
+/* Dropdown Status */
+
+.status-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+.status-select {
+    min-width: 110px;
+    padding: 8px 30px 8px 12px;
+    border: 1px solid #d9deea;
+    border-radius: 8px;
+    background: #fff;
+    color: #344054;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+}
+
+.status-select:focus {
+    border-color: #4f5bd5;
+    box-shadow: 0 0 0 3px rgba(79, 91, 213, .12);
+}
+
+/* Tombol Aksi */
 
 .catatan-actions {
     display: flex;
@@ -234,7 +266,9 @@
     background: #fef2f2;
 }
 
-/* Detail Catatan */
+/* =========================================
+   DETAIL CATATAN
+========================================= */
 
 .catatan-detail-card {
     width: 100%;
@@ -272,17 +306,109 @@
     overflow-wrap: anywhere;
 }
 
+/* =========================================
+   ISI CATATAN QUILL
+========================================= */
+
 .catatan-full-content {
     min-height: 100px;
-    padding: 20px;
+    margin-top: 12px;
     margin-bottom: 22px;
-    border-radius: 10px;
-    background: #f6f7fb;
+    padding: 22px;
+    box-sizing: border-box;
+
+    background: #f8f9fc;
+    border: 1px solid #e1e5ef;
+    border-radius: 12px;
+
+    color: #333b50;
+    font-size: 14px;
+    line-height: 1.8;
+
+    overflow-wrap: anywhere;
+}
+
+.catatan-full-content p {
+    margin: 0 0 12px;
+}
+
+.catatan-full-content p:last-child {
+    margin-bottom: 0;
+}
+
+.catatan-full-content h1,
+.catatan-full-content h2,
+.catatan-full-content h3,
+.catatan-full-content h4,
+.catatan-full-content h5,
+.catatan-full-content h6 {
+    margin: 18px 0 10px;
+    color: #172554;
+    line-height: 1.4;
+}
+
+.catatan-full-content strong,
+.catatan-full-content b {
+    font-weight: 700;
+}
+
+.catatan-full-content em {
+    font-style: italic;
+}
+
+.catatan-full-content u {
+    text-decoration: underline;
+}
+
+.catatan-full-content s {
+    text-decoration: line-through;
+}
+
+.catatan-full-content ul,
+.catatan-full-content ol {
+    padding-left: 26px;
+    margin: 10px 0;
+}
+
+.catatan-full-content li {
+    margin-bottom: 5px;
+}
+
+.catatan-full-content blockquote {
+    margin: 14px 0;
+    padding: 12px 16px;
+    border-left: 4px solid #4f5bd5;
+    background: #eef1fb;
+    border-radius: 4px;
+    color: #46516b;
+}
+
+.catatan-full-content pre {
+    padding: 14px;
+    background: #20263a;
+    color: #fff;
+    border-radius: 8px;
+    overflow-x: auto;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
 }
 
-/* Pesan */
+.catatan-full-content code {
+    padding: 2px 5px;
+    background: #e9edf5;
+    border-radius: 4px;
+    font-family: Consolas, monospace;
+}
+
+.catatan-full-content a {
+    color: #4f5bd5;
+    text-decoration: underline;
+    overflow-wrap: anywhere;
+}
+
+/* =========================================
+   PESAN DAN PAGINATION
+========================================= */
 
 .empty-row {
     padding: 35px !important;
@@ -306,7 +432,15 @@
     color: #166534;
 }
 
-/* Responsif */
+.catatan-description {
+    margin-bottom: 18px;
+    color: #47516a;
+    overflow-wrap: anywhere;
+}
+
+/* =========================================
+   RESPONSIF
+========================================= */
 
 @media (max-width: 700px) {
     .catatan-page-header {
@@ -335,197 +469,11 @@
         align-self: flex-start;
     }
 
+    .catatan-detail-card {
+        padding: 18px;
+    }
 
-/* ========================================
-   ISI CATATAN QUILL
-======================================== */
-
-.catatan-full-content {
-    margin-top: 10px;
-    padding: 20px;
-    background: #f8f9fc;
-    border: 1px solid #e1e5ef;
-    border-radius: 10px;
-    color: #26324b;
-    line-height: 1.8;
-    overflow-wrap: anywhere;
-}
-
-.catatan-full-content p {
-    margin: 0 0 12px;
-}
-
-.catatan-full-content h1,
-.catatan-full-content h2,
-.catatan-full-content h3 {
-    margin: 18px 0 10px;
-    color: #17264b;
-    line-height: 1.4;
-}
-
-.catatan-full-content ul,
-.catatan-full-content ol {
-    padding-left: 28px;
-    margin: 10px 0;
-}
-
-.catatan-full-content blockquote {
-    margin: 14px 0;
-    padding: 10px 16px;
-    border-left: 4px solid #4f5bd5;
-    background: #eef1fb;
-    color: #46516b;
-}
-
-.catatan-full-content pre {
-    padding: 14px;
-    border-radius: 8px;
-    background: #20263a;
-    color: #ffffff;
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-}
-
-.catatan-full-content a {
-    color: #4f5bd5;
-    text-decoration: underline;
-}
-
-/* ========================================
-   DROPDOWN STATUS CATATAN
-======================================== */
-
-.status-form {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.status-select {
-    min-width: 105px;
-    padding: 8px 10px;
-    border: 1px solid #d9dce8;
-    border-radius: 7px;
-    background: #ffffff;
-    color: #26324b;
-    font-size: 13px;
-    cursor: pointer;
-}
-
-.status-select:focus {
-    outline: none;
-    border-color: #4f5bd5;
-    box-shadow: 0 0 0 3px rgba(79, 91, 213, 0.12);
-}
-
-.status-form button {
-    cursor: pointer;
-}
-
-}
-
-/* =========================================
-   ISI CATATAN QUILL
-========================================= */
-
-.catatan-full-content {
-    margin-top: 12px;
-    padding: 22px;
-    background: #f8f9fc;
-    border: 1px solid #e1e5ef;
-    border-radius: 12px;
-
-    color: #333b50;
-    font-size: 14px;
-    line-height: 1.8;
-
-    overflow-wrap: anywhere;
-}
-
-.catatan-full-content p {
-    margin: 0 0 12px;
-}
-
-.catatan-full-content p:last-child {
-    margin-bottom: 0;
-}
-
-.catatan-full-content h1,
-.catatan-full-content h2,
-.catatan-full-content h3,
-.catatan-full-content h4 {
-    margin: 18px 0 10px;
-    color: #172554;
-    line-height: 1.4;
-}
-
-.catatan-full-content strong,
-.catatan-full-content b {
-    font-weight: 700;
-}
-
-.catatan-full-content ul,
-.catatan-full-content ol {
-    padding-left: 26px;
-    margin: 10px 0;
-}
-
-.catatan-full-content li {
-    margin-bottom: 5px;
-}
-
-.catatan-full-content blockquote {
-    margin: 14px 0;
-    padding: 12px 16px;
-    border-left: 4px solid #4f5bd5;
-    background: #eef1fb;
-    border-radius: 4px;
-}
-
-.catatan-full-content pre {
-    padding: 14px;
-    background: #e9edf5;
-    border-radius: 8px;
-    overflow-x: auto;
-}
-
-.catatan-full-content a {
-    color: #4f5bd5;
-    text-decoration: underline;
-    overflow-wrap: anywhere;
-}
-
-/* =========================================
-   DROPDOWN STATUS
-========================================= */
-
-.status-form {
-    margin: 0;
-}
-
-.status-select {
-    min-width: 110px;
-    padding: 8px 30px 8px 12px;
-
-    border: 1px solid #d9deea;
-    border-radius: 8px;
-
-    background-color: #fff;
-    color: #344054;
-
-    font-size: 13px;
-    font-weight: 600;
-
-    cursor: pointer;
-    outline: none;
-}
-
-.status-select:focus {
-    border-color: #4f5bd5;
-    box-shadow: 0 0 0 3px rgba(79, 91, 213, 0.12);
-}
-
-.status-select option {
-    padding: 8px;
+    .catatan-full-content {
+        padding: 15px;
+    }
 }

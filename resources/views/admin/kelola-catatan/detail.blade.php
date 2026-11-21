@@ -44,30 +44,41 @@
 
             <p><strong>Kategori:</strong> {{ $catatan->category->name ?? '-' }}</p>
 
-            <p><strong>Deskripsi:</strong></p>
-            <div>{{ $catatan->deskripsi ?: '-' }}</div>
-
-            <p><strong>Isi Catatan:</strong></p>
-
-                <div class="catatan-full-content">
-                    @if ($catatan->isi_html)
-                        {!! $catatan->isi_html !!}
-                    @else
-                        <p>Isi catatan belum tersedia.</p>
-                    @endif
+                <p><strong>Deskripsi:</strong></p>
+                <div class="catatan-description">
+                    {{ $catatan->deskripsi ?: '-' }}
                 </div>
 
-            <p><strong>Link Catatan:</strong></p>
+            {{-- Isi Catatan --}}
+                <p><strong>Isi Catatan:</strong></p>
 
-            @if ($catatan->tautan)
-                <a href="{{ $catatan->tautan }}"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    Buka tautan catatan
-                </a>
-            @else
-                <span>-</span>
-            @endif
+                @if ($catatan->tipe_isi === 'teks')
+                    <div class="catatan-full-content">
+                        @if ($catatan->isi_html)
+                            {!! $catatan->isi_html !!}
+                        @else
+                            <p>Isi catatan belum tersedia.</p>
+                        @endif
+                    </div>
+                @elseif ($catatan->tipe_isi === 'tautan')
+                    <div class="catatan-full-content">
+                        @if ($catatan->tautan)
+                            <a
+                                href="{{ $catatan->tautan }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Buka tautan catatan
+                            </a>
+                        @else
+                            <p>Tautan catatan belum tersedia.</p>
+                        @endif
+                    </div>
+                @else
+                    <div class="catatan-full-content">
+                        <p>Jenis isi catatan tidak diketahui.</p>
+                    </div>
+                @endif
 
             <p><strong>Visibilitas:</strong> {{ ucfirst($catatan->visibilitas) }}</p>
 

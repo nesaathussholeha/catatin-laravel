@@ -72,52 +72,67 @@ class AdminCatatanController extends Controller
     /**
      * Mengubah status catatan.
      */
-    public function updateStatus(Request $request, $id)
-    {
-        $request->validate([
-            'status' => ['required', 'in:Terbit,Draft'],
-        ]);
+    
+/**
+ * Mengubah status catatan menjadi Terbit atau Draft.
+ */
+public function updateStatus(Request $request, $id)
+{
+    $request->validate([
+        'status' => ['required', 'in:Terbit,Draft'],
+    ]);
 
-        $catatan = Catatan::findOrFail($id);
+    $catatan = Catatan::findOrFail($id);
 
-        $statusBaru = $request->status;
+    $statusBaru = $request->status;
 
-        $catatan->status = $statusBaru;
-        $catatan->save();
+    $catatan->status = $statusBaru;
+    $catatan->save();
 
-        // Jika status menjadi Draft, pindahkan ke Dihapus Sementara.
-        if ($statusBaru === 'Draft') {
-            $catatan->delete();
-
-            return redirect()
-                ->route('admin.kelola-catatan.index', [
-                    'filter' => 'dihapus',
-                ])
-                ->with('sukses', 'Catatan berhasil diubah menjadi Draft dan dipindahkan ke Dihapus Sementara.');
-        }
+    // Jika status Draft, pindahkan ke Dihapus Sementara.
+    if ($statusBaru === 'Draft') {
+        $catatan->delete();
 
         return redirect()
             ->route('admin.kelola-catatan.index', [
-                'filter' => 'aktif',
+                'filter' => 'dihapus',
             ])
-            ->with('sukses', 'Status catatan berhasil diubah menjadi Terbit.');
+            ->with(
+                'sukses',
+                'Status catatan berhasil diubah menjadi Draft dan dipindahkan ke Dihapus Sementara.'
+            );
     }
+
+    return redirect()
+        ->route('admin.kelola-catatan.index', [
+            'filter' => 'aktif',
+        ])
+        ->with(
+            'sukses',
+            'Status catatan berhasil diubah menjadi Terbit.'
+        );
+}
+
 
     
 
-    /**
-     * Memulihkan catatan yang dihapus sementara.
-     */
-    public function restore($id)
-    {
-        $catatan = Catatan::onlyTrashed()->findOrFail($id);
+    
+/**
+ * Memulihkan catatan yang dihapus sementara.
+ */
+public function restore($id)
+{
+    $catatan = Catatan::onlyTrashed()->findOrFail($id);
 
-        $catatan->restore();
+    $catatan->restore();
 
-        return redirect()
-            ->route('admin.kelola-catatan.index', ['filter' => 'dihapus'])
-            ->with('sukses', 'Catatan berhasil dipulihkan. Statusnya tetap Draft.');
-    }
+    return redirect()
+        ->route('admin.kelola-catatan.index', ['filter' => 'aktif'])
+        ->with(
+            'sukses',
+            'Catatan berhasil dipulihkan. Statusnya tetap Draft. Ubah status menjadi Terbit jika ingin menampilkannya kepada pengguna.'
+        );
+}
 
     /**
      * Menghapus catatan secara permanen.
