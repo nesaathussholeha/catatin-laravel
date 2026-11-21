@@ -50,39 +50,6 @@ class Catatan extends Model
             ->where('status', 'Terbit')
             ->where('visibilitas', 'publik');
     }
-
-    /**
-     * Membersihkan dan menampilkan isi catatan dari Quill.
-     */
-    public function getIsiHtmlAttribute(): string
-    {
-        $isi = $this->isi ?? '';
-
-        if (trim($isi) === '') {
-            return '';
-        }
-
-        $config = \HTMLPurifier_Config::createDefault();
-
-        $config->set(
-            'HTML.Allowed',
-            'p,br,strong,b,em,i,u,s,ol,ul,li,blockquote,h1,h2,h3,h4,pre,code,a[href|title],span[style]'
-        );
-
-        $config->set(
-            'CSS.AllowedProperties',
-            [
-                'text-align',
-                'color',
-                'background-color',
-            ]
-        );
-
-        $purifier = new \HTMLPurifier($config);
-
-        return $purifier->purify($isi);
-    }
-
     /**
      * Ringkasan catatan.
      */
