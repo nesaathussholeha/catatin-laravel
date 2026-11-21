@@ -6,6 +6,7 @@ use App\Models\Catatan;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class CatatanController extends Controller
 {
@@ -18,11 +19,57 @@ class CatatanController extends Controller
             'matkul'      => 'required|max:100',
             'jurusan'     => 'required|in:' . implode(',', $this->jurusan),
             'category_id' => 'required|exists:categories,id',
-            'deskripsi'   => 'required|max:255',
-            'tautan'      => 'required|url|max:500',
+            'deskripsi'   => 'nullable|max:255',
+            'tipe_isi'    => 'required|in:teks,tautan',
+            'tautan'      => 'required_if:tipe_isi,tautan|nullable|url|max:500',
+            'isi'         => 'required_if:tipe_isi,teks|nullable|string|max:300000',
             'visibilitas' => 'required|in:pribadi,publik',
             'anonim'      => 'nullable|boolean',
         ];
+    }
+
+    private function siapkanData(Request $request): array
+    {
+        $data = $request->validate($this->aturan());
+
+        if ($data['tipe_isi'] === 'teks') {
+            $teks = $this->ekstrakTeks($data['isi'] ?? '');
+
+            if ($teks === null || $teks === '' || mb_strlen($teks) > 50000) {
+                throw ValidationException::withMessages([
+                    'isi' => 'Isi catatan kosong, tidak valid, atau terlalu panjang (maks 50.000 karakter).',
+                ]);
+            }
+
+            $data['isi_teks'] = $teks;
+            $data['tautan']   = null;
+        } else {
+            $data['isi']      = null;
+            $data['isi_teks'] = null;
+        }
+
+        $data['anonim'] = $request->boolean('anonim') && $data['visibilitas'] === 'publik';
+
+        return $data;
+    }
+
+    private function ekstrakTeks(string $json): ?string
+    {
+        $delta = json_decode($json, true);
+
+        if (!is_array($delta) || !isset($delta['ops']) || !is_array($delta['ops'])) {
+            return null;
+        }
+
+        $teks = '';
+        foreach ($delta['ops'] as $op) {
+            if (!is_array($op) || !isset($op['insert']) || !is_string($op['insert'])) {
+                return null;
+            }
+            $teks .= $op['insert'];
+        }
+
+        return trim($teks);
     }
 
     public function index()
@@ -43,13 +90,11 @@ class CatatanController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate($this->aturan());
-        $data['anonim'] = $request->boolean('anonim') && $data['visibilitas'] === 'publik';
-
-        Auth::user()->catatans()->create($data);
+        Auth::user()->catatans()->create($this->siapkanData($request));
 
         return redirect()->route('catatan.index')->with('sukses', 'Catatan berhasil disimpan.');
     }
+
 
     public function edit(Catatan $catatan)
     {
@@ -66,10 +111,7 @@ class CatatanController extends Controller
     {
         abort_if($catatan->user_id !== Auth::id(), 404);
 
-        $data = $request->validate($this->aturan());
-        $data['anonim'] = $request->boolean('anonim') && $data['visibilitas'] === 'publik';
-
-        $catatan->update($data);
+        $catatan->update($this->siapkanData($request));
 
         return redirect()->route('catatan.index')->with('sukses', 'Catatan berhasil diperbarui.');
     }

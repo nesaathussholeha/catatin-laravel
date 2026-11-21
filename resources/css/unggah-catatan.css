@@ -217,6 +217,124 @@ html, body,
 }
 .alert-galat ul { margin: 0; padding-left: 18px; }
 
+/* ---------- Bagian formulir bernomor ---------- */
+[hidden] { display: none !important; }
+
+.form-section { margin-bottom: 8px; }
+.form-section + .form-section {
+    margin-top: 12px;
+    padding-top: 28px;
+    border-top: 1px solid var(--garis);
+}
+.section-title {
+    margin: 0 0 22px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.section-title span { color: var(--primer); margin-right: 6px; }
+.label-opsional { font-weight: 400; color: #94a3b8; }
+
+/* Pill dua kolom (visibilitas, identitas, mode isi) */
+.pill-group.dua-kolom { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.pill-btn span iconify-icon { vertical-align: -2px; margin-right: 6px; }
+.pill-group.nonaktif { opacity: .5; }
+.pill-group.nonaktif .pill-btn { cursor: not-allowed; }
+
+.mode-toggle { margin-bottom: 18px; }
+.bantuan-teks { margin-top: 8px; font-size: 12px; color: #64748b; }
+
+/* ---------- Editor Quill (disamakan dengan gaya input lama) ---------- */
+.editor-wrap .ql-toolbar.ql-snow {
+    border: 1px solid var(--garis);
+    border-radius: 10px 10px 0 0;
+    font-family: inherit;
+}
+.editor-wrap .ql-container.ql-snow {
+    border: 1px solid var(--garis);
+    border-top: 0;
+    border-radius: 0 0 10px 10px;
+    font-family: inherit;
+    font-size: 14px;
+}
+.editor-wrap .ql-editor { min-height: 260px; line-height: 1.6; color: #334155; }
+.editor-wrap .ql-editor.ql-blank::before { font-style: normal; color: #94a3b8; }
+
+.pesan-galat { margin: 8px 0 0; font-size: 13px; color: #b42318; }
+
+/* ---------- Pengaturan publikasi: kartu opsi persegi panjang ---------- */
+.section-desc { margin: -12px 0 22px; font-size: 13px; color: #64748b; }
+
+.label-opsi {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.label-opsi iconify-icon { font-size: 18px; color: var(--primer); }
+.label-opsi + .bantuan-teks { margin: 4px 0 14px; }
+
+.opsi-list { display: flex; flex-direction: column; gap: 12px; }
+
+.opsi-list .opsi-kartu { position: relative; display: block; margin: 0; cursor: pointer; }
+.opsi-kartu input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
+
+.opsi-isi {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: #ffffff;
+    border: 1px solid var(--garis);
+    border-radius: 10px;                 /* sama dengan kolom input */
+    transition: border-color .15s ease, background-color .15s ease;
+}
+.opsi-ikon { flex-shrink: 0; font-size: 20px; color: #64748b; }
+
+.opsi-teks { display: flex; flex: 1; flex-direction: column; min-width: 0; }
+.opsi-teks strong { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+.opsi-teks small { margin-top: 2px; font-size: 12.5px; color: #64748b; }
+
+/* Titik radio di kanan */
+.opsi-titik {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    border-radius: 50%;
+    transition: background-color .15s ease, border-color .15s ease;
+}
+
+.opsi-kartu:hover .opsi-isi { border-color: var(--primer); }
+
+.opsi-kartu input:checked + .opsi-isi {
+    border-color: var(--primer);
+    background: rgba(79, 70, 229, .06);
+}
+.opsi-kartu input:checked + .opsi-isi .opsi-ikon { color: var(--primer); }
+.opsi-kartu input:checked + .opsi-isi .opsi-titik {
+    background: var(--primer);
+    border-color: var(--primer);
+    box-shadow: inset 0 0 0 3px #ffffff;
+}
+
+.opsi-kartu input:focus-visible + .opsi-isi {
+    outline: 3px solid rgba(79, 70, 229, .4);
+    outline-offset: 2px;
+}
+
+/* Identitas penulis dinonaktifkan saat catatan Pribadi */
+.opsi-list.nonaktif .opsi-kartu { cursor: not-allowed; }
+.opsi-list.nonaktif .opsi-isi { opacity: .5; }
+.opsi-list.nonaktif .opsi-kartu:hover .opsi-isi { border-color: var(--garis); }
+
+@media (max-width: 767px) {
+    .pill-group.dua-kolom { gap: 10px; }
+}
+
 /* ---------- Responsif ---------- */
 @media (max-width: 767px) {
     .card-form { padding: 22px 18px; }

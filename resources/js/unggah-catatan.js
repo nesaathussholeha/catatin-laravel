@@ -1,19 +1,87 @@
+import Quill from 'quill';
+import 'quill/dist/quill.snow.css';
+
 (function () {
     'use strict';
 
-    // Anonim hanya relevan untuk catatan publik
-    var radios = document.querySelectorAll('input[name="visibilitas"]');
-    var anonim = document.getElementById('is_anonim');
-    var grup   = document.getElementById('grup-anonim');
-    if (!radios.length || !anonim || !grup) { return; }
+    const form = document.getElementById('form-catatan');
+    if (!form) { return; }
 
-    function sinkron() {
-        var publik = document.querySelector('input[name="visibilitas"]:checked').value === 'publik';
-        anonim.disabled = !publik;
-        if (!publik) { anonim.checked = false; }
-        grup.style.opacity = publik ? '' : '.5';
+    const panelTeks    = document.getElementById('panel-teks');
+    const panelTautan  = document.getElementById('panel-tautan');
+    const inputTautan  = document.getElementById('tautan');
+    const inputIsi     = document.getElementById('isi');
+    const pesanIsi     = document.getElementById('pesan-isi');
+    const grupIdentitas = document.getElementById('grup-identitas');
+
+    const quill = new Quill('#editor', {
+        theme: 'snow',
+        placeholder: 'Mulai tuliskan materi catatanmu...',
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ header: [1, 2, 3, false] }],
+                [{ list: 'ordered' }, { list: 'bullet' }],
+                ['blockquote', 'code-block'],
+                ['link'],
+                ['clean'],
+            ],
+        },
+    });
+
+    if (inputIsi.value) {
+        try {
+            quill.setContents(JSON.parse(inputIsi.value));
+        } catch (e) {
+            
+        }
     }
 
-    radios.forEach(function (r) { r.addEventListener('change', sinkron); });
-    sinkron();
+    function modeSekarang() {
+        return form.querySelector('input[name="tipe_isi"]:checked').value;
+    }
+
+    function aturMode() {
+        const mode = modeSekarang();
+        panelTeks.hidden   = mode !== 'teks';
+        panelTautan.hidden = mode !== 'tautan';
+        inputTautan.required = mode === 'tautan';
+    }
+
+    function aturIdentitas() {
+        const publik = form.querySelector('input[name="visibilitas"]:checked').value === 'publik';
+
+        form.querySelectorAll('input[name="anonim"]').forEach(function (r) {
+            r.disabled = !publik;
+        });
+        if (!publik) {
+            form.querySelector('input[name="anonim"][value="0"]').checked = true;
+        }
+        grupIdentitas.classList.toggle('nonaktif', !publik);
+    }
+
+    form.querySelectorAll('input[name="tipe_isi"]').forEach(function (r) {
+        r.addEventListener('change', aturMode);
+    });
+    form.querySelectorAll('input[name="visibilitas"]').forEach(function (r) {
+        r.addEventListener('change', aturIdentitas);
+    });
+
+    form.addEventListener('submit', function (e) {
+        if (modeSekarang() === 'teks') {
+            if (quill.getText().trim().length === 0) {
+                e.preventDefault();
+                pesanIsi.hidden = false;
+                quill.focus();
+                return;
+            }
+            pesanIsi.hidden = true;
+            inputIsi.value = JSON.stringify(quill.getContents()); // Delta -> JSON
+        } else {
+            inputIsi.value = '';
+        }
+    });
+
+    aturMode();
+    aturIdentitas();
 })();
