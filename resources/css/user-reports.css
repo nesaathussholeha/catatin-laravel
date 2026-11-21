@@ -232,46 +232,6 @@
 }
 
 /* ==============================
-   TOAST NOTIFICATION
-============================== */
-
-.toast-notification {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 18px;
-    margin-bottom: 20px;
-    border-radius: 9px;
-    font-size: 13px;
-}
-
-.toast-success {
-    color: #166534;
-    background: #dcfce7;
-    border: 1px solid #bbf7d0;
-}
-
-.toast-error {
-    color: #991b1b;
-    background: #fee2e2;
-    border: 1px solid #fecaca;
-}
-
-.toast-notification iconify-icon {
-    font-size: 20px;
-}
-
-.toast-close {
-    margin-left: auto;
-    padding: 0 4px;
-    border: none;
-    background: transparent;
-    color: inherit;
-    font-size: 22px;
-    cursor: pointer;
-}
-
-/* ==============================
    RESPONSIVE
 ============================== */
 
@@ -302,5 +262,218 @@
 
     .pagination-wrapper {
         padding: 16px;
+    }
+}
+
+
+/* ==============================
+   TAB KELOLA PENGGUNA
+============================== */
+
+.user-tabs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding: 6px;
+    background: #fff;
+    border-radius: 10px;
+    width: fit-content;
+}
+
+.user-tab {
+    padding: 11px 20px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.user-tab:hover {
+    color: #4f46e5;
+}
+
+.user-tab.active {
+    color: #ffff;
+    background: #4f46e5;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.1);
+}
+
+/* Konten Tab */
+.user-tab-content {
+    display: none;
+}
+
+.user-tab-content.active {
+    display: block;
+}
+
+/* Badge Status Akun */
+.badge-danger {
+    color: #b91c1c;
+    background: #fee2e2;
+}
+
+/* Responsive Tab */
+@media (max-width: 768px) {
+    .user-tabs {
+        width: 100%;
+    }
+
+    .user-tab {
+        flex: 1;
+        padding: 11px 10px;
+        font-size: 12px;
+    }
+}
+
+
+/* ==============================
+   UBAH STATUS PENGGUNA
+============================== */
+
+.status-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-select {
+    min-width: 115px;
+    padding: 8px 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #334155;
+    font-size: 12px;
+    outline: none;
+}
+
+.status-select:focus {
+    border-color: #6366f1;
+}
+
+.btn-update-status {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 7px;
+    background: #4f46e5;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-update-status:hover {
+    background: #4338ca;
+}
+
+
+/* ==============================
+   MODAL KONFIRMASI UBAH STATUS
+============================== */
+
+.status-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.5);
+}
+
+.status-modal-overlay.active {
+    display: flex;
+}
+
+.status-modal {
+    width: 100%;
+    max-width: 400px;
+    padding: 28px;
+    background: #ffffff;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(15, 23, 42, 0.2);
+    animation: modalFadeIn 0.2s ease;
+}
+
+.status-modal-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 55px;
+    height: 55px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: #eef2ff;
+    color: #4f46e5;
+    font-size: 28px;
+}
+
+.status-modal h3 {
+    margin: 0 0 10px;
+    color: #1e293b;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.status-modal p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.status-modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.status-modal-actions button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-modal-cancel {
+    color: #475569;
+    background: #f1f5f9;
+}
+
+.btn-modal-cancel:hover {
+    background: #e2e8f0;
+}
+
+.btn-modal-confirm {
+    color: #ffffff;
+    background: #4f46e5;
+}
+
+.btn-modal-confirm:hover {
+    background: #4338ca;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
