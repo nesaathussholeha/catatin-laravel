@@ -12,6 +12,7 @@
 
 @section('content')
 
+
     {{-- Notifikasi --}}
     @if (session('success') || session('error'))
         <div class="toast-notification {{ session('success') ? 'toast-success' : 'toast-error' }}" id="toastNotification">

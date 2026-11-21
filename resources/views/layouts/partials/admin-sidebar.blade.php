@@ -30,12 +30,12 @@
     <iconify-icon icon="lucide:book-copy"></iconify-icon>
     <span>Kelola Catatan</span>
 </a>
-        <a href="#" class="admin-nav-link">
+        <a href="{{ route('admin.user-reports.index') }}" class="admin-nav-link {{ request()->routeIs('admin.user-reports.index') ? 'active' : '' }}">
             <iconify-icon icon="lucide:users"></iconify-icon>
             <span>Kelola Pengguna</span>
         </a>
 
-        <a href="{{  route('admin.master-data.index') }}" class="admin-nav-link {{ request()->routeIs('admin.master-data.index') ? 'active' : '' }}"">
+        <a href="{{  route('admin.master-data.index') }}" class="admin-nav-link {{ request()->routeIs('admin.master-data.index') ? 'active' : '' }}">
             <iconify-icon icon="lucide:database"></iconify-icon>
             <span>Master Data</span>
         </a>

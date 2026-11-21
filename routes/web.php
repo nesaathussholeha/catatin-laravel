@@ -14,6 +14,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\AdminCatatanController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\UserReportController;
 
 // ========================================
 // AUTHENTICATION (GUEST)
@@ -74,7 +75,11 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::put('/catatan/{catatan}',      [CatatanController::class, 'update'])->name('catatan.update');
     Route::delete('/catatan/{catatan}',   [CatatanController::class, 'destroy'])->name('catatan.destroy');
 
-    // Profil mahasiswa (dari temanmu)
+    // Laporan Pengguna oleh Mahasiswa
+    Route::post('/user-reports', [UserReportController::class, 'store'])
+        ->name('user-reports.store');
+
+    // Profil mahasiswa
     Route::get('/profil', [UserProfileController::class, 'index'])
         ->name('user.profile');
 
@@ -90,7 +95,7 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::delete('/profil/foto', [UserProfileController::class, 'deletePhoto'])
         ->name('user.profile.photo.delete');
 
-    // Detail Catatan & Laporan (punyamu)
+    // Detail Catatan & Laporan
     Route::get('/catatan/{catatan}', [CatatanController::class, 'show'])
         ->name('catatan.show');
 
@@ -145,12 +150,22 @@ Route::prefix('admin')
         Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])
             ->name('categories.destroy');
 
+        // Kelola Laporan Pengguna oleh Admin
+        Route::get('/user-reports', [UserReportController::class, 'index'])
+            ->name('user-reports.index');
+
+        Route::get('/user-reports/{user_report}', [UserReportController::class, 'show'])
+            ->name('user-reports.show');
+
+        Route::patch('/user-reports/{user_report}', [UserReportController::class, 'update'])
+            ->name('user-reports.update');
+
         // Profil admin
         Route::get('/profil', [AdminProfileController::class, 'edit'])->name('profil');
         Route::put('/profil', [AdminProfileController::class, 'updateProfil'])->name('profil.update');
         Route::put('/profil/password', [AdminProfileController::class, 'updatePassword'])->name('profil.password');
 
-        // Kelola Catatan (dari temanmu)
+        // Kelola Catatan
         Route::get('/kelola-catatan', [AdminCatatanController::class, 'index'])
             ->name('kelola-catatan.index');
 
@@ -166,7 +181,7 @@ Route::prefix('admin')
         Route::delete('/kelola-catatan/{catatan}', [AdminCatatanController::class, 'destroy'])
             ->name('kelola-catatan.destroy');
 
-        // Kelola Laporan (punyamu)
+        // Kelola Laporan
         Route::view('/kelola-laporan', 'admin.kelola-laporan.index')
             ->name('kelola-laporan');
     });
