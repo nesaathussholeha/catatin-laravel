@@ -93,21 +93,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 return 0;
             });
 
-            // Sembunyikan SEMUA kartu terlebih dahulu
+            // Sembunyikan semua kartu
             cards.forEach((card) => {
                 card.hidden = true;
             });
 
-            // Tampilkan hanya kartu yang cocok
+            // Tampilkan kartu yang cocok
             filteredCards.forEach((card) => {
                 card.hidden = false;
                 noteGrid.appendChild(card);
             });
 
-            // Tampilkan pesan jika tidak ada hasil
             emptyMessage.hidden = filteredCards.length !== 0;
 
-            // Perbarui jumlah catatan
             displayCount.textContent = `Menampilkan ${filteredCards.length} dari ${cards.length} catatan`;
         }
 
@@ -116,5 +114,61 @@ document.addEventListener("DOMContentLoaded", function () {
         sortSelect.addEventListener("change", filterAndSortNotes);
 
         filterAndSortNotes();
+
+        // =========================
+        // Upvote
+        // =========================
+        noteGrid.addEventListener("click", async function (event) {
+            const tombol = event.target.closest(".upvote-button");
+
+            if (!tombol || tombol.disabled) return;
+
+            const jumlah = tombol.querySelector(".upvote-count");
+            if (!jumlah) return;
+
+            tombol.disabled = true;
+
+            try {
+                const response = await fetch(tombol.dataset.url, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": document.querySelector(
+                            'meta[name="csrf-token"]',
+                        ).content,
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                    },
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || "Upvote gagal diproses.");
+                }
+
+                jumlah.textContent = data.upvote;
+                tombol.classList.toggle("aktif", data.upvoted);
+
+                tombol.setAttribute(
+                    "aria-pressed",
+                    data.upvoted ? "true" : "false",
+                );
+
+                const card = tombol.closest(".note-card");
+
+                if (card) {
+                    card.dataset.upvote = data.upvote;
+                }
+
+                // Perbarui urutan jika sedang mengurutkan berdasarkan upvote
+                if (sortSelect.value === "upvote") {
+                    filterAndSortNotes();
+                }
+            } catch (error) {
+                alert(error.message);
+            } finally {
+                tombol.disabled = false;
+            }
+        });
     }
 });

@@ -18,6 +18,7 @@ use App\Http\Controllers\UserReportController;
 use App\Http\Controllers\NoteReportController;
 use App\Http\Controllers\AdminNoteReportController;
 use App\Http\Controllers\AuthorProfileController;
+use App\Http\Controllers\CatatanUpvoteController;
 
 // ========================================
 // AUTHENTICATION (GUEST)
@@ -113,6 +114,9 @@ Route::middleware(['auth', 'role:student', 'no.cache'])->group(function () {
     Route::get('/penulis/{user}', [AuthorProfileController::class, 'show'])
         ->whereNumber('user')
         ->name('user.author-profile');
+
+    Route::post('/catatan/{catatan}/upvote', [CatatanUpvoteController::class, 'toggle'])
+        ->name('catatan.upvote');
 });
 
 

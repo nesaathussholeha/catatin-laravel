@@ -243,15 +243,15 @@
                         <div class="note-footer">
 
                             {{-- Jumlah upvote ditampilkan, belum menjadi tombol interaktif --}}
-                            <div class="upvote-button">
+                            <button type="button" class="upvote-button {{ $item->sudah_upvote ? 'aktif' : '' }}"
+                                data-url="{{ route('catatan.upvote', $item->id) }}"
+                                aria-pressed="{{ $item->sudah_upvote ? 'true' : 'false' }}">
                                 <iconify-icon icon="lucide:thumbs-up"></iconify-icon>
 
-                                <span class="upvote-count">
-                                    {{ $item->upvote ?? 0 }}
-                                </span>
+                                <span class="upvote-count">{{ $item->upvote ?? 0 }}</span>
 
                                 <span>Upvote</span>
-                            </div>
+                            </button>
 
                             <a href="{{ route('catatan.show', $item->id) }}" class="note-detail-link">
                                 Lihat catatan

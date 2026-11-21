@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Catatan extends Model
 {
@@ -46,6 +47,12 @@ class Catatan extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function upvoters(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'catatan_upvotes')
+            ->withTimestamps();
     }
 
     public function getRingkasanAttribute(): string
