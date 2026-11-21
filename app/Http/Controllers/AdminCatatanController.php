@@ -3,128 +3,93 @@
 namespace App\Http\Controllers;
 
 use App\Models\Catatan;
-use App\Models\Category;
-use App\Models\User;
-use App\Models\Department;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class AdminCatatanController extends Controller
 {
     /**
-     * Menampilkan daftar catatan.
+     * Menampilkan catatan aktif atau catatan yang dihapus sementara.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $catatan = Catatan::with(['user', 'category'])
+        $filter = $request->query('filter', 'aktif');
+
+        if (!in_array($filter, ['aktif', 'dihapus'], true)) {
+            $filter = 'aktif';
+        }
+
+        $query = Catatan::with(['user', 'category']);
+
+        if ($filter === 'dihapus') {
+            $query->onlyTrashed();
+        }
+
+        if ($request->filled('cari')) {
+            $kataKunci = $request->cari;
+
+            $query->where(function ($q) use ($kataKunci) {
+                $q->where('judul', 'like', "%{$kataKunci}%")
+                    ->orWhere('matkul', 'like', "%{$kataKunci}%")
+                    ->orWhere('jurusan', 'like', "%{$kataKunci}%")
+                    ->orWhereHas('user', function ($userQuery) use ($kataKunci) {
+                        $userQuery->where('name', 'like', "%{$kataKunci}%");
+                    });
+            });
+        }
+
+        $catatan = $query
             ->latest()
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
 
-        $penulis = User::where('role', 'student')
-            ->where('status', 'active')
-            ->orderBy('name')
-            ->get();
-
-        $categories = Category::orderBy('name')->get();
-
-        $departments = Department::orderBy('name')->get();
+        $jumlahAktif = Catatan::count();
+        $jumlahDihapus = Catatan::onlyTrashed()->count();
 
         return view('admin.kelola-catatan.index', compact(
             'catatan',
-            'penulis',
-            'categories',
-            'departments'
+            'filter',
+            'jumlahAktif',
+            'jumlahDihapus'
         ));
     }
 
     /**
-     * Menyimpan catatan baru.
+     * Menampilkan detail catatan, termasuk yang dihapus sementara.
      */
-    public function store(Request $request)
+    public function show($id)
     {
-        $data = $request->validate([
-            'user_id' => [
-                'required',
-                Rule::exists('users', 'id')->where('role', 'student'),
-            ],
-            'judul' => 'required|string|max:150',
-            'matkul' => 'required|string|max:100',
-            'jurusan' => 'required|exists:departments,name',
-            'category_id' => 'required|exists:categories,id',
-            'deskripsi' => 'required|string|max:255',
-            'tautan' => 'required|url|max:500',
-            'visibilitas' => 'required|in:pribadi,publik',
-            'anonim' => 'nullable|boolean',
-        ]);
+        $catatan = Catatan::withTrashed()
+            ->with(['user', 'category'])
+            ->findOrFail($id);
 
-        $data['anonim'] = $request->boolean('anonim');
-
-        $catatanBaru = new Catatan($data);
-        $catatanBaru->status = 'Draft';
-        $catatanBaru->upvote = 0;
-        $catatanBaru->save();
-
-        return redirect()
-            ->route('admin.kelola-catatan.index')
-            ->with('sukses', 'Catatan berhasil ditambahkan.');
+        return view('admin.kelola-catatan.detail', compact('catatan'));
     }
 
     /**
-     * Memperbarui catatan.
+     * Memulihkan catatan yang dihapus sementara.
      */
-    public function update(Request $request, Catatan $catatan)
+    public function restore($id)
     {
-        $data = $request->validate([
-            'user_id' => [
-                'required',
-                Rule::exists('users', 'id')->where('role', 'student'),
-            ],
-            'judul' => 'required|string|max:150',
-            'matkul' => 'required|string|max:100',
-            'jurusan' => 'required|string|max:50',            
-            'category_id' => 'required|exists:categories,id',
-            'deskripsi' => 'required|string|max:255',
-            'tautan' => 'required|url|max:500',
-            'visibilitas' => 'required|in:pribadi,publik',
-            'anonim' => 'nullable|boolean',
-        ]);
+        $catatan = Catatan::onlyTrashed()->findOrFail($id);
 
-        $data['anonim'] = $request->boolean('anonim');
-
-        $catatan->fill($data);
-        $catatan->save();
+        $catatan->restore();
 
         return redirect()
-            ->route('admin.kelola-catatan.index')
-            ->with('sukses', 'Catatan berhasil diperbarui.');
+            ->route('admin.kelola-catatan.index', ['filter' => 'dihapus'])
+            ->with('sukses', 'Catatan berhasil dipulihkan.');
     }
 
     /**
-     * Mengubah status catatan.
+     * Menghapus catatan secara permanen.
      */
-    public function updateStatus(Request $request, Catatan $catatan)
+    public function forceDelete($id)
     {
-        $data = $request->validate([
-            'status' => 'required|in:Draft,Terbit,Dilaporkan',
-        ]);
+        $catatan = Catatan::withTrashed()->findOrFail($id);
 
-        $catatan->status = $data['status'];
-        $catatan->save();
+        $catatan->forceDelete();
 
         return redirect()
-            ->route('admin.kelola-catatan.index')
-            ->with('sukses', 'Status catatan berhasil diperbarui.');
-    }
-
-    /**
-     * Menghapus catatan.
-     */
-    public function destroy(Catatan $catatan)
-    {
-        $catatan->delete();
-
-        return redirect()
-            ->route('admin.kelola-catatan.index')
-            ->with('sukses', 'Catatan berhasil dihapus.');
+            ->route('admin.kelola-catatan.index', ['filter' => 'dihapus'])
+            ->with('sukses', 'Catatan berhasil dihapus secara permanen.');
     }
 }

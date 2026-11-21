@@ -51,12 +51,12 @@ export default defineConfig({
                 'resources/js/kelola-laporan.js',
 
                 // Catatan Saya
-                'resources/css/catatan_saya.css',
-                'resources/js/catatan_saya.js',
+                'resources/css/catatan-saya.css',
+                'resources/js/catatan-saya.js',
 
                 // Unggah Catatan
                 'resources/css/unggah-catatan.css',
-                'esources/js/unggah-catatan.js',
+                'resources/js/unggah-catatan.js',
             ],
 
             refresh: true,

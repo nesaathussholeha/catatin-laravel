@@ -3,12 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Catatan extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'user_id',
         'judul',
+        'isi',
         'matkul',
         'jurusan',
         'category_id',
@@ -20,6 +24,7 @@ class Catatan extends Model
 
     protected $casts = [
         'anonim' => 'boolean',
+        'deleted_at' => 'datetime',
     ];
 
     public function user()
@@ -30,7 +35,9 @@ class Catatan extends Model
     // Catatan yang boleh dilihat umum
     public function scopePublik($query)
     {
-        return $query->where('status', 'Terbit')->where('visibilitas', 'publik');
+        return $query
+            ->where('status', 'Terbit')
+            ->where('visibilitas', 'publik');
     }
 
     public function category()

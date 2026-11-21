@@ -181,19 +181,16 @@ Route::prefix('admin')
 
         // Kelola Catatan
         Route::get('/kelola-catatan', [AdminCatatanController::class, 'index'])
-            ->name('kelola-catatan.index');
+        ->name('kelola-catatan.index');
 
-        Route::post('/kelola-catatan', [AdminCatatanController::class, 'store'])
-            ->name('kelola-catatan.store');
+        Route::get('/kelola-catatan/{id}', [AdminCatatanController::class, 'show'])
+        ->name('kelola-catatan.show');
 
-        Route::put('/kelola-catatan/{catatan}', [AdminCatatanController::class, 'update'])
-            ->name('kelola-catatan.update');
+        Route::patch('/kelola-catatan/{id}/restore', [AdminCatatanController::class, 'restore'])
+        ->name('kelola-catatan.restore');
 
-        Route::patch('/kelola-catatan/{catatan}/status', [AdminCatatanController::class, 'updateStatus'])
-            ->name('kelola-catatan.status');
-
-        Route::delete('/kelola-catatan/{catatan}', [AdminCatatanController::class, 'destroy'])
-            ->name('kelola-catatan.destroy');
+        Route::delete('/kelola-catatan/{id}/force-delete', [AdminCatatanController::class, 'forceDelete'])
+        ->name('kelola-catatan.force-delete');
 
         // Kelola Laporan
         Route::get('/kelola-laporan', [AdminNoteReportController::class, 'index'])
