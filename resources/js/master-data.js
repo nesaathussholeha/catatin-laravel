@@ -26,16 +26,14 @@ if (modalJurusan) {
         modalJurusan.classList.remove("active");
     }
 
-    // Tombol Tambah Jurusan
+    // Tombol tambah jurusan
     btnTambah?.addEventListener("click", bukaModalJurusan);
 
-    // Tombol silang
+    // Tombol tutup dan batal
     btnTutup?.addEventListener("click", tutupModalJurusan);
-
-    // Tombol Batal
     btnBatal?.addEventListener("click", tutupModalJurusan);
 
-    // Menutup modal ketika area luar modal diklik
+    // Menutup modal ketika area luar diklik
     modalJurusan.addEventListener("click", function (event) {
         if (event.target === modalJurusan) {
             tutupModalJurusan();
@@ -49,7 +47,7 @@ if (modalJurusan) {
         }
     });
 
-    // Tombol Edit Jurusan
+    // Edit jurusan
     const tombolEdit = document.querySelectorAll(".btn-edit-jurusan");
 
     tombolEdit.forEach((button) => {
@@ -61,11 +59,9 @@ if (modalJurusan) {
             form.reset();
 
             judulModal.textContent = "Edit Jurusan";
-
             form.action = `/admin/departments/${id}`;
 
             document.getElementById("methodJurusan").value = "PUT";
-
             document.getElementById("kodeJurusan").value = code;
             document.getElementById("namaJurusan").value = name;
 
@@ -73,7 +69,7 @@ if (modalJurusan) {
         });
     });
 
-    // MODAL KONFIRMASI HAPUS JURUSAN
+    // Modal konfirmasi hapus jurusan
     const modalHapusJurusan = document.getElementById("modalHapusJurusan");
 
     if (modalHapusJurusan) {
@@ -89,7 +85,6 @@ if (modalJurusan) {
                 const name = this.dataset.name;
 
                 namaJurusan.textContent = name;
-
                 formHapus.action = `/admin/departments/${id}`;
 
                 modalHapusJurusan.classList.add("active");
@@ -118,8 +113,7 @@ if (modalJurusan) {
         });
     }
 
-    // SEARCH JURUSAN
-
+    // Search jurusan
     const searchJurusan = document.getElementById("searchJurusan");
 
     if (searchJurusan) {
@@ -155,10 +149,7 @@ if (modalJurusan) {
         });
     }
 
-    // ==========================================
-    // CRUD MATA KULIAH
-    // ==========================================
-
+    // CRUD mata kuliah
     const modalMatakuliah = document.getElementById("modalMatakuliah");
 
     if (modalMatakuliah) {
@@ -170,12 +161,8 @@ if (modalJurusan) {
         const judulModal = document.getElementById("judulModalMatakuliah");
         const method = document.getElementById("methodMatakuliah");
 
-        // ==========================================
-        // SEARCHABLE MULTI SELECT JURUSAN
-        // ==========================================
-
-        const jurusanMultiSelect =
-            document.getElementById("jurusanMultiSelect");
+        // Searchable multi select jurusan
+        const jurusanMultiSelect = document.getElementById("jurusanMultiSelect");
         const selectedContainer = document.getElementById("jurusanSelected");
         const searchInput = document.getElementById("searchJurusanSelect");
         const optionsContainer = document.getElementById("jurusanOptions");
@@ -235,7 +222,7 @@ if (modalJurusan) {
             });
         }
 
-        // Membuka dan menutup dropdown
+        // Membuka dan menutup dropdown jurusan
         selectedContainer?.addEventListener("click", () => {
             jurusanMultiSelect.classList.toggle("active");
 
@@ -249,7 +236,7 @@ if (modalJurusan) {
             checkbox.addEventListener("change", renderJurusanSelected);
         });
 
-        // Mencari jurusan
+        // Search jurusan pada dropdown
         searchInput?.addEventListener("input", () => {
             const keyword = searchInput.value.toLowerCase().trim();
 
@@ -272,23 +259,17 @@ if (modalJurusan) {
             }
         });
 
-        // Tampilan awal
+        // Tampilan awal jurusan terpilih
         renderJurusanSelected();
 
-        // ==========================================
-        // VALIDASI LARAVEL
-        // ==========================================
-
+        // Membuka modal kembali jika terdapat error validasi Laravel
         const memilikiError = modalMatakuliah.querySelector(".is-invalid");
 
         if (memilikiError) {
             modalMatakuliah.classList.add("active");
         }
 
-        // ==========================================
-        // MODAL TAMBAH MATA KULIAH
-        // ==========================================
-
+        // Modal tambah mata kuliah
         function bukaModalTambah() {
             form.reset();
 
@@ -297,7 +278,7 @@ if (modalJurusan) {
 
             judulModal.textContent = "Tambah Mata Kuliah";
 
-            // Bersihkan pilihan jurusan sebelumnya
+            // Membersihkan pilihan jurusan sebelumnya
             checkboxes.forEach((checkbox) => {
                 checkbox.checked = false;
             });
@@ -317,10 +298,7 @@ if (modalJurusan) {
             modalMatakuliah.classList.add("active");
         }
 
-        // ==========================================
-        // MENUTUP MODAL
-        // ==========================================
-
+        // Menutup modal mata kuliah
         function tutupModal() {
             modalMatakuliah.classList.remove("active");
             jurusanMultiSelect?.classList.remove("active");
@@ -342,10 +320,7 @@ if (modalJurusan) {
             }
         });
 
-        // ==========================================
-        // EDIT MATA KULIAH
-        // ==========================================
-
+        // Edit mata kuliah
         const tombolEdit = document.querySelectorAll(".btn-edit-matakuliah");
 
         tombolEdit.forEach((button) => {
@@ -361,7 +336,6 @@ if (modalJurusan) {
                 form.reset();
 
                 judulModal.textContent = "Edit Mata Kuliah";
-
                 form.action = `/admin/courses/${id}`;
                 method.value = "PUT";
 
@@ -383,17 +357,13 @@ if (modalJurusan) {
                     ?.querySelectorAll(".jurusan-option")
                     .forEach((option) => option.classList.remove("hidden"));
 
-                // Perbarui chip dan tanda centang
                 renderJurusanSelected();
 
                 modalMatakuliah.classList.add("active");
             });
         });
 
-        // ==========================================
-        // MODAL KONFIRMASI HAPUS MATA KULIAH
-        // ==========================================
-
+        // Modal konfirmasi hapus mata kuliah
         const modalHapusMatakuliah = document.getElementById(
             "modalHapusMatakuliah",
         );
@@ -402,13 +372,10 @@ if (modalJurusan) {
             const tombolHapus = document.querySelectorAll(
                 ".btn-hapus-matakuliah",
             );
-
             const btnBatalHapus = document.getElementById(
                 "btnBatalHapusMatakuliah",
             );
-
             const formHapus = document.getElementById("formHapusMatakuliah");
-
             const namaMatakuliah = document.getElementById(
                 "namaMatakuliahHapus",
             );
@@ -419,13 +386,13 @@ if (modalJurusan) {
                     const name = this.dataset.name;
 
                     namaMatakuliah.textContent = name;
-
                     formHapus.action = `/admin/courses/${id}`;
 
                     modalHapusMatakuliah.classList.add("active");
                 });
             });
 
+            // Menutup modal konfirmasi hapus
             function tutupModalHapus() {
                 modalHapusMatakuliah.classList.remove("active");
             }
@@ -445,20 +412,15 @@ if (modalJurusan) {
             });
         }
 
-        // ==========================================
-        // SEARCH MATA KULIAH
-        // ==========================================
-
+        // Search mata kuliah
         const searchMatakuliah = document.getElementById("searchMatakuliah");
 
         if (searchMatakuliah) {
             const barisMatakuliah =
                 document.querySelectorAll(".baris-matakuliah");
-
             const pesanTidakDitemukan = document.getElementById(
                 "hasilMatakuliahTidakDitemukan",
             );
-
             const dataKosong = document.getElementById("dataMatakuliahKosong");
 
             searchMatakuliah.addEventListener("input", function () {
@@ -492,10 +454,7 @@ if (modalJurusan) {
     }
 }
 
-// ==========================================
-// CRUD KATEGORI
-// ==========================================
-
+// CRUD kategori
 const modalKategori = document.getElementById("modalKategori");
 
 if (modalKategori) {
@@ -508,20 +467,14 @@ if (modalKategori) {
     const method = document.getElementById("methodKategori");
     const inputNama = document.getElementById("namaKategori");
 
-    // ==========================================
-    // VALIDASI LARAVEL
-    // ==========================================
-
+    // Membuka kembali modal jika terdapat error validasi Laravel
     const memilikiError = modalKategori.querySelector(".is-invalid");
 
     if (memilikiError) {
         modalKategori.classList.add("active");
     }
 
-    // ==========================================
-    // MODAL TAMBAH KATEGORI
-    // ==========================================
-
+    // Modal tambah kategori
     function bukaModalTambahKategori() {
         form.reset();
 
@@ -533,10 +486,7 @@ if (modalKategori) {
         modalKategori.classList.add("active");
     }
 
-    // ==========================================
-    // MENUTUP MODAL
-    // ==========================================
-
+    // Menutup modal kategori
     function tutupModalKategori() {
         modalKategori.classList.remove("active");
     }
@@ -557,10 +507,7 @@ if (modalKategori) {
         }
     });
 
-    // ==========================================
-    // EDIT KATEGORI
-    // ==========================================
-
+    // Edit kategori
     const tombolEdit = document.querySelectorAll(".btn-edit-kategori");
 
     tombolEdit.forEach((button) => {
@@ -571,7 +518,6 @@ if (modalKategori) {
             form.reset();
 
             judulModal.textContent = "Edit Kategori";
-
             form.action = `/admin/categories/${id}`;
             method.value = "PUT";
 
@@ -581,19 +527,13 @@ if (modalKategori) {
         });
     });
 
-    // ==========================================
-    // MODAL KONFIRMASI HAPUS KATEGORI
-    // ==========================================
-
+    // Modal konfirmasi hapus kategori
     const modalHapusKategori = document.getElementById("modalHapusKategori");
 
     if (modalHapusKategori) {
         const tombolHapus = document.querySelectorAll(".btn-hapus-kategori");
-
         const btnBatalHapus = document.getElementById("btnBatalHapusKategori");
-
         const formHapus = document.getElementById("formHapusKategori");
-
         const namaKategori = document.getElementById("namaKategoriHapus");
 
         // Membuka modal konfirmasi
@@ -603,14 +543,13 @@ if (modalKategori) {
                 const name = this.dataset.name;
 
                 namaKategori.textContent = name;
-
                 formHapus.action = `/admin/categories/${id}`;
 
                 modalHapusKategori.classList.add("active");
             });
         });
 
-        // Menutup modal
+        // Menutup modal konfirmasi hapus
         function tutupModalHapus() {
             modalHapusKategori.classList.remove("active");
         }
@@ -631,19 +570,14 @@ if (modalKategori) {
     }
 }
 
-// ==========================================
-// SEARCH KATEGORI
-// ==========================================
-
+// Search kategori
 const searchKategori = document.getElementById("searchKategori");
 
 if (searchKategori) {
     const barisKategori = document.querySelectorAll("tr.baris-kategori");
-
     const pesanTidakDitemukan = document.getElementById(
         "hasilKategoriTidakDitemukan",
     );
-
     const dataKosong = document.getElementById("dataKategoriKosong");
 
     searchKategori.addEventListener("input", function () {
@@ -652,7 +586,6 @@ if (searchKategori) {
 
         barisKategori.forEach((baris) => {
             const nama = baris.cells[1].textContent.toLowerCase();
-
             const cocok = nama.includes(keyword);
 
             baris.style.display = cocok ? "" : "none";

@@ -9,25 +9,6 @@ use Illuminate\Validation\Rule;
 
 class CourseController extends Controller
 {
-    public function index()
-    {
-        $courses = Course::with('departments')
-            ->latest()
-            ->get();
-
-        $departments = Department::orderBy('name')->get();
-
-        return view('admin.master-data.index', compact(
-            'courses',
-            'departments'
-        ));
-    }
-
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -77,16 +58,6 @@ class CourseController extends Controller
         return redirect()
             ->route('admin.master-data.index', ['tab' => 'matakuliah'])
             ->with('success', 'Mata kuliah berhasil ditambahkan.');
-    }
-
-    public function show(Course $course)
-    {
-        //
-    }
-
-    public function edit(Course $course)
-    {
-        //
     }
 
     public function update(Request $request, Course $course)

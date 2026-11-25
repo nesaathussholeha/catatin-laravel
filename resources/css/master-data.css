@@ -1,7 +1,5 @@
-/* =========================================
-   MASTER DATA PAGE
-========================================= */
 
+/* Untuk mengatur halaman Master Data */
 .master-data-page {
     width: 100%;
 }
@@ -22,11 +20,7 @@
     font-size: 14px;
 }
 
-
-/* =========================================
-   TAB NAVIGATION
-========================================= */
-
+/* Untuk mengatur tab navigasi */
 .master-data-tabs {
     display: flex;
     align-items: center;
@@ -59,11 +53,7 @@
     color: #ffffff;
 }
 
-
-/* =========================================
-   MASTER DATA CONTENT
-========================================= */
-
+/* Untuk mengatur konten Master Data */
 .master-data-content {
     padding: 25px;
     background: #ffffff;
@@ -87,11 +77,7 @@
     font-size: 13px;
 }
 
-
-/* =========================================
-   TOOLBAR & SEARCH
-========================================= */
-
+/* Untuk mengatur toolbar dan pencarian */
 .master-data-toolbar {
     display: flex;
     align-items: center;
@@ -138,11 +124,7 @@
     background: #e58c00;
 }
 
-
-/* =========================================
-   MASTER DATA TABLE
-========================================= */
-
+/* Untuk mengatur tabel Master Data */
 .master-data-table-wrapper {
     width: 100%;
     overflow-x: auto;
@@ -197,11 +179,7 @@ td.btn-action button:not(:last-child) {
     margin-right: 8px;
 }
 
-
-/* =========================================
-   DEPARTMENT BADGE
-========================================= */
-
+/* Untuk mengatur badge jurusan */
 .department-badge {
     display: inline-block;
     padding: 5px 10px;
@@ -214,13 +192,7 @@ td.btn-action button:not(:last-child) {
     white-space: nowrap;
 }
 
-
-/* =========================================
-   TABLE ACTION BUTTONS
-========================================= */
-
-/* Tombol Edit */
-
+/* Untuk mengatur tombol edit */
 .btn-edit-jurusan,
 .btn-edit-matakuliah,
 .btn-edit-kategori {
@@ -239,8 +211,7 @@ td.btn-action button:not(:last-child) {
     background: #dfe5ff;
 }
 
-/* Tombol Hapus */
-
+/* Untuk mengatur tombol hapus */
 .btn-hapus-jurusan,
 .btn-hapus-matakuliah,
 .btn-hapus-kategori {
@@ -259,24 +230,17 @@ td.btn-action button:not(:last-child) {
     background: #fecaca;
 }
 
-
-/* =========================================
-   MODAL MASTER DATA
-========================================= */
-
+/* Untuk mengatur modal Master Data */
 .master-data-modal {
     display: none;
     position: fixed;
     inset: 0;
     z-index: 9999;
-
     align-items: center;
     justify-content: center;
-
     padding: 20px;
     overflow-y: auto;
     box-sizing: border-box;
-
     background: rgba(13, 18, 43, 0.5);
 }
 
@@ -284,39 +248,31 @@ td.btn-action button:not(:last-child) {
     display: flex;
 }
 
-/* Kontainer modal */
-
+/* Untuk mengatur kontainer modal */
 .master-data-modal-content {
     display: flex;
     flex-direction: column;
-
     width: 100%;
     max-width: 480px;
     max-height: calc(100vh - 40px);
     max-height: calc(100dvh - 40px);
-
     padding: 0;
     overflow: hidden;
     box-sizing: border-box;
-
     background: #ffffff;
     border-radius: 16px;
     box-shadow: 0 15px 45px rgba(13, 18, 43, 0.15);
-
     animation: modalFadeIn 0.2s ease;
 }
 
-/* Header modal */
-
+/* Untuk mengatur header modal */
 .master-data-modal-header {
     display: flex;
     flex-shrink: 0;
     align-items: center;
     justify-content: space-between;
-
     padding: 25px 25px 15px;
     margin-bottom: 0;
-
     background: #ffffff;
 }
 
@@ -340,8 +296,7 @@ td.btn-action button:not(:last-child) {
     color: #17203c;
 }
 
-/* Form di dalam modal */
-
+/* Untuk mengatur form di dalam modal */
 .master-data-modal-content>form {
     display: flex;
     flex: 1;
@@ -350,21 +305,17 @@ td.btn-action button:not(:last-child) {
     overflow: hidden;
 }
 
-/* Bagian isi modal yang bisa di-scroll */
-
+/* Untuk mengatur isi modal */
 .master-data-modal-body {
     flex: 1;
     min-height: 0;
-
     padding: 10px 25px 20px;
-
     overflow-y: auto;
     overflow-x: hidden;
     overscroll-behavior: contain;
 }
 
-/* Scrollbar isi modal */
-
+/* Untuk mengatur scrollbar modal */
 .master-data-modal-body::-webkit-scrollbar {
     width: 5px;
 }
@@ -382,11 +333,7 @@ td.btn-action button:not(:last-child) {
     background: #9ca3af;
 }
 
-
-/* =========================================
-   FORM INPUT
-========================================= */
-
+/* Untuk mengatur form input */
 .form-group {
     margin-bottom: 20px;
 }
@@ -405,10 +352,8 @@ td.btn-action button:not(:last-child) {
     border: 1px solid #e1e4ef;
     border-radius: 9px;
     outline: none;
-
     color: #17203c;
     font-size: 13px;
-
     box-sizing: border-box;
     transition: 0.2s ease;
 }
@@ -422,11 +367,7 @@ td.btn-action button:not(:last-child) {
     color: #a5aabd;
 }
 
-
-/* =========================================
-   FORM VALIDATION
-========================================= */
-
+/* Untuk mengatur validasi form */
 .required {
     margin-left: 3px;
     color: #ef4444;
@@ -452,21 +393,15 @@ td.btn-action button:not(:last-child) {
     line-height: 1.5;
 }
 
-
-/* =========================================
-   MODAL ACTION BUTTONS
-========================================= */
-
+/* Untuk mengatur tombol aksi modal */
 .master-data-modal-actions {
     display: flex;
     flex-shrink: 0;
     align-items: center;
     justify-content: flex-end;
     gap: 10px;
-
     padding: 15px 25px 25px;
     margin-top: 0;
-
     border-top: 1px solid #e8eaf2;
     background: #ffffff;
 }
@@ -475,15 +410,13 @@ td.btn-action button:not(:last-child) {
     padding: 11px 20px;
     border: none;
     border-radius: 9px;
-
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     transition: 0.2s ease;
 }
 
-/* Tombol Batal */
-
+/* Untuk mengatur tombol batal */
 #btnBatalJurusan,
 #btnBatalMatakuliah,
 #btnBatalKategori {
@@ -497,8 +430,7 @@ td.btn-action button:not(:last-child) {
     background: #e5e7ef;
 }
 
-/* Tombol Simpan */
-
+/* Untuk mengatur tombol simpan */
 #btnSimpanJurusan,
 #btnSimpanMatakuliah,
 #btnSimpanKategori {
@@ -512,28 +444,21 @@ td.btn-action button:not(:last-child) {
     background: #e58c00;
 }
 
-
-/* =========================================
-   MODAL DELETE CONFIRMATION
-========================================= */
-
+/* Untuk mengatur modal konfirmasi hapus */
 .modal-delete-content {
     max-width: 420px;
     padding: 25px;
     text-align: center;
 }
 
-/* Ikon hapus */
-
+/* Untuk mengatur ikon hapus */
 .delete-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 58px;
     height: 58px;
     margin: 0 auto 18px;
-
     border-radius: 50%;
     background: #fee2e2;
     color: #dc2626;
@@ -545,8 +470,7 @@ td.btn-action button:not(:last-child) {
     height: 27px;
 }
 
-/* Judul dan deskripsi */
-
+/* Untuk mengatur judul dan deskripsi hapus */
 .delete-heading p {
     margin: 0;
     color: #17203c;
@@ -555,23 +479,19 @@ td.btn-action button:not(:last-child) {
     line-height: 1.6;
 }
 
-/* Informasi data yang dihapus */
-
+/* Untuk mengatur informasi data yang dihapus */
 .delete-info {
     padding: 13px;
     margin: 20px 0 12px;
-
     border: 1px solid #e8eaf2;
     border-radius: 9px;
     background: #f7f8fc;
-
     color: #17203c;
     font-size: 14px;
     overflow-wrap: anywhere;
 }
 
-/* Peringatan */
-
+/* Untuk mengatur peringatan hapus */
 .delete-warning {
     margin: 0 0 22px;
     color: #dc2626;
@@ -579,8 +499,7 @@ td.btn-action button:not(:last-child) {
     line-height: 1.6;
 }
 
-/* Area tombol */
-
+/* Untuk mengatur area tombol modal hapus */
 .modal-delete-content .master-data-modal-actions {
     display: flex;
     flex-shrink: 0;
@@ -588,37 +507,30 @@ td.btn-action button:not(:last-child) {
     align-items: center;
     justify-content: center;
     gap: 10px;
-
     padding: 15px 0 0;
     margin: 0;
-
     border-top: 1px solid #e8eaf2;
 }
 
-/* Form hapus */
-
+/* Untuk mengatur form hapus */
 .modal-delete-content .master-data-modal-actions form {
     display: flex;
     margin: 0;
 }
 
-/* Semua tombol modal hapus */
-
+/* Untuk mengatur semua tombol modal hapus */
 .modal-delete-content .master-data-modal-actions button {
     width: auto;
     padding: 11px 20px;
-
     border: none;
     border-radius: 9px;
-
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     transition: 0.2s ease;
 }
 
-/* Tombol Batal */
-
+/* Untuk mengatur tombol batal hapus */
 #btnBatalHapusJurusan,
 #btnBatalHapusMatakuliah,
 #btnBatalHapusKategori {
@@ -632,8 +544,7 @@ td.btn-action button:not(:last-child) {
     background: #e5e7ef;
 }
 
-/* Tombol Ya, Hapus */
-
+/* Untuk mengatur tombol konfirmasi hapus */
 #btnKonfirmasiHapusJurusan,
 #btnKonfirmasiHapusMatakuliah,
 #btnKonfirmasiHapusKategori {
@@ -647,31 +558,23 @@ td.btn-action button:not(:last-child) {
     background: #b91c1c;
 }
 
-
-/* =========================================
-   SEARCHABLE MULTI SELECT JURUSAN
-========================================= */
-
+/* Untuk mengatur multi select jurusan */
 .jurusan-multiselect {
     position: relative;
     width: 100%;
 }
 
-/* Area jurusan yang dipilih */
-
+/* Untuk mengatur area jurusan yang dipilih */
 .jurusan-selected {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 8px;
-
     min-height: 46px;
     padding: 8px 12px;
-
     border: 1px solid #d1d5db;
     border-radius: 8px;
     background: #ffffff;
-
     cursor: pointer;
     box-sizing: border-box;
 }
@@ -685,16 +588,13 @@ td.btn-action button:not(:last-child) {
     font-size: 14px;
 }
 
-/* Chip jurusan */
-
+/* Untuk mengatur chip jurusan */
 .jurusan-selected .jurusan-chip {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-
     padding: 5px 9px;
     border-radius: 6px;
-
     background: #eef1fb;
     color: #374151;
     font-size: 12px;
@@ -705,7 +605,6 @@ td.btn-action button:not(:last-child) {
     border: none;
     background: none;
     color: #6b7280;
-
     font-size: 14px;
     line-height: 1;
     cursor: pointer;
@@ -715,22 +614,18 @@ td.btn-action button:not(:last-child) {
     color: #ef4444;
 }
 
-/* Dropdown jurusan */
-
+/* Untuk mengatur dropdown jurusan */
 .jurusan-dropdown {
     display: none;
     position: relative;
-
     width: 100%;
     max-height: 230px;
     padding: 10px;
     margin-top: 6px;
-
     border: 1px solid #e5e7eb;
     border-radius: 8px;
     background: #ffffff;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-
     overflow: hidden;
     box-sizing: border-box;
 }
@@ -740,19 +635,15 @@ td.btn-action button:not(:last-child) {
     flex-direction: column;
 }
 
-/* Kolom pencarian jurusan */
-
+/* Untuk mengatur kolom pencarian jurusan */
 .jurusan-dropdown>input {
     flex-shrink: 0;
-
     width: 100%;
     padding: 9px 10px;
     margin-bottom: 8px;
-
     border: 1px solid #d1d5db;
     border-radius: 6px;
     outline: none;
-
     font-size: 13px;
     box-sizing: border-box;
 }
@@ -761,28 +652,23 @@ td.btn-action button:not(:last-child) {
     border-color: #f59e0b;
 }
 
-/* Daftar pilihan jurusan */
-
+/* Untuk mengatur daftar pilihan jurusan */
 .jurusan-options {
     flex: 1;
     min-height: 0;
     max-height: 170px;
-
     overflow-y: auto;
     overflow-x: hidden;
     overscroll-behavior: contain;
 }
 
-/* Setiap pilihan */
-
+/* Untuk mengatur setiap pilihan jurusan */
 .jurusan-option {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     padding: 10px;
     border-radius: 7px;
-
     font-size: 13px;
     cursor: pointer;
     transition: background 0.2s;
@@ -796,8 +682,7 @@ td.btn-action button:not(:last-child) {
     background: #f3f4f6;
 }
 
-/* Jurusan yang dipilih */
-
+/* Untuk mengatur jurusan yang dipilih */
 .jurusan-option.selected {
     background: #eef1fb;
     color: #374151;
@@ -810,14 +695,12 @@ td.btn-action button:not(:last-child) {
     font-weight: 700;
 }
 
-/* Hasil pencarian yang tidak cocok */
-
+/* Untuk mengatur hasil pencarian yang tidak cocok */
 .jurusan-option.hidden {
     display: none;
 }
 
-/* Scrollbar daftar jurusan */
-
+/* Untuk mengatur scrollbar daftar jurusan */
 .jurusan-options::-webkit-scrollbar {
     width: 5px;
 }
@@ -835,11 +718,7 @@ td.btn-action button:not(:last-child) {
     background: #9ca3af;
 }
 
-
-/* =========================================
-   ANIMATION
-========================================= */
-
+/* Untuk mengatur animasi modal */
 @keyframes modalFadeIn {
     from {
         opacity: 0;
@@ -852,11 +731,7 @@ td.btn-action button:not(:last-child) {
     }
 }
 
-
-/* =========================================
-   RESPONSIVE - TABLET
-========================================= */
-
+/* Untuk mengatur tampilan tablet */
 @media (max-width: 768px) {
     .master-data-content {
         padding: 18px;
@@ -884,11 +759,7 @@ td.btn-action button:not(:last-child) {
     }
 }
 
-
-/* =========================================
-   RESPONSIVE - MOBILE
-========================================= */
-
+/* Untuk mengatur tampilan mobile */
 @media (max-width: 480px) {
     .master-data-modal {
         align-items: center;
@@ -899,7 +770,6 @@ td.btn-action button:not(:last-child) {
         max-width: 100%;
         max-height: calc(100vh - 24px);
         max-height: calc(100dvh - 24px);
-
         border-radius: 12px;
     }
 
@@ -949,7 +819,7 @@ td.btn-action button:not(:last-child) {
     }
 }
 
-
+/* Untuk mengatur header halaman */
 .page-header {
     display: flex;
     align-items: center;
@@ -970,6 +840,7 @@ td.btn-action button:not(:last-child) {
     font-size: 14px;
 }
 
+/* Untuk mengatur header halaman pada tablet */
 @media (max-width: 768px) {
     .page-header {
         margin-bottom: 20px;
