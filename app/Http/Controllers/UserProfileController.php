@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use App\Models\Department;
+use App\Models\Catatan;
 
 class UserProfileController extends Controller
 {
@@ -20,8 +21,15 @@ class UserProfileController extends Controller
 
         // Nilai statistik sementara
         $stats = [
-            'total_catatan' => 0,
-            'total_upvote' => 0,
+            'total_catatan' => Catatan::where('user_id', $user->id)
+                ->where('status', 'Terbit')
+                ->where('visibilitas', 'publik')
+                ->count(),
+
+            'total_upvote' => Catatan::where('user_id', $user->id)
+                ->where('status', 'Terbit')
+                ->where('visibilitas', 'publik')
+                ->sum('upvote'),
         ];
 
         return view('user.profile', compact(
