@@ -466,6 +466,17 @@ body,
     border-color: var(--garis);
 }
 
+/* Pengaturan Publikasi: sejajarkan kartu Visibilitas dan Identitas Penulis */
+.form-section .form-row .label-opsi + .bantuan-teks {
+    display: block;
+    line-height: 1.5;
+    min-height: 3em;            /* ruang untuk 2 baris, di kedua kolom */
+}
+
+.form-section .form-row .opsi-list { flex: 1; }
+.form-section .form-row .opsi-list .opsi-kartu { flex: 1; }
+.form-section .form-row .opsi-list .opsi-isi { height: 100%; }
+
 @media (max-width: 767px) {
     .pill-group.dua-kolom {
         gap: 10px;
