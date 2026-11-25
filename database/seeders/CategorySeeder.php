@@ -9,8 +9,16 @@ class CategorySeeder extends Seeder
 {
     public function run(): void
     {
-        foreach (['Rangkuman', 'Soal Ujian', 'Modul'] as $nama) {
-            Category::firstOrCreate(['name' => $nama]);
+        $categories = [
+            'Rangkuman',
+            'Soal Ujian',
+            'Modul',
+        ];
+
+        foreach ($categories as $category) {
+            Category::firstOrCreate([
+                'name' => $category,
+            ]);
         }
     }
 }
