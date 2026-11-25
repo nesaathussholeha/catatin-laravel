@@ -4,20 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Catatan;
 use App\Models\Category;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class CatatanController extends Controller
 {
-    private array $jurusan = ['Informatika', 'Sistem Informasi', 'Teknik Komputer', 'Elektro'];
-
     private function aturan(): array
     {
         return [
             'judul'       => 'required|max:150',
             'matkul'      => 'required|max:100',
-            'jurusan'     => 'required|in:' . implode(',', $this->jurusan),
+            'jurusan'     => 'required|exists:departments,name',
             'category_id' => 'required|exists:categories,id',
             'deskripsi'   => 'nullable|max:255',
             'tipe_isi'    => 'required|in:teks,tautan',
@@ -72,13 +71,19 @@ class CatatanController extends Controller
         return trim($teks);
     }
 
+    /** Daftar jurusan dari Master Data. */
+    private function daftarJurusan()
+    {
+        return Department::orderBy('name')->pluck('name');
+    }
+
     /* ---------- Boleh dilihat akun aktif dan nonaktif ---------- */
 
     public function index()
     {
         $this->tolakJikaDiblokir();
 
-        $catatanSaya = Auth::user()->catatans()->with('category')->latest()->get();
+        $catatanSaya = $this->pengguna()->catatans()->with('category')->latest()->get();
 
         return view('user.catatan', compact('catatanSaya'));
     }
@@ -130,7 +135,7 @@ class CatatanController extends Controller
         return view('user.unggah', [
             'catatan'       => new Catatan(['visibilitas' => 'pribadi']),
             'categories'    => Category::all(),
-            'jurusan'       => $this->jurusan,
+            'jurusan'       => $this->daftarJurusan(),
             'akunNonaktif'  => $akunNonaktif,
             'pesanNonaktif' => $pesanNonaktif,
         ]);
@@ -140,7 +145,7 @@ class CatatanController extends Controller
     {
         $this->tolakJikaNonaktif();
 
-        Auth::user()->catatans()->create($this->siapkanData($request));
+        $this->pengguna()->catatans()->create($this->siapkanData($request));
 
         return redirect()->route('catatan.index')->with('sukses', 'Catatan berhasil disimpan.');
     }
@@ -153,7 +158,7 @@ class CatatanController extends Controller
         return view('user.unggah', [
             'catatan'       => $catatan,
             'categories'    => Category::all(),
-            'jurusan'       => $this->jurusan,
+            'jurusan'       => $this->daftarJurusan(),
             'akunNonaktif'  => false,   // akun nonaktif/diblokir sudah dialihkan oleh tolakJikaNonaktif()
             'pesanNonaktif' => null,
         ]);
