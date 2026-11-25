@@ -151,9 +151,11 @@ class CatatanController extends Controller
         abort_if($catatan->user_id !== Auth::id(), 404);
 
         return view('user.unggah', [
-            'catatan'    => $catatan,
-            'categories' => Category::all(),
-            'jurusan'    => $this->jurusan,
+            'catatan'       => $catatan,
+            'categories'    => Category::all(),
+            'jurusan'       => $this->jurusan,
+            'akunNonaktif'  => false,   // akun nonaktif/diblokir sudah dialihkan oleh tolakJikaNonaktif()
+            'pesanNonaktif' => null,
         ]);
     }
 
