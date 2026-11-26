@@ -101,10 +101,17 @@ class DepartmentController extends Controller
 
     public function destroy(Department $department)
     {
-        $department->delete();
+        try {
+            $department->delete();
 
-        return redirect()
-            ->route('admin.master-data.index', ['tab' => 'jurusan'])
-            ->with('success', 'Jurusan berhasil dihapus.');
+            return redirect()
+                ->route('admin.master-data.index', ['tab' => 'jurusan'])
+                ->with('success', 'Jurusan berhasil dihapus.');
+
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.master-data.index', ['tab' => 'jurusan'])
+                ->with('error', 'Jurusan gagal dihapus. Error: ' . $e->getMessage());
+        }
     }
 }
