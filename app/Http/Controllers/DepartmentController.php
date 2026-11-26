@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use App\Models\Course;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -12,9 +14,9 @@ class DepartmentController extends Controller
     {
         $departments = Department::with('courses')->latest()->get();
 
-        $courses = \App\Models\Course::with('departments')->latest()->get();
+        $courses = Course::with('departments')->latest()->get();
 
-        $categories = \App\Models\Category::latest()->get();
+        $categories = Category::latest()->get();
 
         $activeTab = $request->query('tab', 'jurusan');
 

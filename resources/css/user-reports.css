@@ -1,8 +1,4 @@
-
-/* ==============================
-   HALAMAN KELOLA LAPORAN
-============================== */
-
+/* Halaman Kelola Laporan */
 .page-header {
     display: flex;
     justify-content: space-between;
@@ -24,10 +20,7 @@
     font-size: 14px;
 }
 
-/* ==============================
-   RINGKASAN LAPORAN
-============================== */
-
+/* Ringkasan Laporan */
 .summary-container {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -56,10 +49,7 @@
     font-weight: 700;
 }
 
-/* ==============================
-   CARD DAN HEADER
-============================== */
-
+/* Card dan Header */
 .card {
     overflow: hidden;
     background: #ffffff;
@@ -79,10 +69,7 @@
     font-weight: 700;
 }
 
-/* ==============================
-   PENCARIAN DAN FILTER
-============================== */
-
+/* Pencarian dan Filter */
 .filter-form {
     display: flex;
     align-items: center;
@@ -146,10 +133,7 @@
     background: #e2e8f0;
 }
 
-/* ==============================
-   TABEL
-============================== */
-
+/* Tabel */
 .table-responsive {
     width: 100%;
     overflow-x: auto;
@@ -197,10 +181,7 @@
     text-align: center;
 }
 
-/* ==============================
-   BADGE STATUS
-============================== */
-
+/* Badge Status */
 .badge {
     display: inline-flex;
     align-items: center;
@@ -231,20 +212,14 @@
     color: #374151;
 }
 
-/* ==============================
-   PAGINATION
-============================== */
-
+/* Pagination */
 .pagination-wrapper {
     display: flex;
     justify-content: flex-end;
     padding: 20px 24px;
 }
 
-/* ==============================
-   RESPONSIVE
-============================== */
-
+/* Responsive */
 @media (max-width: 768px) {
     .summary-container {
         grid-template-columns: 1fr;
@@ -275,10 +250,7 @@
     }
 }
 
-/* ==============================
-   TAB KELOLA PENGGUNA
-============================== */
-
+/* Tab Kelola Pengguna */
 .user-tabs {
     display: flex;
     align-items: center;
@@ -313,7 +285,6 @@
 }
 
 /* Konten Tab */
-
 .user-tab-content {
     display: none;
 }
@@ -323,7 +294,6 @@
 }
 
 /* Responsive Tab */
-
 @media (max-width: 768px) {
     .user-tabs {
         width: 100%;
@@ -336,10 +306,7 @@
     }
 }
 
-/* ==============================
-   UBAH STATUS PENGGUNA
-============================== */
-
+/* Ubah Status Pengguna */
 .status-form {
     display: flex;
     align-items: center;
@@ -377,10 +344,7 @@
     background: #D97706;
 }
 
-/* ==============================
-   MODAL KONFIRMASI UBAH STATUS
-============================== */
-
+/* Modal Konfirmasi Ubah Status */
 .status-modal-overlay {
     display: none;
     position: fixed;
@@ -469,6 +433,7 @@
     background: #D97706;
 }
 
+/* Animasi Modal */
 @keyframes modalFadeIn {
     from {
         opacity: 0;

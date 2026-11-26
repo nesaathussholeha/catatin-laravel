@@ -142,10 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // ==========================================
     // MODAL KONFIRMASI UBAH STATUS
-    // ==========================================
-
     const statusModal = document.getElementById("statusConfirmModal");
     const statusModalMessage = document.getElementById("statusModalMessage");
     const btnBatalStatus = document.getElementById("btnBatalStatus");
