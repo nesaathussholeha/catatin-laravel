@@ -95,7 +95,9 @@ class PlaylistController extends Controller
 
         $playlist->catatans()->attach($catatan->id);
 
-        return back()->with('success', 'Catatan disimpan ke folder "' . $playlist->name . '".');
+        return redirect()
+        ->route('user.playlists.index', ['playlist' => $playlist->id])
+        ->with('success', 'Catatan disimpan ke folder "' . $playlist->name . '".');
     }
 
     // Keluarkan catatan dari folder (catatan asli tidak dihapus)

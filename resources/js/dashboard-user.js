@@ -133,8 +133,20 @@ function initDashboard() {
             filterCatatan();
         });
     });
-    
+
     grid.addEventListener("click", async function (event) {
+        const kartuKlik = event.target.closest(".kartu");
+
+        if (kartuKlik && !event.target.closest("button, a")) {
+            const detail = kartuKlik.querySelector("a.detail");
+
+            if (detail) {
+                window.location.href = detail.href;
+            }
+
+            return;
+        }
+
         const tombol = event.target.closest(".upvote");
 
         if (!tombol || tombol.disabled) {
