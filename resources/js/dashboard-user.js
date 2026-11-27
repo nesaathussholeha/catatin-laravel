@@ -38,7 +38,7 @@ function initDashboard() {
 
     let kategoriAktif = "semua";
 
-    const semuaChipKategori = document.querySelectorAll("[data-kategori]");
+const semuaChipKategori = document.querySelectorAll(".chip[data-kategori]");
 
     function filterCatatan() {
         const kataKunci = cari.value.toLowerCase().trim();
